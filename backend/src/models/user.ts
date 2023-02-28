@@ -1,8 +1,9 @@
-//user model schema in mongoose
+//user model schema in typescript
 
 import { Schema, model } from 'mongoose';
+import { User } from '../types/user.types';
 
-const userSchema = new Schema({
+const userSchema = new Schema<User>({
     name: {
         type: String,
         required: true,
@@ -29,6 +30,6 @@ const userSchema = new Schema({
     },
 });
 
-const User = model('User', userSchema);
+const UserModel = model<User>('User', userSchema);
 
-export default User;
+export default UserModel;

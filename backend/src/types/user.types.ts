@@ -7,10 +7,9 @@ interface User {
     address: string;
     userType: string;
     subscriptionPlan: string;
+    fiscalCode?: string;
 }
 
-interface CompanyUser extends User {
-    fiscalCode: string;
-}
 
-export { User, CompanyUser };
+
+export { User };

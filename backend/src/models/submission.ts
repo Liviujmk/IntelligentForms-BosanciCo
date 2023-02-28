@@ -1,8 +1,9 @@
 //create submission from the form model
 
 import { Schema, model } from 'mongoose';
+import Submission from '../types/submission.types';
 
-const submissionSchema = new Schema({
+const submissionSchema = new Schema<Submission>({
     formTitle: {
         type: String,
         required: true
@@ -17,6 +18,6 @@ const submissionSchema = new Schema({
     }
 });
 
-const Submission = model('Submission', submissionSchema);
+const SubmissionModel = model<Submission>('Submission', submissionSchema);
 
-export default Submission;
+export default SubmissionModel;
