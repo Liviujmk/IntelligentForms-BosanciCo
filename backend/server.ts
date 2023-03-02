@@ -18,31 +18,8 @@ import router from './src/routes/routes';
 app.use('/', router);
 
 
-// app.get('/forms', (req: Request, res: Response) => {
-//     /*res.status(200).json({ forms: [{
-//         name: 'form1',
-//         fields: [
-//             {
-//                 label: 'label1',
-//                 fieldType: 'text',
-//                 placeholder: 'placeholder1',
-//                 keyword: 'keyword1',
-//                 mandatory: true,
-//                 options: ['option1', 'option2']
-//             },
-//             {
-//                 label: 'label2',
-//                 fieldType: 'text',
-//                 placeholder: 'placeholder2',
-//                 keyword: 'keyword2',
-//                 mandatory: true,
-//                 options: ['option1', 'option2']
-//             }
-//         ],
-//     }]});*/
-//     res.json({ message: 'Hello World'});
-// });
 
-app.listen(3001, () => {
-    console.log('Server running on port http://localhost:3001');
+
+app.listen(3000, () => {
+    console.log('Server running on port http://localhost:3000');
 });
