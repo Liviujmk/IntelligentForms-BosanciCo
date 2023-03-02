@@ -8,6 +8,7 @@ interface User {
     userType: string;
     subscriptionPlan: string;
     fiscalCode?: string;
+    access_token: string;
 }
 
 

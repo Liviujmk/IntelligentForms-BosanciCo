@@ -28,6 +28,10 @@ const userSchema = new Schema<User>({
         type: String,
         default: 'free'
     },
+    access_token: {
+        type: String,
+        required: true,
+    },
 });
 
 const UserModel = model<User>('User', userSchema);
