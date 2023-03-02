@@ -14,8 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../models/user"));
 const crypto_1 = __importDefault(require("crypto"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const bcrypt_2 = __importDefault(require("../config/bcrypt"));
 const authController = {
     create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -25,7 +23,8 @@ const authController = {
             const isUserExists = yield user_1.default.findOne({ email }).exec();
             if (isUserExists)
                 return res.status(401).json({ message: "User Already Exists" });
-            const password = yield bcrypt_1.default.hash(passwordBody, bcrypt_2.default.salt);
+            //const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
+            const password = crypto_1.default.randomBytes(30).toString("hex");
             const access_token = crypto_1.default.randomBytes(30).toString("hex");
             const newUser = yield new user_1.default({
                 name,
@@ -51,7 +50,8 @@ const authController = {
             const user = yield user_1.default.findOne({ email }).exec();
             if (!user)
                 return res.status(401).json({ message: "Email or Password is Wrong!" });
-            const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
+            //const isPasswordValid = await bcrypt.compare(password, user.password);
+            const isPasswordValid = password === user.password;
             if (!isPasswordValid)
                 return res.status(401).json({ message: "Email or Password is Wrong!" });
             return res.status(200).json({

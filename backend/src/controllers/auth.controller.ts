@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/user';
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
+//import * as bcrypt from 'bcrypt'
 import bcryptConfig from '../config/bcrypt';
 
 
@@ -17,7 +17,8 @@ const authController = {
 
             if (isUserExists) return res.status(401).json({ message: "User Already Exists" })
 
-            const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
+            //const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
+            const password = crypto.randomBytes(30).toString("hex");
             const access_token = crypto.randomBytes(30).toString("hex");
 
             const newUser = await new User({
@@ -48,7 +49,8 @@ const authController = {
 
             if (!user) return res.status(401).json({ message: "Email or Password is Wrong!" })
 
-            const isPasswordValid = await bcrypt.compare(password, user.password);
+            //const isPasswordValid = await bcrypt.compare(password, user.password);
+            const isPasswordValid = password === user.password;
 
             if (!isPasswordValid) return res.status(401).json({ message: "Email or Password is Wrong!" })
 
