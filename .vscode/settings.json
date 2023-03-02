@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/078c6a1e-9697-4a2c-a4e6-4820bf8d1eed/resourceGroups/Liviu/providers/Microsoft.Web/sites/IntelligentForm",
+    "appService.deploySubpath": "backend"
+}

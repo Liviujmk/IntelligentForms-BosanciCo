@@ -20,6 +20,6 @@ app.use('/', router);
 
 
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 80, () => {
     console.log('Server running on port http://localhost:3000');
 });
