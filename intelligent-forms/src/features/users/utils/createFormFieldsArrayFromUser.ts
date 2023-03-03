@@ -6,7 +6,7 @@ export const createFormFieldsArrayFromUser = (user: User) => {
         ['email', user.email],
         ['password', user.password],
         ['adress', user.adress],
-        ['userType', user.userType],
+        //['userType', user.?userType],
         ['fiscalCode', user.fiscalCode],
         ['subscriptionPlan', user.subscriptionPlan],
     ]
