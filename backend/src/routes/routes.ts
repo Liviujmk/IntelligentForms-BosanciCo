@@ -2,7 +2,7 @@
 
 import express from 'express';
 import { Request, Response } from 'express';
-import authController from '../controllers/auth.controller';
+import {authController, isAuthenticated} from '../controllers/auth.controller';
 
 const router = express.Router();
 
@@ -10,7 +10,8 @@ router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'Hello World' });
 });
 
-router.get('/forms', (req: Request, res: Response) => {
+router.get('/forms', isAuthenticated ,(req: Request, res: Response) => {
+    console.log(req.cookies)
      res.status(200).json({ forms: [{
          name: 'form1',
          fields: [

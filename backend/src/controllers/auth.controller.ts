@@ -3,8 +3,17 @@ import User from '../models/user';
 import crypto from 'crypto';
 //import * as bcrypt from 'bcrypt'
 import bcryptConfig from '../config/bcrypt';
+import { any } from 'zod';
 
+const isAuthenticated = (req: Request, res: Response, next: any) => {
+    if (req.cookies.access_token) {
+        next();
+    } else {
+        //res.status(401).json({ message: "Unauthorized" });
+        next();
+    }
 
+}
 
 const authController = {
     create: async (req: Request, res: Response) => {
@@ -18,7 +27,7 @@ const authController = {
             if (isUserExists) return res.status(401).json({ message: "User Already Exists" })
 
             //const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
-            const password = crypto.randomBytes(30).toString("hex");
+            const password = crypto.createHash('sha256').update(passwordBody).digest('hex');
             const access_token = crypto.randomBytes(30).toString("hex");
 
             const newUser = await new User({
@@ -47,12 +56,23 @@ const authController = {
 
             const user = await User.findOne({ email }).exec();
 
-            if (!user) return res.status(401).json({ message: "Email or Password is Wrong!" })
-
+            if (!user) return res.status(401).json({ message: "Email or Password is Wrong1!" })
             //const isPasswordValid = await bcrypt.compare(password, user.password);
-            const isPasswordValid = password === user.password;
 
-            if (!isPasswordValid) return res.status(401).json({ message: "Email or Password is Wrong!" })
+            const hashPassword = (password:any) => {
+                return crypto.createHash('sha256').update(password).digest('hex')
+            }
+
+            const isPasswordValid = hashPassword(password) === user.password
+            if (!isPasswordValid) return res.status(401).json({ message: "Email or Password is Wrong2!" })
+
+            //set 1 day cookie
+            res.cookie('access_token', user.access_token, {
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none'
+            });
 
             return res.status(200).json({
                 _id: user._id,
@@ -62,9 +82,18 @@ const authController = {
             });
 
         } catch (err) {
-            return res.status(500).json({ message: "Internal Server Error" })
+            return res.status(500).json({ message: "Internal Server Error. Please wait until error is solved." })
+        }
+    },
+
+    logout: async (req: Request, res: Response) => {
+        try {
+            res.clearCookie('access_token');
+            return res.status(200).json({ message: "Logout Success" });
+        } catch (err) {
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     },
 };
 
-export default authController;
+export { isAuthenticated, authController };

@@ -5,12 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const auth_controller_1 = require("../controllers/auth.controller");
 const router = express_1.default.Router();
 router.get('/', (req, res) => {
     res.json({ message: 'Hello World' });
 });
-router.get('/forms', (req, res) => {
+router.get('/forms', auth_controller_1.isAuthenticated, (req, res) => {
+    console.log(req.cookies);
     res.status(200).json({ forms: [{
                 name: 'form1',
                 fields: [
@@ -33,6 +34,6 @@ router.get('/forms', (req, res) => {
                 ],
             }] });
 });
-router.post('/auth/signup', auth_controller_1.default.create);
-router.post('/auth/login', auth_controller_1.default.login);
+router.post('/auth/signup', auth_controller_1.authController.create);
+router.post('/auth/login', auth_controller_1.authController.login);
 exports.default = router;
