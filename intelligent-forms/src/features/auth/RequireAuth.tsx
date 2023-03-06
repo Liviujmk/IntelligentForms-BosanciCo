@@ -6,7 +6,7 @@ const RequireAuth = () => {
     const location = useLocation();
 
     return (
-        (auth?.email)
+        ( localStorage.getItem('access_token') )
             ? <Outlet />
             : <Navigate to="/login" state={{ from: location }} replace />
     );

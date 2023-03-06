@@ -5,6 +5,7 @@ import './App.css'
 import { Route, Routes} from "react-router-dom"
 
 import RequireAuth from './features/auth/RequireAuth'
+import { Login } from './pages/login'
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
           <Route path="/" element={<div>Home</div>} />
           <Route path="about" element={<div>About</div>} />
           <Route path="signup" element={<div>Signup</div>} />
-          <Route path="login" element={<div>Login</div>} />
+          <Route path="login" element={<Login />} />
           <Route element={<RequireAuth />}>
             <Route path="dashboard" element={<div>Dashboard</div>} >
               <Route index element={<div>Dashboard</div>} />
