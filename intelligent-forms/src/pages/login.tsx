@@ -4,7 +4,6 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import useAuth from '../features/auth/hooks/useAuth';
-import { API_PATH } from '../config/api';
 import AuthContext from '../features/auth/AuthProvider';
 import { loginUser } from '../features/auth/api';
 import { UserLite } from '../features/users/types/user.types';
