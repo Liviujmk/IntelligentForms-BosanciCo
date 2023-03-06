@@ -2,8 +2,8 @@
 //
 
 import { Request, Response } from "express";
-import Form from "../models/form";
-import { IntForm } from "../types/form.types";
+import FormModel from "../models/form";
+import { Form } from "../types/form.types";
 
 
 
@@ -20,7 +20,7 @@ export const formController = {
             
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
 
-            const newForm = await new Form({
+            const newForm = await new FormModel({
                 title,
                 fields,
                 sections,
@@ -35,7 +35,7 @@ export const formController = {
     //get all forms
     getForms: async (req: Request, res: Response) => {
         try {
-            const forms = await Form.find().exec();
+            const forms = await FormModel.find().exec();
             res.status(200).json(forms);
         } catch (error: any) {
             return res.status(500).json({ msg: error.message });
@@ -44,7 +44,7 @@ export const formController = {
     //get form by id
     getFormById: async (req: Request, res: Response) => {
         try {
-            const form = await Form.findById(req.params.id).exec();
+            const form = await FormModel.findById(req.params.id).exec();
             res.status(200).json(form);
         } catch (error: any) {
             return res.status(500).json({ msg: error.message });
@@ -61,7 +61,7 @@ export const formController = {
             } = req.body;
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
 
-            await Form.findByIdAndUpdate({ _id: req.params.id }, {
+            await FormModel.findByIdAndUpdate({ _id: req.params.id }, {
                 title,
                 fields,
                 sections,
@@ -76,7 +76,7 @@ export const formController = {
     //delete form
     deleteForm: async (req: Request, res: Response) => {
         try {
-            await Form.findByIdAndDelete(req.params.id);
+            await FormModel.findByIdAndDelete(req.params.id);
             res.status(200).json({ msg: "Deleted a form" });
         } catch (error: any) {
             return res.status(500).json({ msg: error.message });
