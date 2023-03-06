@@ -1,7 +1,7 @@
 // create interface for the form model
 //
 
-interface Form {
+interface IntForm {
     title: string;
     fields: Field[];
     sections: Section[];
@@ -33,4 +33,4 @@ interface SingleChoiceField extends Field {
     options: string[];
 }
 
-export { Form, Field, Section, MultipleChoiceField, SingleChoiceField };
+export { IntForm, Field, Section, MultipleChoiceField, SingleChoiceField };

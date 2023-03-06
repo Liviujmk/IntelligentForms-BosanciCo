@@ -6,34 +6,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth_controller_1 = require("../controllers/auth.controller");
+const form_controller_1 = require("../controllers/form.controller");
 const router = express_1.default.Router();
 router.get('/', (req, res) => {
-    res.json({ message: 'Hello World' });
-});
-router.get('/forms', auth_controller_1.isAuthenticated, (req, res) => {
-    console.log(req.cookies);
-    res.status(200).json({ forms: [{
-                name: 'form1',
-                fields: [
-                    {
-                        label: 'label1',
-                        fieldType: 'text',
-                        placeholder: 'placeholder1',
-                        keyword: 'keyword1',
-                        mandatory: true,
-                        options: ['option1', 'option2']
-                    },
-                    {
-                        label: 'label2',
-                        fieldType: 'text',
-                        placeholder: 'placeholder2',
-                        keyword: 'keyword2',
-                        mandatory: true,
-                        options: ['option1', 'option2']
-                    }
-                ],
-            }] });
+    res.json({ message: 'Intelligent forms app' });
 });
 router.post('/auth/signup', auth_controller_1.authController.create);
 router.post('/auth/login', auth_controller_1.authController.login);
+//create routes for forms base on form controller
+router.post('/form/create', form_controller_1.formController.createForm);
+router.get('/form', form_controller_1.formController.getForms);
+router.get('/form/:id', form_controller_1.formController.getFormById);
+router.put('/form/:id', form_controller_1.formController.updateForm);
+router.delete('/form/:id', form_controller_1.formController.deleteForm);
 exports.default = router;
