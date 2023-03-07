@@ -10,4 +10,9 @@ export interface User {
     subscriptionPlan: string
 }
 
+export interface UserLite {
+    email: string
+    password: string
+}
+
 export type UserFieldName = keyof typeof USER_FIELDS_DEFAULT_VALUES
