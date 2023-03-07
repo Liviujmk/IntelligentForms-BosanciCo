@@ -2,11 +2,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
-import { Route, Routes} from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 
 import RequireAuth from './features/auth/RequireAuth'
 import { Login } from './pages/login'
+import { Navigation } from './layouts/authenticated-layout/components/navigation/navigation'
 
+import { DashboardPage } from './pages/dashboard.page'
+import { FormsPage } from './pages/forms.page'
+import { SubmissionsPage } from './pages/submissions.page'
+import { PricingPage } from './pages/pricing.page'
 function App() {
 
   return (
@@ -18,14 +23,15 @@ function App() {
           <Route path="signup" element={<div>Signup</div>} />
           <Route path="login" element={<Login />} />
           <Route element={<RequireAuth />}>
-            <Route path="dashboard" element={<div>Dashboard</div>} >
-              <Route index element={<div>Dashboard</div>} />
+            <Route path="dashboard" >
+              <Route index element={<DashboardPage />} />
               <Route path="forms">
-                <Route index element={<div>Forms</div>} />
+                <Route index element={<FormsPage />} />
                 <Route path=":formId" element={<div>Form</div>} />
-                <Route path=":formId/submissions" element={<div>Submissions</div>} />
+                <Route path=":formId/submissions" element={<SubmissionsPage />} />
                 <Route path=":formId/submissions/:submissionId" element={<div>Submission</div>} />
               </Route>
+              <Route path="pricing" element={<PricingPage />} />
             </Route>
           </Route>
           <Route path="*" element={<div>404</div>} />

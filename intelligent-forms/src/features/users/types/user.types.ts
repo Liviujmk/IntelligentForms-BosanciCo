@@ -6,10 +6,10 @@ export interface User {
     email: string
     password: string
     adress: string
+    userType: string
     fiscalCode?: string
     subscriptionPlan: string
 }
-
 export interface UserLite {
     email: string
     password: string
