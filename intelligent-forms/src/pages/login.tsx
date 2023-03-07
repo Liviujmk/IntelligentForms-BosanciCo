@@ -1,6 +1,6 @@
 //create login component is tsx file
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import useAuth from '../features/auth/hooks/useAuth';
@@ -13,14 +13,15 @@ import { AuthenticatedLayout } from '../layouts/authenticated-layout/Authenticat
 export const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-
-    if (localStorage.getItem('access_token')) {
-        navigate('/dashboard');
-    }
-
     const { auth, setAuth }: any = useContext(AuthContext);
-
     const from = location.state?.from?.pathname || '/dashboard';
+
+    //check constantly if localStorage has access_token
+    useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+            navigate(from, { replace: true });
+        }
+    }, []);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
