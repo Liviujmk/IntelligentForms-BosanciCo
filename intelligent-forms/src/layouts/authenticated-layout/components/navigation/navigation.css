@@ -1,0 +1,19 @@
+.p-menubar .p-menubar-custom,
+.p-menubar .p-menubar-end {
+    margin-left: inherit;
+}
+
+.p-menubar {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logout-button {
+    background-color: #3c39e8da;
+    color: #ffffff;
+}
+
+.logout-button:hover {
+    background-color: #3c39e8;
+}

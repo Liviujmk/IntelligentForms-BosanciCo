@@ -1,11 +1,11 @@
 import { Menubar } from 'primereact/menubar';
-import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'primeicons/primeicons.css';                                 // icons
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';                       // core css
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
-
+import './navigation.css'
+import logoform from '../../../../assets/logoform.png'
 
 interface MenuItem {
     label: string;
@@ -13,6 +13,7 @@ interface MenuItem {
     url: string;
 }
 export const Navigation = () => {
+    const navigate = useNavigate()
     const items: MenuItem[] = [
         {
             label: 'Dashboard',
@@ -30,8 +31,17 @@ export const Navigation = () => {
             url: '/dashboard/pricing'
         }
     ];
+    const start = <img alt="logo" src={logoform} height="60" className="mr-2"></img>;
+    const end =
+        <button onClick={() => {
+            localStorage.removeItem("access_token")
+            navigate('/login')
+        }}
+            className='logout-button'>
+            Log out
+        </button>
 
     return (
-        <Menubar model={items} />
+        <Menubar model={items} start={start} end={end} />
     );
 }
