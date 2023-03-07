@@ -22,12 +22,12 @@ export const Navigation = () => {
         {
             label: 'Forms',
             icon: 'pi pi-file',
-            url: '/forms'
+            url: '/dashboard/forms'
         },
         {
             label: 'Pricing',
             icon: 'pi pi-money-bill',
-            url: '/pricing'
+            url: '/dashboard/pricing'
         }
     ];
 
