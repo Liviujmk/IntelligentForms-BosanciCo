@@ -4,6 +4,7 @@
 import { Request, Response } from "express";
 import FormModel from "../models/form";
 import { Form } from "../types/form.types";
+import { allowedOrigins } from "../config/corsOptions";
 
 
 
@@ -25,6 +26,7 @@ export const formController = {
                 fields,
                 sections,
                 dataRetention,
+                fillFormUrl: `${allowedOrigins[2]}/fill/${title}-id_${Math.floor(Math.random() * 100000000)}`,
             }).save();
 
             res.status(200).json(newForm);

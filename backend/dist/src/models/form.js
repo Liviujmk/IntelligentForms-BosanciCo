@@ -56,6 +56,14 @@ const formSchema = new mongoose_1.Schema({
     dataRetention: {
         type: Number,
         default: 30
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    fillFormUrl: {
+        type: String,
+        default: ''
     }
 });
 const FormModel = (0, mongoose_1.model)('Form', formSchema);

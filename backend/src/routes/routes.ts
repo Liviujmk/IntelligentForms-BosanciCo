@@ -16,10 +16,10 @@ router.post('/auth/login', authController.login);
 
 //create routes for forms base on form controller
 
-router.post('/form/create', formController.createForm);
-router.get('/form', formController.getForms);
-router.get('/form/:id', formController.getFormById);
-router.put('/form/:id', formController.updateForm);
-router.delete('/form/:id', formController.deleteForm);
+router.post('/forms', formController.createForm);
+router.get('/forms', formController.getForms);
+router.get('/forms/:id', formController.getFormById);
+router.put('/forms/:id', formController.updateForm);
+router.delete('/forms/:id', formController.deleteForm);
 
 export default router;

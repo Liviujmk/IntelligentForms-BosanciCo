@@ -59,6 +59,14 @@ const formSchema = new Schema<Form>({
     dataRetention: {
         type: Number,
         default: 30
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    fillFormUrl: {
+        type: String,
+        default: ''
     }
 });
 

@@ -1,8 +1,8 @@
 // create interface for the submission model
 
 interface Submission {
-    formTitle: string;
-    data: any;
+    formId: string;
+    data: Object;
     date: Date;
 }
 

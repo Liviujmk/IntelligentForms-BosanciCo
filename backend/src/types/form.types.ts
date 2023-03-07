@@ -6,6 +6,8 @@ interface Form {
     fields: Field[];
     sections: Section[];
     dataRetention: number;
+    createdAt?: Date;
+    fillFormUrl?: string;
 }
 
 // create interface for the field model

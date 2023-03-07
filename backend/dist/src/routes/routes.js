@@ -14,9 +14,9 @@ router.get('/', (req, res) => {
 router.post('/auth/signup', auth_controller_1.authController.create);
 router.post('/auth/login', auth_controller_1.authController.login);
 //create routes for forms base on form controller
-router.post('/form/create', form_controller_1.formController.createForm);
-router.get('/form', form_controller_1.formController.getForms);
-router.get('/form/:id', form_controller_1.formController.getFormById);
-router.put('/form/:id', form_controller_1.formController.updateForm);
-router.delete('/form/:id', form_controller_1.formController.deleteForm);
+router.post('/forms', form_controller_1.formController.createForm);
+router.get('/forms', form_controller_1.formController.getForms);
+router.get('/forms/:id', form_controller_1.formController.getFormById);
+router.put('/forms/:id', form_controller_1.formController.updateForm);
+router.delete('/forms/:id', form_controller_1.formController.deleteForm);
 exports.default = router;

@@ -3,7 +3,7 @@
 import express from 'express';
 import { Request, Response } from 'express';
 
-import corsOption from '././src/config/corsOptions';
+import { corsOptions } from './src/config/corsOptions';
 import cors from 'cors';
 
 const app = express();
@@ -14,7 +14,7 @@ require('./src/config/db')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 
 //import router

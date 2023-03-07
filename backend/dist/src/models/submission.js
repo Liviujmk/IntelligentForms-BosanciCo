@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const submissionSchema = new mongoose_1.Schema({
-    formTitle: {
+    formId: {
         type: String,
         required: true
     },

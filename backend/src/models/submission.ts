@@ -4,7 +4,7 @@ import { Schema, model } from 'mongoose';
 import Submission from '../types/submission.types';
 
 const submissionSchema = new Schema<Submission>({
-    formTitle: {
+    formId: {
         type: String,
         required: true
     },

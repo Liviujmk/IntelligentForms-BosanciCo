@@ -16,6 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formController = void 0;
 const form_1 = __importDefault(require("../models/form"));
+const corsOptions_1 = require("../config/corsOptions");
 exports.formController = {
     //create form
     createForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,6 +29,7 @@ exports.formController = {
                 fields,
                 sections,
                 dataRetention,
+                fillFormUrl: `${corsOptions_1.allowedOrigins[2]}/fill/${title}-id_${Math.floor(Math.random() * 100000000)}`,
             }).save();
             res.status(200).json(newForm);
         }
