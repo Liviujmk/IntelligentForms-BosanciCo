@@ -14,17 +14,17 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<div>Home</div>} />
-          <Route path="/about" element={<div>About</div>} />
-          <Route path="/signup" element={<div>Signup</div>} />
-          <Route path="/login" element={<Login />} />
+          <Route path="about" element={<div>About</div>} />
+          <Route path="signup" element={<div>Signup</div>} />
+          <Route path="login" element={<Login />} />
           <Route element={<RequireAuth />}>
-            <Route path="/dashboard" element={<div>Dashboard</div>} >
+            <Route path="dashboard" element={<div>Dashboard</div>} >
               <Route index element={<div>Dashboard</div>} />
-              <Route path="/forms">
+              <Route path="forms">
                 <Route index element={<div>Forms</div>} />
-                <Route path="/:formId" element={<div>Form</div>} />
-                <Route path="/:formId/submissions" element={<div>Submissions</div>} />
-                <Route path="/:formId/submissions/:submissionId" element={<div>Submission</div>} />
+                <Route path=":formId" element={<div>Form</div>} />
+                <Route path=":formId/submissions" element={<div>Submissions</div>} />
+                <Route path=":formId/submissions/:submissionId" element={<div>Submission</div>} />
               </Route>
             </Route>
           </Route>
