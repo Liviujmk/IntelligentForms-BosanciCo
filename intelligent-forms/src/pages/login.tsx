@@ -37,6 +37,7 @@ export const Login = () => {
             .then((data) => {
                 if (data.access_token) {
                     localStorage.setItem('access_token', data.access_token);
+                    Cookies.set('access_token', data.access_token);
                     setAuth(data);
                     navigate(from, { replace: true });
                 }
