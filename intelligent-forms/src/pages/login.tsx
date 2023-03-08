@@ -2,6 +2,7 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import useAuth from '../features/auth/hooks/useAuth';
 import AuthContext from '../features/auth/AuthProvider';
@@ -15,10 +16,9 @@ export const Login = () => {
     const location = useLocation();
     const { auth, setAuth }: any = useContext(AuthContext);
     const from = location.state?.from?.pathname || '/dashboard';
-
     //check constantly if localStorage has access_token
     useEffect(() => {
-        if (localStorage.getItem('access_token')) {
+        if (Cookies.get("access_token")) {
             navigate(from, { replace: true });
         }
     }, []);

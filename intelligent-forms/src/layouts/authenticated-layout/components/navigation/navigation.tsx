@@ -6,6 +6,8 @@ import 'primereact/resources/primereact.css';                       // core css
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
 import './navigation.css'
 import logoform from '../../../../assets/logoform.png'
+import Cookies from 'js-cookie';
+import { logoutUser } from '../../../../features/auth/api';
 
 interface MenuItem {
     label: string;
@@ -33,10 +35,7 @@ export const Navigation = () => {
     ];
     const start = <img alt="logo" src={logoform} height="60" className="mr-2"></img>;
     const end =
-        <button onClick={() => {
-            localStorage.removeItem("access_token")
-            navigate('/login')
-        }}
+        <button onClick={logoutUser}
             className='logout-button'>
             Log out
         </button>
