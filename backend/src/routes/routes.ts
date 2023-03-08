@@ -16,6 +16,8 @@ router.post('/auth/login', authController.login);
 
 //create routes for forms base on form controller
 
+router.all('/forms/*', isAuthenticated)
+
 router.post('/forms', formController.createForm);
 router.get('/forms', formController.getForms);
 router.get('/forms/:id', formController.getFormById);

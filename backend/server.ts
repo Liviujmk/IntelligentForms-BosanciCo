@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 
 import { corsOptions } from './src/config/corsOptions';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -15,6 +16,7 @@ require('./src/config/db')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 
 //import router

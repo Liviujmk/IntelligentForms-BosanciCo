@@ -37,6 +37,10 @@ import { Schema, model } from 'mongoose';
 import { Form } from '../types/form.types';
 
 const formSchema = new Schema<Form>({
+    userId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true

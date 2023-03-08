@@ -2,6 +2,7 @@
 //
 
 interface Form {
+    userId: string;
     title: string;
     fields: Field[];
     sections: Section[];

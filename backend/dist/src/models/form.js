@@ -34,6 +34,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //form schema with dynamic fields and sections in typescript with mongoose using all interfaces and types
 const mongoose_1 = require("mongoose");
 const formSchema = new mongoose_1.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true

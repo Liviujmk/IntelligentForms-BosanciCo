@@ -15,16 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authController = exports.isAuthenticated = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const crypto_1 = __importDefault(require("crypto"));
-const isAuthenticated = (req, res, next) => {
-    if (req.cookies.access_token) {
-        next();
-    }
-    else {
-        //res.status(401).json({ message: "Unauthorized" });
-        next();
-    }
-};
-exports.isAuthenticated = isAuthenticated;
 const authController = {
     create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -71,7 +61,6 @@ const authController = {
             //set 1 day cookie
             res.cookie('access_token', user.access_token, {
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly: true,
                 secure: true,
                 sameSite: 'none'
             });
@@ -97,3 +86,20 @@ const authController = {
     }),
 };
 exports.authController = authController;
+const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.cookies.access_token) {
+        const { access_token } = req.cookies;
+        //find user by access token
+        const foundUser = yield user_1.default.findOne({ access_token }).exec();
+        if (foundUser) {
+            next();
+        }
+        else {
+            res.status(401).json({ message: "Unauthorized" });
+        }
+    }
+    else {
+        res.status(401).json({ message: "Unauthorized" });
+    }
+});
+exports.isAuthenticated = isAuthenticated;

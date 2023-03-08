@@ -5,16 +5,6 @@ import crypto from 'crypto';
 import bcryptConfig from '../config/bcrypt';
 import { any } from 'zod';
 
-const isAuthenticated = (req: Request, res: Response, next: any) => {
-    if (req.cookies.access_token) {
-        next();
-    } else {
-        //res.status(401).json({ message: "Unauthorized" });
-        next();
-    }
-
-}
-
 const authController = {
     create: async (req: Request, res: Response) => {
         try {
@@ -55,21 +45,18 @@ const authController = {
             if (!email || !password) return res.status(400).json({ message: "Missing Data" });
 
             const user = await User.findOne({ email }).exec();
-
             if (!user) return res.status(401).json({ message: "Email or Password is Wrong1!" })
             //const isPasswordValid = await bcrypt.compare(password, user.password);
 
             const hashPassword = (password:any) => {
                 return crypto.createHash('sha256').update(password).digest('hex')
             }
-
             const isPasswordValid = hashPassword(password) === user.password
             if (!isPasswordValid) return res.status(401).json({ message: "Email or Password is Wrong2!" })
 
             //set 1 day cookie
             res.cookie('access_token', user.access_token, {
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly: true,
                 secure: true,
                 sameSite: 'none'
             });
@@ -95,5 +82,21 @@ const authController = {
         }
     },
 };
+
+const isAuthenticated = async (req: Request, res: Response, next: any) => {
+    if (req.cookies.access_token) {
+        const { access_token } = req.cookies;
+        //find user by access token
+        const foundUser = await User.findOne({ access_token }).exec();
+        if (foundUser) {
+            next();
+        } else {
+            res.status(401).json({ message: "Unauthorized" });
+        }
+    } else {
+        res.status(401).json({ message: "Unauthorized" });
+    }
+
+}
 
 export { isAuthenticated, authController };
