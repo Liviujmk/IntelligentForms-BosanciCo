@@ -14,13 +14,14 @@ router.get('/', (req: Request, res: Response) => {
 router.post('/auth/signup', authController.create);
 router.post('/auth/login', authController.login);
 
+// exception route for forms without authentication;
+// used when filling forms
+router.get('/fill/forms/:id', formController.getFormById);
+
 //create routes for forms base on form controller
-
 router.all('/forms*', isAuthenticated)
-
 router.post('/forms', formController.createForm);
 router.get('/forms', formController.getForms);
-router.get('/forms/:id', formController.getFormById);
 router.put('/forms/:id', formController.updateForm);
 router.delete('/forms/:id', formController.deleteForm);
 
