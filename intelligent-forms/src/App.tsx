@@ -8,6 +8,7 @@ import RequireAuth from './features/auth/RequireAuth'
 import { Login } from './pages/login'
 import { Navigation } from './layouts/authenticated-layout/components/navigation/navigation'
 
+import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
 import { SubmissionsPage } from './pages/submissions.page'
@@ -18,7 +19,7 @@ function App() {
     <>
       <div className="App">
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="about" element={<div>About</div>} />
           <Route path="signup" element={<div>Signup</div>} />
           <Route path="login" element={<Login />} />

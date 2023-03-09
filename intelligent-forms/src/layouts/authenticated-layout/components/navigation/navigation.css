@@ -9,11 +9,13 @@
     justify-content: space-between;
 }
 
-.logout-button {
+/* .logout-button {
     background-color: #3c39e8da;
     color: #ffffff;
+    margin: 10px;
 }
+
 
 .logout-button:hover {
     background-color: #3c39e8;
-}
+} */

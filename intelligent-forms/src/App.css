@@ -46,3 +46,35 @@
 .read-the-docs {
   color: #888;
 }
+
+.p-menubar .p-menubar-custom,
+.p-menubar .p-menubar-end {
+  margin-left: inherit;
+}
+
+.p-menubar {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logout-button,
+.signup-button {
+  background-color: #3c39e8e9;
+  color: #ffffff;
+  margin: 10px;
+}
+
+.signup-button:hover,
+.logout-button:hover {
+  background-color: #3c39e8;
+}
+
+.login-button {
+  background-color: #ffffff;
+  color: #3c39e8;
+}
+
+.login-button:hover {
+  border: 1px solid #3c39e8;
+}
