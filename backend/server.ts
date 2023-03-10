@@ -6,6 +6,7 @@ import { Request, Response } from 'express';
 import { corsOptions } from './src/config/corsOptions';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(fileUpload({
+    createParentPath: true
+}));
 
 
 //import router
