@@ -9,7 +9,7 @@ const RequireAuth = () => {
     const location = useLocation();
 
     // check constantly if localStorage has access_token
-    
+
     return (
         (Cookies.get('access_token'))
             ? <Outlet />
