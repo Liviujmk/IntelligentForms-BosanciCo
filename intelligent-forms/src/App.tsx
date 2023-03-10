@@ -7,8 +7,8 @@ import { startServer } from './config/api'
 
 import RequireAuth from './features/auth/RequireAuth'
 import { Login } from './pages/login'
-import { Navigation } from './layouts/authenticated-layout/components/navigation/navigation'
-
+import { Signup } from './pages/signup'
+import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
 import { FillForm } from './features/forms/components/fillForm'
@@ -21,9 +21,9 @@ function App() {
     <>
       <div className="App">
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="about" element={<div>About</div>} />
-          <Route path="signup" element={<div>Signup</div>} />
+          <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route element={<RequireAuth />}>
             <Route path="dashboard" >

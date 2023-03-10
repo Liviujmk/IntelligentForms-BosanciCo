@@ -8,7 +8,10 @@ import useAuth from '../features/auth/hooks/useAuth';
 import AuthContext from '../features/auth/AuthProvider';
 import { loginUser } from '../features/auth/api';
 import { UserLite } from '../features/users/types/user.types';
-
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Password } from 'primereact/password';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/Authenticated.layout';
 
 export const Login = () => {
@@ -45,35 +48,25 @@ export const Login = () => {
     }
 
     return (
-
-        <AuthenticatedLayout>
-            <div className="login">
-                <div className="login__container">
-                    <div className="login__container__header">
-                        <h1>Login</h1>
-                    </div>
-                    <div className="login__container__body">
-                        <form onSubmit={handleSubmit}>
-                            <div className="login__container__body__input">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
-                            </div>
-                            <div className="login__container__body__input">
-                                <label htmlFor="password">Password</label>
-                                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-                            </div>
-                            <div className="login__container__body__input">
-                                <button type="submit">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="login__container__footer">
-                        <p>Don't have an account? <Link to="/register">Register</Link></p>
-                    </div>
-                </div>
+        <div className='login-form'>
+            <div className='login-header'>
+                <p className='title'>Welcome Back</p>
+                <p className='description'>Please enter your details</p>
             </div>
-        </AuthenticatedLayout>
-
-    )
-}
-
+            <div className="p-field">
+                <span className="p-float-label">
+                    <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <label htmlFor="email">Email</label>
+                </span>
+            </div>
+            <div className="p-field">
+                <span className="p-float-label">
+                    <Password className='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label htmlFor="password">Password</label>
+                </span>
+            </div>
+            <Button className='submit-button' label="Login" onClick={handleSubmit} />
+            <p>Don't have an account? <span><Link to={'/signup'}>Register!</Link></span></p>
+        </div>
+    );
+};
