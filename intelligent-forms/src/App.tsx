@@ -5,8 +5,8 @@ import './App.css'
 import { Route, Routes } from "react-router-dom"
 
 import RequireAuth from './features/auth/RequireAuth'
-import { Login } from './pages/login'
-import { Signup } from './pages/signup'
+import { Login } from './pages/login.page'
+import { Signup } from './pages/signup.page'
 import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
