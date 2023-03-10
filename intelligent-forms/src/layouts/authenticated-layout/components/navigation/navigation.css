@@ -10,10 +10,13 @@
 }
 
 .logout-button {
-    background-color: #3c39e8da;
-    color: #ffffff;
+    background-color: white;
+    color:#3C39E8;
+    font-size: large;
 }
 
 .logout-button:hover {
     background-color: #3c39e8;
+    color:white;
+    transition: 0.5s;
 }
