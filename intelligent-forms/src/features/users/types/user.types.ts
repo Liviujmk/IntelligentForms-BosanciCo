@@ -5,7 +5,7 @@ export interface User {
     name: string
     email: string
     password: string
-    adress: string
+    address: string
     userType: string
     fiscalCode?: string
     subscriptionPlan: string

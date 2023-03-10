@@ -1,9 +1,11 @@
-/* #root {
-  max-width: 1280px;
+#root {
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
-} */
+}
+
+a {
+  color: #3c39e8 !important;
+}
 
 .logo {
   height: 6em;
@@ -16,25 +18,6 @@
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
 .card {
   background: var(--surface-card);
@@ -60,14 +43,14 @@
 
 .logout-button,
 .signup-button {
-  background-color: #3c39e8e9;
+  background-color: #3c39e8;
   color: #ffffff;
   margin: 10px;
 }
 
 .signup-button:hover,
 .logout-button:hover {
-  background-color: #3c39e8;
+  background-color: #2d2acf;
 }
 
 .login-button {
@@ -77,4 +60,79 @@
 
 .login-button:hover {
   border: 1px solid #3c39e8;
+}
+
+.login-form {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin-inline: auto;
+  max-width: 500px;
+  margin-top: 150px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 2.5em;
+  margin-bottom: 0;
+}
+
+.description {
+  margin-top: 0;
+  margin-bottom: 3em;
+  color: rgba(130, 130, 130, 1);
+}
+
+.p-field,
+button.submit-button {
+  margin: 1rem 0;
+}
+
+.p-field span input {
+  width: 100%;
+  padding: 1rem .75rem;
+}
+
+.p-password {
+  position: relative;
+  display: flex !important;
+}
+
+label {
+  position: absolute;
+}
+
+button.submit-button {
+  padding: 1rem .75rem;
+  background-color: #3c39e8;
+}
+
+button.submit-button:hover {
+  background-color: #2d2acf !important;
+}
+
+
+.p-field-group {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.p-float-label {
+  width: 100%;
+}
+
+.p-float-label input {
+  width: 100%;
+}
+
+.p-dropdown .p-dropdown-label {
+  text-align: left;
+}
+
+#signup-form {
+  margin-top: 60px;
 }

@@ -8,7 +8,6 @@ import logoform from '../../../../assets/logoform.png'
 
 interface MenuItem {
     label: string;
-    icon: string;
     url: string;
 }
 export const BaseNavigation = () => {
@@ -16,7 +15,6 @@ export const BaseNavigation = () => {
     const items: MenuItem[] = [
         {
             label: 'Pricing',
-            icon: 'pi pi-money-bill',
             url: '/dashboard/pricing'
         }
     ];

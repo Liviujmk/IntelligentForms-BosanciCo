@@ -2,6 +2,7 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import useAuth from '../features/auth/hooks/useAuth';
 import AuthContext from '../features/auth/AuthProvider';
@@ -10,7 +11,7 @@ import { UserLite } from '../features/users/types/user.types';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-
+import { Password } from 'primereact/password';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/Authenticated.layout';
 
 export const Login = () => {
@@ -18,10 +19,9 @@ export const Login = () => {
     const location = useLocation();
     const { auth, setAuth }: any = useContext(AuthContext);
     const from = location.state?.from?.pathname || '/dashboard';
-
     //check constantly if localStorage has access_token
     useEffect(() => {
-        if (localStorage.getItem('access_token')) {
+        if (Cookies.get("access_token")) {
             navigate(from, { replace: true });
         }
     }, []);
@@ -40,6 +40,7 @@ export const Login = () => {
             .then((data) => {
                 if (data.access_token) {
                     localStorage.setItem('access_token', data.access_token);
+                    Cookies.set('access_token', data.access_token);
                     setAuth(data);
                     navigate(from, { replace: true });
                 }
@@ -47,44 +48,25 @@ export const Login = () => {
     }
 
     return (
-        <div className="login">
-            <div className="login__container">
-                <div className="login__container__header">
-                    <h1>Login</h1>
-                </div>
-                <div className="login__container__body">
-                    <form onSubmit={handleSubmit}>
-                        <div className="login__container__body__input">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className="login__container__body__input">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <div className="login__container__body__input">
-                            <button type="submit">Login</button>
-                        </div>
-                    </form>
-                </div>
-                <div className="login__container__footer">
-                    <p>Don't have an account? <Link to="/register">Register</Link></p>
-                </div>
+        <div className='login-form'>
+            <div className='login-header'>
+                <p className='title'>Welcome Back</p>
+                <p className='description'>Please enter your details</p>
             </div>
+            <div className="p-field">
+                <span className="p-float-label">
+                    <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <label htmlFor="email">Email</label>
+                </span>
+            </div>
+            <div className="p-field">
+                <span className="p-float-label">
+                    <Password className='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label htmlFor="password">Password</label>
+                </span>
+            </div>
+            <Button className='submit-button' label="Login" onClick={handleSubmit} />
+            <p>Don't have an account? <span><Link to={'/signup'}>Register!</Link></span></p>
         </div>
-    )
-
-    // return (
-    //     <Card className='login-form'>
-    //         <div className="p-field">
-    //             <label htmlFor="username">Email</label>
-    //             <InputText id="username" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-    //         </div>
-    //         <div className="p-field">
-    //             <label htmlFor="password">Password</label>
-    //             <InputText id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-    //         </div>
-    //         <Button label="Login" onClick={handleSubmit} />
-    //     </Card>
-    // );
+    );
 };
