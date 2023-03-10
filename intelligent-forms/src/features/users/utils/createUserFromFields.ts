@@ -6,7 +6,7 @@ export const createUserFromFields = (userFields: User, userID?: string): User =>
         name: userFields.name,
         email: userFields.email,
         password: userFields.password,
-        adress: userFields.adress,
+        address: userFields.address,
         userType: userFields.userType,
         fiscalCode: userFields.fiscalCode,
         subscriptionPlan: userFields.subscriptionPlan,
