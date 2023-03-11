@@ -24,13 +24,13 @@ export const BaseNavigation = () => {
             <button onClick={() => {
                 navigate('/login');
             }}
-                className='login-button'>
+                className="first-frame-button-login">
                 Log In
             </button>
             <button onClick={() => {
                 navigate('/signup');
             }}
-                className='signup-button'>
+                className="first-frame-button-signup">
                 Register
             </button>
         </>

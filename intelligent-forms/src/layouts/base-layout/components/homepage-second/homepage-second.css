@@ -1,0 +1,68 @@
+.second-frame{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 50px 0;
+}
+
+.second-frame-text{
+    display: flex;
+    flex-direction: column;
+    padding-left: 60px;
+}
+
+.second-frame-icon{
+    display: flex;
+}
+
+.second-frame-title{
+    font-size: 55px;
+    font-weight: 700;
+    padding: 0 0;
+    margin: 0 0;
+    text-align: left;
+}
+
+.second-frame-subtitle{
+    max-width: 700px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: 300;
+    padding: 0 0;
+    margin: 0 0;
+}
+
+@media (max-width: 1050px) {
+    .iconscan{
+        height: 200px;
+    }
+    .second-frame-title{
+        font-size: 35px;
+    }
+    .second-frame-subtitle{
+        max-width: 500px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .iconscan{
+        height: 130px;
+    }
+    .second-frame{
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    .second-frame-text{
+        padding-left: 20px;
+    }    
+    .second-frame-title{
+        font-size: 20px;
+        text-align: center;
+    }
+    .second-frame-subtitle{
+        max-width: 300px;
+        font-size: 10px;
+        text-align: center;
+    }
+}
