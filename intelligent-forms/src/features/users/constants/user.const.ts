@@ -18,7 +18,7 @@ export const USER_FORM_SCHEMA = zod.object({
             required_error: 'required field',
         })
         .min(1),
-    adress: zod
+    address: zod
         .string({
             required_error: 'required field',
         })
@@ -45,7 +45,7 @@ export const USER_FIELDS_DEFAULT_VALUES = {
     name: '',
     email: '',
     password: '',
-    adress: '',
+    address: '',
     userType: '',
     fiscalCode: '',
     subscriptionPlan: 'free',
