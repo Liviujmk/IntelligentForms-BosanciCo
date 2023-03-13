@@ -30,13 +30,14 @@ export const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [address, setAddress] = useState('');
-    const [userType, setUserType] = useState('');
+    const [userType, setUserType] = useState({ name: 'Individual' });
     const [fiscalCode, setFiscalCode] = useState('');
     const [subscriptionPlan, setsubscriptionPlan] = useState('');
-    const userTypes = [
+
+    const userTypes: any = [
         { name: 'Individual' },
         { name: 'Company' },
-        { name: 'Public Institution' }
+        { name: 'Institution' }
     ];
 
     const handleSubmit = (e: any) => {
@@ -46,24 +47,15 @@ export const Signup = () => {
             email: email,
             password: password,
             address: address,
-            userType: userType,
+            userType: userType.name,
             fiscalCode: fiscalCode,
-            subscriptionPlan: subscriptionPlan,
+            subscriptionPlan: subscriptionPlan
         }
 
         createUser(data)
-            .then((data) => {
-                if (data.access_token) {
-                    localStorage.setItem('access_token', data.access_token);
-                    Cookies.set('access_token', data.access_token);
-                    setAuth(data);
-                    navigate(from, { replace: true });
-                }
-            })
+        navigate('/login');
     }
-    useEffect(() => {
-        setUserType(userType);
-    }, [userType]);
+    console.log(userType)
 
 
     return (
@@ -79,7 +71,7 @@ export const Signup = () => {
                 </span>
                 <span className="p-float-label">
                     {
-                        userType === 'Individual' ? (<InputText disabled placeholder="Disabled" />) : (<InputText id="fiscalCode" value={fiscalCode} onChange={(e) => setFiscalCode(e.target.value)} />)
+                        userType.name === 'Individual' ? (<InputText disabled placeholder="Disabled" />) : (<InputText id="fiscalCode" value={fiscalCode} onChange={(e) => setFiscalCode(e.target.value)} />)
                     }
                     <label htmlFor="email">Fiscal Code</label>
                 </span>

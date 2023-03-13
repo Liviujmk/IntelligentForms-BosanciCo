@@ -30,7 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Poppins;
+    font-family: 'Poppins';
     font-size: 50px;
     font-weight: 600;
     color: #212121;
@@ -136,17 +136,43 @@
 @media (max-width: 1050px) {
     .panel{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 20px;
     }
     .pricing-card-left,
     .pricing-card-mid,
     .pricing-card-right {
-    width: 100%;
+    width: 33.3%;
     }
+    .pricing-card-left .p-card-title,
+    .pricing-card-mid .p-card-title,
+    .pricing-card-right .p-card-title {
+    font-size: xx-large;
+    font-weight: 600;
+    }
+    .pricing-card-left .p-card-subtitle,
+    .pricing-card-mid .p-card-subtitle,
+    .pricing-card-right .p-card-subtitle {
+    font-weight: 500;
+    font-size: large;
+    } 
+    .pricing-card-left li,
+    .pricing-card-mid li, 
+    .pricing-card-right li {
+    font-weight: 400;
+    font-size: medium;
+}
 }
  
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+    .panel{
+        flex-direction: column;
+    }
+    .pricing-card-left,
+    .pricing-card-mid,
+    .pricing-card-right {
+    width: 250px
+    }
     .pricing-title {
         font-size: 30px;
     }
@@ -167,5 +193,11 @@
     .pricing-card-right li {
     font-weight: 400;
     font-size: large;
+    }
 }
+
+@media (max-width: 600px){
+    .panel{
+        margin-top: 30px;
+    }
 }

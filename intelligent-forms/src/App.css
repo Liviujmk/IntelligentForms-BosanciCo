@@ -136,3 +136,17 @@ button.submit-button:hover {
 #signup-form {
   margin-top: 60px;
 }
+
+#pricing-title {
+  font-size: 60px;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px){
+  #pricing-title{
+    font-size: xx-large;
+  }
+
+
+}

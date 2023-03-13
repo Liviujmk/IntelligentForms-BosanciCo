@@ -3,7 +3,7 @@ import { UserLite, User } from '../users/types/user.types';
 import Cookies from 'js-cookie';
 
 export const createUser = async (user: User) => {
-  const response = await fetch(`${API_PATH_PROD}auth/login/`, {
+  const response = await fetch(`${API_PATH_PROD}auth/signup/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
