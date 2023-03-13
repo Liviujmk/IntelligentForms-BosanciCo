@@ -6,6 +6,7 @@ import {authController, isAuthenticated} from '../controllers/auth.controller';
 import {formController} from '../controllers/form.controller';
 import {formRecognizerController} from '../controllers/formRecognizer.controller';
 
+
 const router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
