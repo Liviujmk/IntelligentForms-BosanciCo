@@ -100,7 +100,7 @@ button.submit-button {
   display: flex !important;
 }
 
-label {
+label:not('notAbs') {
   position: absolute;
 }
 

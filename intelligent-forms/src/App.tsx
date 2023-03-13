@@ -25,6 +25,7 @@ function App() {
           <Route path="about" element={<div>About</div>} />
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
+          <Route path="fill/:formId" element={<FillForm />} />
           <Route element={<RequireAuth />}>
             <Route path="dashboard" >
               <Route index element={<DashboardPage />} />
@@ -32,7 +33,6 @@ function App() {
                 <Route index element={<FormsPage />} />
                 <Route path="create" element={<div>Create new form</div>} />
                 <Route path=":formId" element={<div>Form</div>} />
-                <Route path=":formId/fill" element={<FillForm />} />
                 <Route path=":formId/submissions" element={<SubmissionsPage />} />
                 <Route path=":formId/submissions/:submissionId" element={<div>Submission</div>} />
               </Route>

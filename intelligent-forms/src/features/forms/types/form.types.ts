@@ -19,6 +19,7 @@ interface Field {
     placeholder: string;
     keyword: string;
     mandatory: boolean;
+    sectionNr: any;
 }
 
 // create interface for the section model
@@ -26,6 +27,7 @@ interface Field {
 interface Section {
     rtfText: string;
     documentType: string;
+    sectionNr: any;
 }
 
 interface MultipleChoiceField extends Field {
