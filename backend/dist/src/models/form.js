@@ -11,14 +11,18 @@ const formSchema = new mongoose_1.Schema({
         required: true
     },
     fields: [{
+            sectionNr: Number,
             label: String,
             fieldType: String,
             placeholder: String,
             keyword: String,
             mandatory: Boolean,
-            options: [String]
+            options: [{
+                    name: String
+                }]
         }],
     sections: [{
+            sectionNr: Number,
             rtfText: String,
             documentType: {
                 type: String,

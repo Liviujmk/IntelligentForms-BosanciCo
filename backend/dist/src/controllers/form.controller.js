@@ -21,15 +21,19 @@ exports.formController = {
     //create form
     createForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { title, fields, sections, dataRetention, } = req.body;
+            const { userId, title, fields, sections, dataRetention, } = req.body;
             if (!title || !fields || !sections || !dataRetention)
                 return res.status(400).json({ message: "Missing data" });
+            //remove spaces and slashes and ? and # and dots from title and make it lowercase
+            const titleWithoutSpaces = title.replace(/ /g, '').replace(/[/]/g, '').replace(/[?]/g, '').replace(/[#]/g, '').replace(/[.]/g, '').toLowerCase();
+            console.log('titleWithoutSpaces', titleWithoutSpaces);
             const newForm = yield new form_1.default({
-                title,
+                userId,
+                title: titleWithoutSpaces,
                 fields,
                 sections,
                 dataRetention,
-                fillFormUrl: `${corsOptions_1.allowedOrigins[2]}/fill/${title}-id_${Math.floor(Math.random() * 100000000)}`,
+                fillFormUrl: `${corsOptions_1.allowedOrigins[2]}/fill/${title}`,
             }).save();
             res.status(200).json(newForm);
         }

@@ -86,11 +86,10 @@ export const formRecognizerController = {
     const file: any = req.files.file
     const blobs = await azureFunctions.getBlobsInContainer();
     console.log('file >>>', file)
-    //azureFunctions.uploadFile(file);
-    //return res.status(200).json({"cl":blobs});
 
     const fields = await azureFunctions.recognizeForm(file.data, modelId);
     try {
+      console.log('fields >>>', fields)
       res.status(200).json(fields);
     } catch (error) {
       res.status(500).json({error: "Internal server error 500-2" });

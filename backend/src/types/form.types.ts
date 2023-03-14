@@ -4,7 +4,7 @@
 interface Form {
     userId: string;
     title: string;
-    fields: Field[];
+    fields: Field[]|ChoiceField[];
     sections: Section[];
     dataRetention: number;
     createdAt?: Date;
@@ -19,6 +19,10 @@ interface Field {
     placeholder: string;
     keyword: string;
     mandatory: boolean;
+    sectionNr: number;
+}
+interface ChoiceField extends Field {
+    options?: Options[];
 }
 
 // create interface for the section model
@@ -26,14 +30,11 @@ interface Field {
 interface Section {
     rtfText: string;
     documentType: string;
+    sectionNr: number;
 }
 
-interface MultipleChoiceField extends Field {
-    options: string[];
+type Options = {
+    name: string;
 }
 
-interface SingleChoiceField extends Field {
-    options: string[];
-}
-
-export { Form, Field, Section, MultipleChoiceField, SingleChoiceField };
+export { Form, Field, Section, ChoiceField, Options};

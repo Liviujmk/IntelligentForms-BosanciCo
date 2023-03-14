@@ -13,6 +13,7 @@ export const formController = {
     createForm: async (req: Request, res: Response) => {
         try {
             const {
+                userId,
                 title,
                 fields,
                 sections,
@@ -21,14 +22,18 @@ export const formController = {
             
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
 
+            //remove spaces and slashes and ? and # and dots from title and make it lowercase
+            const titleWithoutSpaces = title.replace(/ /g, '').replace(/[/]/g, '').replace(/[?]/g, '').replace(/[#]/g, '').replace(/[.]/g, '').toLowerCase();
+
+            console.log('titleWithoutSpaces', titleWithoutSpaces) 
             const newForm = await new FormModel({
-                title,
+                userId,
+                title: titleWithoutSpaces,
                 fields,
                 sections,
                 dataRetention,
-                fillFormUrl: `${allowedOrigins[2]}/fill/${title}-id_${Math.floor(Math.random() * 100000000)}`,
+                fillFormUrl: `${allowedOrigins[2]}/fill/${title}`,
             }).save();
-
             res.status(200).json(newForm);
         } catch (error: any) {
             return res.status(500).json({ msg: error.message });

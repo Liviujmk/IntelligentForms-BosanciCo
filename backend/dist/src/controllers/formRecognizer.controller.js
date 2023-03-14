@@ -98,10 +98,9 @@ exports.formRecognizerController = {
         const file = req.files.file;
         const blobs = yield azureFunctions.getBlobsInContainer();
         console.log('file >>>', file);
-        //azureFunctions.uploadFile(file);
-        //return res.status(200).json({"cl":blobs});
         const fields = yield azureFunctions.recognizeForm(file.data, modelId);
         try {
+            console.log('fields >>>', fields);
             res.status(200).json(fields);
         }
         catch (error) {

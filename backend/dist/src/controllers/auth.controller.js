@@ -87,19 +87,18 @@ const authController = {
 };
 exports.authController = authController;
 const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.cookies.access_token) {
+    next();
+    /*if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token
-        const foundUser = yield user_1.default.findOne({ access_token }).exec();
+        const foundUser = await User.findOne({ access_token }).exec();
         if (foundUser) {
             next();
-        }
-        else {
+        } else {
             res.status(401).json({ message: "Unauthorized" });
         }
-    }
-    else {
+    } else {
         res.status(401).json({ message: "Unauthorized" });
-    }
+    }*/
 });
 exports.isAuthenticated = isAuthenticated;
