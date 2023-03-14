@@ -4,7 +4,7 @@ interface Form {
     _id?: string;
     userId?: string;
     title: string;
-    fields: Field[];
+    fields: Field[] | ChoiceField[];
     sections: Section[];
     dataRetention: number;
     createdAt?: Date;
@@ -21,6 +21,9 @@ interface Field {
     mandatory: boolean;
     sectionNr: any;
 }
+interface ChoiceField extends Field {
+    options?: string[];
+}
 
 // create interface for the section model
 
@@ -30,12 +33,5 @@ interface Section {
     sectionNr: any;
 }
 
-interface MultipleChoiceField extends Field {
-    options: string[];
-}
 
-interface SingleChoiceField extends Field {
-    options: string[];
-}
-
-export type { Form, Field, Section, MultipleChoiceField, SingleChoiceField };
+export type { Form, Field, Section, ChoiceField };

@@ -1,5 +1,5 @@
 // create interface for the submission model
-import { Field, Section, MultipleChoiceField, SingleChoiceField } from "../../forms/types/form.types";
+import { Field, Section, ChoiceField} from "../../forms/types/form.types";
 interface Submission {
     formId: string;
     data: SubmissionData;
@@ -7,10 +7,13 @@ interface Submission {
 }
 
 interface SubmissionData {
-    fields: Field[];
-    sections: Section[];
-    multipleChoiceFields?: MultipleChoiceField[];
-    singleChoiceFields?: SingleChoiceField[];
+    fields: SubmissionField[],
+    rtfText: string,
 }
 
-export type { Submission, SubmissionData }
+interface SubmissionField {
+    label: string;
+    value: string;
+}
+
+export type { Submission, SubmissionData, SubmissionField }

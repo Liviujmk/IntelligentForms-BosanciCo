@@ -11,7 +11,7 @@ import { Signup } from './pages/signup.page'
 import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
-import { FillForm } from './features/forms/components/fillForm'
+import { FillForm } from './features/fill-form/components/fillForm'
 import { SubmissionsPage } from './pages/submissions.page'
 import { PricingPage } from './pages/pricing.page'
 
