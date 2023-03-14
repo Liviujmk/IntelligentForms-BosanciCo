@@ -11,9 +11,10 @@ import { Signup } from './pages/signup.page'
 import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
-import { FillForm } from './features/forms/components/fillForm'
+import { FillForm } from './features/forms/components/fill-form'
 import { SubmissionsPage } from './pages/submissions.page'
 import { PricingPage } from './pages/pricing.page'
+import { CreateForm } from './features/forms/components/form'
 
 function App() {
   startServer()
@@ -30,7 +31,7 @@ function App() {
               <Route index element={<DashboardPage />} />
               <Route path="forms">
                 <Route index element={<FormsPage />} />
-                <Route path="create" element={<div>Create new form</div>} />
+                <Route path="create" element={<CreateForm />} />
                 <Route path=":formId" element={<div>Form</div>} />
                 <Route path=":formId/fill" element={<FillForm />} />
                 <Route path=":formId/submissions" element={<SubmissionsPage />} />

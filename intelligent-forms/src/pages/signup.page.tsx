@@ -71,7 +71,7 @@ export const Signup = () => {
                 </span>
                 <span className="p-float-label">
                     {
-                        userType.name === 'Individual' ? (<InputText disabled placeholder="Disabled" />) : (<InputText id="fiscalCode" value={fiscalCode} onChange={(e) => setFiscalCode(e.target.value)} />)
+                        userType.name === 'Individual' ? (<InputText disabled placeholder="Disabled" />) : (<InputText id="fiscalCode" value={fiscalCode} onChange={(e) => setFiscalCode(e.target.value)} required />)
                     }
                     <label htmlFor="email">Fiscal Code</label>
                 </span>

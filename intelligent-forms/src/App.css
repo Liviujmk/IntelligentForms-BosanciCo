@@ -136,3 +136,16 @@ button.submit-button:hover {
 #signup-form {
   margin-top: 60px;
 }
+
+.step2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.step2 input,
+.step2 button {
+  margin: 1rem;
+}

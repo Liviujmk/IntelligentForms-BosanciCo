@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 import { getForm } from "../api/api.forms";
@@ -57,9 +57,9 @@ export const FillForm = () => {
                                 <br />
                                 <br />
                             </div>
-                            
+
                         )
-                    })                   
+                    })
                 }
             </div>
         </div>
