@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { Form } from '../types/form.types';
+import { allowedOrigins } from '../config/corsOptions';
 
 const formSchema = new Schema<Form>({
     userId: {
@@ -47,6 +48,7 @@ const formSchema = new Schema<Form>({
 formSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
+        returnedObject.fillFormUrl = `${allowedOrigins[2]}/fill/${returnedObject.id}`;
         delete returnedObject._id;
         delete returnedObject.__v;
     }

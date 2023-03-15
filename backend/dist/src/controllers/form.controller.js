@@ -16,7 +16,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formController = void 0;
 const form_1 = __importDefault(require("../models/form"));
-const corsOptions_1 = require("../config/corsOptions");
 exports.formController = {
     //create form
     createForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,16 +23,15 @@ exports.formController = {
             const { userId, title, fields, sections, dataRetention, } = req.body;
             if (!title || !fields || !sections || !dataRetention)
                 return res.status(400).json({ message: "Missing data" });
-            //remove spaces and slashes and ? and # and dots from title and make it lowercase
-            const titleWithoutSpaces = title.replace(/ /g, '').replace(/[/]/g, '').replace(/[?]/g, '').replace(/[#]/g, '').replace(/[.]/g, '').toLowerCase();
+            //remove any caracter that is not a letter or a number
+            const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
             console.log('titleWithoutSpaces', titleWithoutSpaces);
             const newForm = yield new form_1.default({
                 userId,
                 title: titleWithoutSpaces,
                 fields,
                 sections,
-                dataRetention,
-                fillFormUrl: `${corsOptions_1.allowedOrigins[2]}/fill/${title}`,
+                dataRetention
             }).save();
             res.status(200).json(newForm);
         }

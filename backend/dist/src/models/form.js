@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
+const corsOptions_1 = require("../config/corsOptions");
 const formSchema = new mongoose_1.Schema({
     userId: {
         type: String,
@@ -46,6 +47,7 @@ const formSchema = new mongoose_1.Schema({
 formSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
+        returnedObject.fillFormUrl = `${corsOptions_1.allowedOrigins[2]}/fill/${returnedObject.id}`;
         delete returnedObject._id;
         delete returnedObject.__v;
     }

@@ -22,17 +22,15 @@ export const formController = {
             
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
 
-            //remove spaces and slashes and ? and # and dots from title and make it lowercase
-            const titleWithoutSpaces = title.replace(/ /g, '').replace(/[/]/g, '').replace(/[?]/g, '').replace(/[#]/g, '').replace(/[.]/g, '').toLowerCase();
-
+            //remove any caracter that is not a letter or a number
+            const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
             console.log('titleWithoutSpaces', titleWithoutSpaces) 
             const newForm = await new FormModel({
                 userId,
                 title: titleWithoutSpaces,
                 fields,
                 sections,
-                dataRetention,
-                fillFormUrl: `${allowedOrigins[2]}/fill/${title}`,
+                dataRetention
             }).save();
             res.status(200).json(newForm);
         } catch (error: any) {
