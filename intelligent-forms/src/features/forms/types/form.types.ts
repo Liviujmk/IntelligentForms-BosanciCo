@@ -1,7 +1,7 @@
 // create interface for the form model
 
 interface Form {
-    _id?: string;
+    id?: string;
     userId?: string;
     title: string;
     fields: Field[] | ChoiceField[];
@@ -17,12 +17,12 @@ interface Field {
     label: string;
     fieldType: string;
     placeholder: string;
-    keyword: string;
+    keyword?: string;
     mandatory: boolean;
-    sectionNr: any;
+    sectionNr: Number
 }
 interface ChoiceField extends Field {
-    options?: string[];
+    options: { name: string }[];
 }
 
 // create interface for the section model
@@ -30,7 +30,7 @@ interface ChoiceField extends Field {
 interface Section {
     rtfText: string;
     documentType: string;
-    sectionNr: any;
+    sectionNr: number;
 }
 
 
