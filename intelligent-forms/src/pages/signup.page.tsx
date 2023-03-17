@@ -1,6 +1,6 @@
 //create login component is tsx file
 
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -73,19 +73,19 @@ export const Signup = () => {
                     {
                         userType.name === 'Individual' ? (<InputText disabled placeholder="Disabled" />) : (<InputText id="fiscalCode" value={fiscalCode} onChange={(e) => setFiscalCode(e.target.value)} />)
                     }
-                    <label htmlFor="email">Fiscal Code</label>
+                    <label htmlFor="fiscal-code">Fiscal Code</label>
                 </span>
             </div>
             <div className="p-field">
                 <span className="p-float-label">
                     <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-                    <label htmlFor="email">Name</label>
+                    <label htmlFor="name">Name</label>
                 </span>
             </div>
             <div className="p-field">
                 <span className="p-float-label">
                     <InputText id="address" value={address} onChange={(e) => setAddress(e.target.value)} required />
-                    <label htmlFor="email">Address</label>
+                    <label htmlFor="address">Address</label>
                 </span>
             </div>
             <div className="p-field">
