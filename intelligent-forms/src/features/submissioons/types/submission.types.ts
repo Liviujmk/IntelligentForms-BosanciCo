@@ -8,7 +8,7 @@ interface Submission {
 
 interface SubmissionData {
     fields: SubmissionField[],
-    rtfText: string,
+    rtfText: string
 }
 
 interface SubmissionField {
