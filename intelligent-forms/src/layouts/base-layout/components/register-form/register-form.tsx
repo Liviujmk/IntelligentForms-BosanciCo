@@ -75,7 +75,6 @@ export const Register = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="p-field">
           <select
-            value="User Type"
             id="userType"
             {...register("userType")}
             className="custom-select"
