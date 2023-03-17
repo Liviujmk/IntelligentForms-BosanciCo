@@ -63,17 +63,18 @@ a {
 }
 
 .login-form {
-  padding: 1rem;
+  background-color: #f5f5f5;
+  padding: 2rem;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: stretch;
+  flex-direction: column;
   margin-inline: auto;
   max-width: 500px;
-  margin-top: 150px;
+  max-height: 800px;
 }
 
 .title {
+  margin-top: 100px;
   font-weight: 600;
   font-size: 2.5em;
   margin-bottom: 0;
@@ -113,37 +114,14 @@ button.submit-button:hover {
   background-color: #2d2acf !important;
 }
 
-
-.p-field-group {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.p-float-label {
-  width: 100%;
-}
-
-.p-float-label input {
-  width: 100%;
-}
-
-.p-dropdown .p-dropdown-label {
-  text-align: left;
-}
-
-#signup-form {
-  margin-top: 60px;
-}
-
 #pricing-title {
   font-size: 60px;
   font-weight: 800;
   margin-bottom: 0;
 }
 
-.login-error{
+.login-error,
+.form-error {
   color: red;
 }
 

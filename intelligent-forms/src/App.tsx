@@ -1,22 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
 
-import { Route, Routes } from "react-router-dom"
-import { startServer } from './config/api'
+import { Route, Routes } from "react-router-dom";
+import { startServer } from "./config/api";
 
-import RequireAuth from './features/auth/RequireAuth'
-import { Login } from './pages/login.page'
-import { Signup } from './pages/signup.page'
-import { HomePage } from './pages/home.page'
-import { DashboardPage } from './pages/dashboard.page'
-import { FormsPage } from './pages/forms.page'
-import { FillForm } from './features/fill-form/components/fillForm'
-import { SubmissionsPage } from './pages/submissions.page'
-import { PricingPage } from './pages/pricing.page'
+import RequireAuth from "./features/auth/RequireAuth";
+import { Login } from "./pages/login.page";
+import { Signup } from "./pages/signup.page";
+import { HomePage } from "./pages/home.page";
+import { DashboardPage } from "./pages/dashboard.page";
+import { FormsPage } from "./pages/forms.page";
+import { FillForm } from "./features/fill-form/components/fillForm";
+import { SubmissionsPage } from "./pages/submissions.page";
+import { PricingPage } from "./pages/pricing.page";
 
 function App() {
-  startServer()
+  startServer();
   return (
     <>
       <div className="App">
@@ -27,14 +27,20 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="fill/:formId" element={<FillForm />} />
           <Route element={<RequireAuth />}>
-            <Route path="dashboard" >
+            <Route path="dashboard">
               <Route index element={<DashboardPage />} />
               <Route path="forms">
                 <Route index element={<FormsPage />} />
                 <Route path="create" element={<div>Create new form</div>} />
                 <Route path=":formId" element={<div>Form</div>} />
-                <Route path=":formId/submissions" element={<SubmissionsPage />} />
-                <Route path=":formId/submissions/:submissionId" element={<div>Submission</div>} />
+                <Route
+                  path=":formId/submissions"
+                  element={<SubmissionsPage />}
+                />
+                <Route
+                  path=":formId/submissions/:submissionId"
+                  element={<div>Submission</div>}
+                />
               </Route>
               <Route path="pricing" element={<PricingPage />} />
             </Route>
@@ -43,7 +49,7 @@ function App() {
         </Routes>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
