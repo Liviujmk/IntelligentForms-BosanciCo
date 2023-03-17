@@ -1,43 +1,8 @@
 import { Request, Response } from 'express';
 import User from '../models/user';
 import crypto from 'crypto';
-//import * as bcrypt from 'bcrypt'
-import bcryptConfig from '../config/bcrypt';
-import { any } from 'zod';
 
 const authController = {
-    create: async (req: Request, res: Response) => {
-        try {
-            const { name, email, password: passwordBody, address, userType, subscriptionPlan, fiscalCode } = req.body;
-
-            if (!name || !email || !passwordBody) return res.status(400).json({ message: "Missing data" });
-
-            const isUserExists = await User.findOne({ email }).exec();
-
-            if (isUserExists) return res.status(401).json({ message: "User Already Exists" })
-
-            //const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
-            const password = crypto.createHash('sha256').update(passwordBody).digest('hex');
-            const access_token = crypto.randomBytes(30).toString("hex");
-
-            const newUser = await new User({
-                name,
-                email,
-                password,
-                address,
-                userType,
-                subscriptionPlan,
-                fiscalCode,
-                access_token
-            }).save();
-
-            return res.status(201).json(newUser);
-
-        } catch (err) {
-            return res.status(500).json({ message: "Internal Server Error" });
-        }
-    },
-
     login: async (req: Request, res: Response) => {
         try {
             const { email, password } = req.body;

@@ -3,7 +3,7 @@ import User from '../models/user';
 import crypto from 'crypto';
 
 export const userController={
-   // make CRUD operations for user
+    // make CRUD operations for user
 
     // create user
     create: async (req: Request, res: Response) => {
