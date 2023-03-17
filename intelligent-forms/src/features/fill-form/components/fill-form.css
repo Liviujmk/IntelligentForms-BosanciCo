@@ -100,7 +100,7 @@ div .form-btn span.p-button:hover{
     width: 100%;
 }
 
-span.p-calendar input.p-inputtext {
+span.p-calendar input.p-inputtext, span.p-float-label input.p-inputtext {
     width: 100%;
 }
 
