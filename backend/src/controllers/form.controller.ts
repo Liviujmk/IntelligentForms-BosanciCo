@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import FormModel from "../models/form";
 import { Form } from "../types/form.types";
 import { allowedOrigins } from "../config/corsOptions";
+import SubmissionModel from "../models/submission";
 
 
 
@@ -65,7 +66,7 @@ export const formController = {
                 dataRetention,
             } = req.body;
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
-
+            
             await FormModel.findByIdAndUpdate({ _id: req.params.id }, {
                 title,
                 fields,
@@ -81,8 +82,10 @@ export const formController = {
     //delete form
     deleteForm: async (req: Request, res: Response) => {
         try {
+            //delete all submissions related to this form
+            await SubmissionModel.deleteMany({ formId: req.params.id });
             await FormModel.findByIdAndDelete(req.params.id);
-            res.status(200).json({ msg: "Deleted a form" });
+            res.status(200).json({ msg: "Deleted form with its submissions" });
         } catch (error: any) {
             return res.status(500).json({ msg: error.message });
         }

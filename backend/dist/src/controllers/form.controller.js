@@ -16,6 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formController = void 0;
 const form_1 = __importDefault(require("../models/form"));
+const submission_1 = __importDefault(require("../models/submission"));
 exports.formController = {
     //create form
     createForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -80,8 +81,10 @@ exports.formController = {
     //delete form
     deleteForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            //delete all submissions related to this form
+            yield submission_1.default.deleteMany({ formId: req.params.id });
             yield form_1.default.findByIdAndDelete(req.params.id);
-            res.status(200).json({ msg: "Deleted a form" });
+            res.status(200).json({ msg: "Deleted form with its submissions" });
         }
         catch (error) {
             return res.status(500).json({ msg: error.message });

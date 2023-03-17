@@ -28,13 +28,14 @@ router.delete('/users/:id', userController.delete);
 
 // create routes for submissions base on submission controller
 router.all('/submissions*', isAuthenticated)
-router.post('/submissions', submissionController.create);
+router.post('/client/submissions', submissionController.create);
 router.get('/submissions', submissionController.getAll);
 router.get('/submissions/:id', submissionController.getById);
-router.put('/submissions/:id', submissionController.updateById);
+//router.put('/submissions/:id', submissionController.updateById);
 router.delete('/submissions/:id', submissionController.deleteById);
 
-router.post('/analyze', formRecognizerController.analyzeIdentityCard);
+router.post('/analyze/identity', formRecognizerController.analyzeIdentityCard);
+router.post('/analyze/passport', formRecognizerController.analyzePassport);
 // exception route for forms without authentication;
 // used when filling forms
 
