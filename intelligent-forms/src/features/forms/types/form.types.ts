@@ -17,7 +17,7 @@ interface Field {
     label: string;
     fieldType: string;
     placeholder: string;
-    keyword?: string;
+    keyword: string
     mandatory: boolean;
     sectionNr: Number
 }

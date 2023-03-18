@@ -104,6 +104,18 @@ span.p-calendar input.p-inputtext, span.p-float-label input.p-inputtext {
     width: 100%;
 }
 
+.p-float-label span.p-calendar {
+    width: 100%;
+    display: inline-flex;
+}
+
+.p-dropdown-label.p-inputtext {
+    text-align: left;
+}
+.p-multiselect-label {
+    text-align: left;
+}
+
 @media screen and (max-width: 480px) {
     div.p-tabview .p-tabview-nav {
         flex-direction: column;

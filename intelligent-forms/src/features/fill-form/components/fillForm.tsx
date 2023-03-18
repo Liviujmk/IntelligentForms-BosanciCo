@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_PATH_LOCAL, API_PATH_PROD } from "../../../config/api";
 
 import { getForm } from "../../forms/api/api.forms";
-import { capitalizeFirstLetter, capitalizeString,lowercaseString } from "../utils/input.functions";
+import { capitalizeFirstLetter, capitalizeString, lowercaseString } from "../utils/input.functions";
 import { createSubmission, analyzeIdentityCard, analyzePassport } from "../api/fill.api";
 
 import './fill-form.css'
@@ -23,22 +23,23 @@ import { Calendar, CalendarChangeEvent } from 'primereact/calendar';
 import { Editor } from "primereact/editor";
 
 //import fill layouts
-import { TabHeaderTemplate } from "../layouts/layouts.fill";
+import { TabHeaderTemplate, editorHead } from "../layouts/layouts.fill";
+
 import { Button } from "primereact/button";
 
 export const FillForm = () => {
     const { formId } = useParams();
-    
-    if (localStorage.getItem(`formId`)=== formId) return <h1>Thanks for submitting this form! xD</h1>
+
+    if (localStorage.getItem(`formId`) === formId) return <h1>Thanks for submitting this form! xD</h1>
     //fetch form from (url) api and set it to form state
     const [form, setForm] = useState<Form | null>(null);
     const [sections, setSections] = useState<Section[]>([]);
     const [fields, setFields] = useState<any[]>([]);
     const [choiceFields, setChoiceFields] = useState<any[]>([]);
-    const [preview , setPreview] = useState<any>([]);
-    const [previewClone , setPreviewClone] = useState<any>([]);
-    const [previewDynamicFieldsIndex , setPreviewDynamicFieldsIndex] = useState<any>([]);
-    
+    const [preview, setPreview] = useState<any>([]);
+    const [previewClone, setPreviewClone] = useState<any>([]);
+    const [previewDynamicFieldsIndex, setPreviewDynamicFieldsIndex] = useState<any>([]);
+
 
     //fetch form from (url) api and set it to form state
     async function fetchForm() {
@@ -59,6 +60,7 @@ export const FillForm = () => {
         {
             label: '',
             value: '',
+            keyword: '',
         }
     ]);
     useEffect(() => {
@@ -76,6 +78,7 @@ export const FillForm = () => {
             return {
                 label: field.label,
                 value: '',
+                keyword: field.keyword,
             }
         }));
 
@@ -93,10 +96,10 @@ export const FillForm = () => {
 
 
     //create submission object ------->
-    const [filledForm, setFilledForm] = useState<Submission>({
+    const [filledForm, setFilledForm] = useState<any>({
         formId: formId as string,
         data: {
-            fields : [],
+            fields: [],
             rtfText: '',
         },
         date: new Date(),
@@ -115,12 +118,15 @@ export const FillForm = () => {
 
 
     const handleFieldChange = (e: ChangeEvent<HTMLInputElement> | CalendarChangeEvent) => {
-        const { name, value } = e.target;
+        console.log('e >>> ', e)
+        const { name, value, id } = e.target;
         // update preview state with the values of the dynamic fields
         previewDynamicFieldsIndex?.forEach((index: number) => {
-            if (previewClone[index].includes(name)) {
-                preview[index] = value;
-            }
+            if (previewClone[index].includes(`{${name}`)) {
+                // @ts-ignore
+                id.includes('date') ? preview[index] = value.toLocaleDateString('en-UK') : preview[index] = value;
+                // preview[index] = value;
+            }   
         });
 
         setFilledForm({
@@ -129,7 +135,7 @@ export const FillForm = () => {
                 ...filledForm?.data,
                 // @ts-ignore
                 fields: filledForm?.data?.fields.map((field: SubmissionField) => {
-                    if (capitalizeString(field.label).split(" ").join("")  === capitalizeString(name)) {
+                    if (capitalizeString(field.label).split(" ").join("") === capitalizeString(name)) {
                         return {
                             ...field,
                             value: value
@@ -145,30 +151,36 @@ export const FillForm = () => {
     const analyzePhoto = async (e: FileUploadHandlerEvent, sectionDocumentType: string) => {
         let data: any = {};
         console.log(lowercaseString(sectionDocumentType))
-        if(lowercaseString(sectionDocumentType).includes('ident') && !lowercaseString(sectionDocumentType).includes('car ident')) {
+        if (lowercaseString(sectionDocumentType).includes('ident') && !lowercaseString(sectionDocumentType).includes('car ident')) {
             data = await analyzeIdentityCard(e)
-        } else if (sectionDocumentType.includes('passport')) {
+        } else if (lowercaseString(sectionDocumentType).includes('passport') || lowercaseString(sectionDocumentType).includes('pasaport')) {
             data = await analyzePassport(e)
         } else console.log("Your document is not supported yet.")
         const keys = Object.keys(data);
 
+        // if keys are equal to the keyword of form.fields, then update preview state with the values of the dynamic fields and also update the filledForm state
         previewDynamicFieldsIndex?.forEach((index: number) => {
             keys.forEach((key: string) => {
-                if (previewClone[index].includes(lowercaseString(key))) {
-                    preview[index] = data[key].value;
-                }
+                form?.fields.forEach((field: Field) => {
+                    if (lowercaseString(field.keyword).includes(lowercaseString(key))) {
+                        if (lowercaseString(previewClone[index]).includes(`{${lowercaseString(field.placeholder)}`)) {
+                            (data[key].kind === 'date') ? preview[index] = new Date(data[key].value).toLocaleDateString('en-UK')
+                            : preview[index] = data[key].value;
+                        }
+                    }
+                });
             });
         });
-        
+
         setFilledForm({
             ...filledForm,
             data: {
                 ...filledForm?.data,
                 fields: filledForm?.data?.fields.map((field: SubmissionField) => {
-                    if (keys.includes(field.label)) {
+                    if (keys.includes(field.keyword)) {
                         return {
                             ...field,
-                            value: data[field.label].value,
+                            value: data[field.keyword].value
                         }
                     }
                     return field;
@@ -178,9 +190,9 @@ export const FillForm = () => {
         });
 
     }
-    
-    console.log('filledForm = ', filledForm)
 
+    console.log('filledForm = ', filledForm)
+    
     return (
         <div className="page-container">
             <h1>Fill form - <u>{form?.title}</u></h1>
@@ -194,15 +206,15 @@ export const FillForm = () => {
                                         <div>
                                             <FileUpload customUpload uploadHandler={
                                                 (e: FileUploadHandlerEvent) => analyzePhoto(e, section.documentType)
-                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={1000000} auto chooseLabel={'Scan ' + section.documentType} />
+                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={1000000} auto chooseLabel={'Scan ' + section?.documentType} />
                                         </div>
                                         {
-                                            form?.fields.filter((field: Field|ChoiceField) => field.sectionNr === section.sectionNr).map((field: Field|ChoiceField) => {
+                                            form?.fields.filter((field: Field | ChoiceField) => field.sectionNr === section.sectionNr).map((field: Field | ChoiceField) => {
                                                 return (
                                                     <div className="input-container">
                                                         {
 
-                                                            field.fieldType === 'number' && (
+                                                            lowercaseString(field.fieldType) === 'number' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
@@ -212,15 +224,15 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder} 
-                                                                        value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                        <InputText id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="number-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'string' && (
+                                                            lowercaseString(field.fieldType) === 'string' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
@@ -237,7 +249,7 @@ export const FillForm = () => {
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'date' && (
+                                                            lowercaseString(field.fieldType) === 'date' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
@@ -247,14 +259,14 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <Calendar id="date-input" dateFormat="dd/mm/yy" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                        <Calendar touchUI showButtonBar showIcon id="date-input" dateFormat="dd/mm/yy" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="date-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'single-choice' && (
+                                                            lowercaseString(field.fieldType) === 'single-choice' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
@@ -264,8 +276,8 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <Dropdown optionLabel="name" 
-                                                                            showClear 
+                                                                        <Dropdown optionLabel="name"
+                                                                            showClear
                                                                             // @ts-ignore
                                                                             options={field.options}
                                                                             value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value}
@@ -301,7 +313,7 @@ export const FillForm = () => {
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'multiple-choice' && (
+                                                            lowercaseString(field.fieldType) === 'multiple-choice' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
@@ -344,7 +356,7 @@ export const FillForm = () => {
                                                                     </span>
                                                                 </div>
                                                             )
-                                                                            
+
                                                         }
                                                     </div>
                                                 )
@@ -357,27 +369,27 @@ export const FillForm = () => {
                     }
                     <TabPanel header={`Preview`} headerTemplate={TabHeaderTemplate}>
                         <Card>
-                            <Editor readOnly value={filledForm?.data?.rtfText} style={{ height: '320px' }} />
+                            <Editor readOnly value={filledForm?.data?.rtfText} style={{ height: '320px' }} headerTemplate={editorHead} />
                         </Card>
                     </TabPanel>
                 </TabView>
                 <div className="submit-group">
-                {
-                    filledForm?.data?.fields.every((field: SubmissionField) => (
-                        form?.fields.find((f: Field|ChoiceField) => f.label === field.label)?.mandatory === false || (field.value !== '' && field.value !== null && field.value !== undefined && field.value.length !== 0)
-                    )) 
-                    && filledForm?.data?.rtfText !== '' 
-                    && form?.fields.filter((field: Field|ChoiceField) => (!lowercaseString(field.fieldType).includes("choice") && !lowercaseString(field.fieldType).includes("date") )).every((field: Field|ChoiceField) => filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value.charAt(0) !== ' ')
-                    ? (
-                        <Button label="Submit" 
-                            onClick={() => {
-                                createSubmission(filledForm);
-                            }}
-                        />
-                    ) : (
-                        <Button label="Submit" disabled />
-                    )
-                }
+                    {
+                        filledForm?.data?.fields.every((field: SubmissionField) => (
+                            form?.fields.find((f: Field | ChoiceField) => f.label === field.label)?.mandatory === false || (field.value !== '' && field.value !== null && field.value !== undefined && field.value.length !== 0)
+                        ))
+                            && filledForm?.data?.rtfText !== ''
+                            && form?.fields.filter((field: Field | ChoiceField) => (!lowercaseString(field.fieldType).includes("choice") && !lowercaseString(field.fieldType).includes("date"))).every((field: Field | ChoiceField) => filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value.charAt(0) !== ' ')
+                            ? (
+                                <Button label="Submit"
+                                    onClick={() => {
+                                        createSubmission(filledForm);
+                                    }}
+                                />
+                            ) : (
+                                <Button label="Submit" disabled />
+                            )
+                    }
                 </div>
             </div>
         </div>

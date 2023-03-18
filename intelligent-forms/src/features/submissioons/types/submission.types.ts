@@ -14,6 +14,7 @@ interface SubmissionData {
 interface SubmissionField {
     label: string;
     value: string;
+    keyword: string;
 }
 
 export type { Submission, SubmissionData, SubmissionField }
