@@ -1,0 +1,69 @@
+.fill-container {
+    margin-inline: auto;
+    max-width: 600px;
+    padding-inline: 2rem;
+}
+
+div.p-tabview .p-tabview-nav-container {
+    margin-bottom: 2.5rem;
+}
+
+div.p-tabview .p-tabview-nav {
+    border: none;
+    gap: 1rem;
+}
+
+div.p-tabview .p-tabview-nav .p-tabview-selected button{
+    background-color: #3c39e8;
+    color: #fff;
+}
+
+div.p-tabview .p-tabview-nav .p-tabview-ink-bar{
+    display: none;
+}
+
+div.p-tabview .p-tabview-panels {
+    padding: 0;
+}
+
+.p-tabview-panels .p-card {
+    box-shadow: none;
+}
+
+.p-tabview-panels .p-card div.p-card-body {
+    padding: 0;
+}
+
+.tab-btn {
+    display: block;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: .4rem;
+    color: #333;
+    font-weight: 500;
+    padding: .8rem 1.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+span.p-float-label > span{
+    display: block;
+}
+
+.input-container {
+    margin-bottom: 1.58rem;
+}
+
+div.input-container div.p-dropdown {
+    width: 100% !important;
+}
+
+div .form-btn{
+    display: flex;
+    margin-bottom: 1.58rem;
+}
+
+div .form-btn span.p-button{
+    background-color: #3c39e8;
+}

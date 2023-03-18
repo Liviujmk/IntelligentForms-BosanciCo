@@ -11,7 +11,7 @@ import { Signup } from './pages/signup.page'
 import { HomePage } from './pages/home.page'
 import { DashboardPage } from './pages/dashboard.page'
 import { FormsPage } from './pages/forms.page'
-import { FillForm } from './features/forms/components/fill-form'
+import { FillForm } from './features/fill-form/components/fillForm'
 import { SubmissionsPage } from './pages/submissions.page'
 import { PricingPage } from './pages/pricing.page'
 import { CreateForm } from './features/forms/components/form'
@@ -26,6 +26,7 @@ function App() {
           <Route path="about" element={<div>About</div>} />
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
+          <Route path="fill/:formId" element={<FillForm />} />
           <Route element={<RequireAuth />}>
             <Route path="dashboard" >
               <Route index element={<DashboardPage />} />
@@ -33,7 +34,6 @@ function App() {
                 <Route index element={<FormsPage />} />
                 <Route path="create" element={<CreateForm />} />
                 <Route path=":formId" element={<div>Form</div>} />
-                <Route path=":formId/fill" element={<FillForm />} />
                 <Route path=":formId/submissions" element={<SubmissionsPage />} />
                 <Route path=":formId/submissions/:submissionId" element={<div>Submission</div>} />
               </Route>

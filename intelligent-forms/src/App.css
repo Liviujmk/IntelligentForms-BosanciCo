@@ -100,7 +100,7 @@ button.submit-button {
   display: flex !important;
 }
 
-label {
+label:not('notAbs') {
   position: absolute;
 }
 
@@ -147,5 +147,21 @@ button.submit-button:hover {
 
 .step2 input,
 .step2 button {
+  margin: 1rem;
+}
+
+#pricing-title {
+  font-size: 60px;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  #pricing-title {
+    font-size: xx-large;
+  }
+}
+
+.field-section>* {
   margin: 1rem;
 }
