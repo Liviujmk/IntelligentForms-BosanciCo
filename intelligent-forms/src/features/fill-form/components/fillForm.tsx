@@ -21,6 +21,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { FileUpload, FileUploadHandlerEvent } from 'primereact/fileupload';
 import { Calendar, CalendarChangeEvent } from 'primereact/calendar';
 import { Editor } from "primereact/editor";
+import { Dialog } from 'primereact/dialog';
 
 //import fill layouts
 import { TabHeaderTemplate, editorHead } from "../layouts/layouts.fill";
@@ -31,6 +32,10 @@ export const FillForm = () => {
     const { formId } = useParams();
 
     if (localStorage.getItem(`formId`) === formId) return <h1>Thanks for submitting this form! xD</h1>
+
+    //add loading state
+    const [loading, setLoading] = useState<boolean>(false);
+    const [visible, setVisible] = useState<boolean>(false);
     //fetch form from (url) api and set it to form state
     const [form, setForm] = useState<Form | null>(null);
     const [sections, setSections] = useState<Section[]>([]);
@@ -126,7 +131,7 @@ export const FillForm = () => {
                 // @ts-ignore
                 id.includes('date') ? preview[index] = value.toLocaleDateString('en-UK') : preview[index] = value;
                 // preview[index] = value;
-            }   
+            }
         });
 
         setFilledForm({
@@ -165,7 +170,7 @@ export const FillForm = () => {
                     if (lowercaseString(field.keyword).includes(lowercaseString(key))) {
                         if (lowercaseString(previewClone[index]).includes(`{${lowercaseString(field.placeholder)}`)) {
                             (data[key].kind === 'date') ? preview[index] = new Date(data[key].value).toLocaleDateString('en-UK')
-                            : preview[index] = data[key].value;
+                                : preview[index] = data[key].value;
                         }
                     }
                 });
@@ -192,7 +197,7 @@ export const FillForm = () => {
     }
 
     console.log('filledForm = ', filledForm)
-    
+
     return (
         <div className="page-container">
             <h1>Fill form - <u>{form?.title}</u></h1>
@@ -204,9 +209,20 @@ export const FillForm = () => {
                                 <TabPanel header={`Section ${section.sectionNr}`} headerTemplate={TabHeaderTemplate}>
                                     <Card>
                                         <div>
+                                            <Dialog header="Auto fill" visible={visible} onHide={() => setVisible(false)}
+                                                style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
+                                                <p className="m-0">
+                                                    Please wait! Auto-filling your data...
+                                                </p>
+                                            </Dialog>
                                             <FileUpload customUpload uploadHandler={
-                                                (e: FileUploadHandlerEvent) => analyzePhoto(e, section.documentType)
-                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={1000000} auto chooseLabel={'Scan ' + section?.documentType} />
+                                                (e: FileUploadHandlerEvent) => {
+                                                    setVisible(true);
+                                                    analyzePhoto(e, section.documentType).then(() => {
+                                                        setVisible(false);
+                                                    })
+                                                }
+                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={10000000} auto chooseLabel={'Scan ' + section?.documentType} />
                                         </div>
                                         {
                                             form?.fields.filter((field: Field | ChoiceField) => field.sectionNr === section.sectionNr).map((field: Field | ChoiceField) => {
@@ -383,6 +399,7 @@ export const FillForm = () => {
                             ? (
                                 <Button label="Submit"
                                     onClick={() => {
+                                        setLoading(true);
                                         createSubmission(filledForm);
                                     }}
                                 />

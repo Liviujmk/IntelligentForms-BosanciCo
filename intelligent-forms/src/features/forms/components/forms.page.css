@@ -1,0 +1,16 @@
+.card.table-group {
+    padding: 0;
+}
+
+.qr-dialog .p-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.qr-dialog .qr-container {
+    margin-top: 3rem;
+    width: 400px;
+}
