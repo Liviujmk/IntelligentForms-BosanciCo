@@ -153,14 +153,27 @@ export const FillForm = () => {
         });
     }
 
+    const [fileState, setFileState] = useState<any>(null);
     const analyzePhoto = async (e: FileUploadHandlerEvent, sectionDocumentType: string) => {
+        // check file size and return if too big
+        if(e.files[0].size > 10000000) {
+            setFileState('File size is too big. Please upload a file less than 10MB.');
+            return;
+        }
+
+        // assign data
         let data: any = {};
-        console.log(lowercaseString(sectionDocumentType))
         if (lowercaseString(sectionDocumentType).includes('ident') && !lowercaseString(sectionDocumentType).includes('car ident')) {
+            setFileState('Please wait! Auto-filling your identity card data...');
             data = await analyzeIdentityCard(e)
         } else if (lowercaseString(sectionDocumentType).includes('passport') || lowercaseString(sectionDocumentType).includes('pasaport')) {
+            setFileState('Please wait! Auto-filling your passport data...');
             data = await analyzePassport(e)
-        } else console.log("Your document is not supported yet.")
+        } else {
+            console.log("Your document is not supported yet.")
+            setFileState('Document not supported yet.');
+            return;
+        }
         const keys = Object.keys(data);
 
         // if keys are equal to the keyword of form.fields, then update preview state with the values of the dynamic fields and also update the filledForm state
@@ -212,7 +225,18 @@ export const FillForm = () => {
                                             <Dialog header="Auto fill" visible={visible} onHide={() => setVisible(false)}
                                                 style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
                                                 <p className="m-0">
-                                                    Please wait! Auto-filling your data...
+                                                    {
+                                                        fileState?.includes('Please wait') ? (
+                                                            <span>{fileState}</span>
+                                                        ): (
+                                                            (fileState === 'Document not supported yet.') ? (
+                                                                <span>{fileState}</span>
+                                                            ) : (
+                                                                <span>{fileState}</span>
+                                                            )
+                                                        )
+                                                    }
+                                                    
                                                 </p>
                                             </Dialog>
                                             <FileUpload customUpload uploadHandler={
