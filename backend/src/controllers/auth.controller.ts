@@ -50,18 +50,20 @@ const authController = {
 
 const isAuthenticated = async (req: Request, res: Response, next: any) => {
     next();
-    /*if (req.cookies.access_token) {
+    if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token
         const foundUser = await User.findOne({ access_token }).exec();
         if (foundUser) {
+            // @ts-ignore
+            req.userId = foundUser.id;
             next();
         } else {
             res.status(401).json({ message: "Unauthorized" });
         }
     } else {
         res.status(401).json({ message: "Unauthorized" });
-    }*/
+    }
 
 }
 

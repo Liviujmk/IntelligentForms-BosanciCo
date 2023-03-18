@@ -16,33 +16,6 @@ exports.authController = exports.isAuthenticated = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const crypto_1 = __importDefault(require("crypto"));
 const authController = {
-    create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const { name, email, password: passwordBody, address, userType, subscriptionPlan, fiscalCode } = req.body;
-            if (!name || !email || !passwordBody)
-                return res.status(400).json({ message: "Missing data" });
-            const isUserExists = yield user_1.default.findOne({ email }).exec();
-            if (isUserExists)
-                return res.status(401).json({ message: "User Already Exists" });
-            //const password = await bcrypt.hash(passwordBody, bcryptConfig.salt);
-            const password = crypto_1.default.createHash('sha256').update(passwordBody).digest('hex');
-            const access_token = crypto_1.default.randomBytes(30).toString("hex");
-            const newUser = yield new user_1.default({
-                name,
-                email,
-                password,
-                address,
-                userType,
-                subscriptionPlan,
-                fiscalCode,
-                access_token
-            }).save();
-            return res.status(201).json(newUser);
-        }
-        catch (err) {
-            return res.status(500).json({ message: "Internal Server Error" });
-        }
-    }),
     login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { email, password } = req.body;
@@ -88,17 +61,21 @@ const authController = {
 exports.authController = authController;
 const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     next();
-    /*if (req.cookies.access_token) {
+    if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token
-        const foundUser = await User.findOne({ access_token }).exec();
+        const foundUser = yield user_1.default.findOne({ access_token }).exec();
         if (foundUser) {
+            // @ts-ignore
+            req.userId = foundUser.id;
             next();
-        } else {
+        }
+        else {
             res.status(401).json({ message: "Unauthorized" });
         }
-    } else {
+    }
+    else {
         res.status(401).json({ message: "Unauthorized" });
-    }*/
+    }
 });
 exports.isAuthenticated = isAuthenticated;

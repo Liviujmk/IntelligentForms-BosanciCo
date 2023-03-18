@@ -50,6 +50,17 @@ exports.formController = {
             return res.status(500).json({ msg: error.message });
         }
     }),
+    //get all forms by user id
+    getFormsByUserId: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            // @ts-ignore
+            const forms = yield form_1.default.find({ userId: req.userId }).exec();
+            res.status(200).json(forms);
+        }
+        catch (error) {
+            return res.status(500).json({ msg: error.message });
+        }
+    }),
     //get form by id
     getFormById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
