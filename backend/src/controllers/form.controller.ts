@@ -50,6 +50,8 @@ export const formController = {
     getFormsByUserId: async (req: Request, res: Response) => {
         try {
             // @ts-ignore
+            console.log('req.userId', req.userId)
+            // @ts-ignore
             const forms = await FormModel.find({ userId: req.userId }).exec();
             res.status(200).json(forms);
         } catch (error: any) {
@@ -65,7 +67,7 @@ export const formController = {
             return res.status(500).json({ msg: error.message });
         }
     },
-    //update form
+    //update form 
     updateForm: async (req: Request, res: Response) => {
         try {
             const {

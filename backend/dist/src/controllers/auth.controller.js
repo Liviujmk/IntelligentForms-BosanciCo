@@ -60,7 +60,6 @@ const authController = {
 };
 exports.authController = authController;
 const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    next();
     if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token

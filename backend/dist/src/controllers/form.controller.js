@@ -53,6 +53,8 @@ exports.formController = {
     getFormsByUserId: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             // @ts-ignore
+            console.log('req.userId', req.userId);
+            // @ts-ignore
             const forms = yield form_1.default.find({ userId: req.userId }).exec();
             res.status(200).json(forms);
         }
@@ -70,7 +72,7 @@ exports.formController = {
             return res.status(500).json({ msg: error.message });
         }
     }),
-    //update form
+    //update form 
     updateForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { title, fields, sections, dataRetention, } = req.body;

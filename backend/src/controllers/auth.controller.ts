@@ -49,7 +49,6 @@ const authController = {
 };
 
 const isAuthenticated = async (req: Request, res: Response, next: any) => {
-    next();
     if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token
