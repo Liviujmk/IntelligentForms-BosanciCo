@@ -1,5 +1,3 @@
-// express typescript router
-
 import express from 'express';
 import { Request, Response } from 'express';
 import {authController, isAuthenticated} from '../controllers/auth.controller';
@@ -14,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'Intelligent forms app' });
 });
 
-// POST routes for form recognizer: identity card and passport only at the moment
+// POST routes for form recognizer: at the moment identity-card and passport only 
 router.post('/analyze/identity', formRecognizerController.analyzeIdentityCard);
 router.post('/analyze/passport', formRecognizerController.analyzePassport);
 
@@ -22,7 +20,7 @@ router.post('/analyze/passport', formRecognizerController.analyzePassport);
 router.post('/auth/signup', userController.create);
 router.post('/auth/login', authController.login);
 
-// create routes for users base on user controller
+// create routes for users based on user controller
 router.all('/users*', isAuthenticated)
 router.post('/users', userController.create);
 router.get('/users', userController.getAll);
@@ -34,17 +32,17 @@ router.delete('/users/:id', userController.delete);
 // used when filling forms
 router.get('/fill/forms/:id', formController.getFormById);
 
-//create routes for forms base on form controller
+//create routes for forms based on form controller
 router.all('/forms*', isAuthenticated)
 router.post('/forms', formController.createForm);
 router.get('/forms', formController.getFormsByUserId);
 router.put('/forms/:id', formController.updateForm);
 router.delete('/forms/:id', formController.deleteForm);
 
-// create routes for submissions base on submission controller
+// create routes for submissions based on submission controller
 router.all('/submissions*', isAuthenticated)
 router.post('/client/submissions', submissionController.create);
-router.get('/submissions', submissionController.getAll);
+router.get('/submissions', submissionController.getAllByFormId);
 router.get('/submissions/:id', submissionController.getById);
 router.delete('/submissions/:id', submissionController.deleteById);
 

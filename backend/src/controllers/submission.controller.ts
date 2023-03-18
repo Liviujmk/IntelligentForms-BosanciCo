@@ -19,10 +19,10 @@ export const submissionController = {
         }
     },
 
-    // get all submissions
-    getAll: async (req: Request, res: Response) => {
+    // get all submissions by form id
+    getAllByFormId: async (req: Request, res: Response) => {
         try{
-            const submissions = await Submission.find().exec();
+            const submissions = await Submission.find({ formId: req.params.id }).exec();
             return res.status(200).json(submissions);
         } catch (err) {
             return res.status(500).json({ message: "Internal Server Error" });
@@ -34,24 +34,6 @@ export const submissionController = {
         try{
             const submission = await Submission.findById(req.params.id).exec();
             return res.status(200).json(submission);
-        } catch (err) {
-            return res.status(500).json({ message: "Internal Server Error" });
-        }
-    },
-
-    // update submission by id
-    updateById: async (req: Request, res: Response) => {
-        try{
-            const submission = await Submission.findById(req.params.id).exec();
-            if (submission) {
-                submission.formId = req.body.formId;
-                submission.data = req.body.data;
-                submission.date = req.body.date;
-                await submission.save();
-                return res.status(200).json(submission);
-            } else {
-                return res.status(404).json({ message: "Submission not found" });
-            }
         } catch (err) {
             return res.status(500).json({ message: "Internal Server Error" });
         }

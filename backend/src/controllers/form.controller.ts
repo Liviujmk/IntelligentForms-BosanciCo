@@ -1,5 +1,4 @@
 //create form controller based on form model
-//
 
 import { Request, Response } from "express";
 import FormModel from "../models/form";

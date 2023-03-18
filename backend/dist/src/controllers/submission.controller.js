@@ -31,10 +31,10 @@ exports.submissionController = {
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }),
-    // get all submissions
-    getAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // get all submissions by form id
+    getAllByFormId: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const submissions = yield submission_1.default.find().exec();
+            const submissions = yield submission_1.default.find({ formId: req.params.id }).exec();
             return res.status(200).json(submissions);
         }
         catch (err) {
@@ -46,25 +46,6 @@ exports.submissionController = {
         try {
             const submission = yield submission_1.default.findById(req.params.id).exec();
             return res.status(200).json(submission);
-        }
-        catch (err) {
-            return res.status(500).json({ message: "Internal Server Error" });
-        }
-    }),
-    // update submission by id
-    updateById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const submission = yield submission_1.default.findById(req.params.id).exec();
-            if (submission) {
-                submission.formId = req.body.formId;
-                submission.data = req.body.data;
-                submission.date = req.body.date;
-                yield submission.save();
-                return res.status(200).json(submission);
-            }
-            else {
-                return res.status(404).json({ message: "Submission not found" });
-            }
         }
         catch (err) {
             return res.status(500).json({ message: "Internal Server Error" });
