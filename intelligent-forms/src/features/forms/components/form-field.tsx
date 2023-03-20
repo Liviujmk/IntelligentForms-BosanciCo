@@ -1,4 +1,3 @@
-
 import { useEffect, useReducer, useState } from 'react'
 import { Form, Field, Section, ChoiceField } from '../types/form.types'
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
@@ -7,13 +6,36 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { Chips, ChipsChangeEvent } from 'primereact/chips';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
-import { Chip } from 'primereact/chip';
+import * as yup from 'yup';
+
+
 interface Props {
     sectionNr: number,
     fieldsArray: Field[] | ChoiceField[],
     setFields: React.Dispatch<React.SetStateAction<Field[] | ChoiceField[]>>
 }
+
+const schema = yup.object().shape({
+    label: yup.string()
+        .min(2, 'Label is Too Short!')
+        .max(70, 'Label is Too Long!')
+        .required(),
+    placeholder: yup.string()
+        .min(2, ' Placeholder is Too Short!')
+        .max(70, 'Placeholder is Too Long!')
+        .required(),
+    fieldType: yup.string()
+        .min(2, 'FieldType is Too Short!')
+        .max(70, 'FieldType Too Long!').
+        required(),
+    keyword: yup.string()
+        .min(2, 'Keyword is Too Short!')
+        .max(70, 'Keyword is Too Long!')
+        .required(),
+    mandatory: yup.boolean(),
+    sectionNr: yup.number().required(),
+})
+
 
 export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
 
@@ -31,8 +53,6 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
         sectionNr: sectionNr,
     })
 
-    // const [fields, setFieldsArray] = useState<Field[] | ChoiceField[]>([])
-
     const fieldTypes: any = [
         { type: 'Text' },
         { type: 'Number' },
@@ -46,21 +66,19 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
     const [choices, setChoices] = useState<any[]>([]);
     const [checked, toggle] = useReducer(checked => !checked, false);
 
-    const saveData = () => {
-        {
-            const newField: any = {
-                label: field.label,
-                placeholder: field.placeholder,
-                fieldType: fieldType?.type,
-                keyword: field.keyword,
-                options: choices,
-                mandatory: checked,
-                sectionNr: sectionNr,
-            }
-            setFields([...fieldsArray, newField])
-            resetData()
+    const addField = () => {
+        const newField: any = {
+            label: field.label,
+            placeholder: field.placeholder,
+            fieldType: fieldType?.type,
+            keyword: field.keyword,
+            options: choices,
+            mandatory: checked,
+            sectionNr: sectionNr,
         }
+        setFields([...fieldsArray, newField])
     }
+
     const resetData = () => {
         setField({
             label: '',
@@ -76,6 +94,31 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
         toggle()
     }
 
+    const saveData = () => {
+        {
+            const data = {
+                label: field.label,
+                placeholder: field.placeholder,
+                fieldType: fieldType?.type,
+                keyword: field.keyword,
+                options: choices,
+                mandatory: checked,
+                sectionNr: sectionNr,
+            }
+            schema.validate(data)
+                .then(() => {
+                    console.log('data is valid')
+                    addField()
+                    resetData()
+                })
+                .catch((err) => {
+                    console.log(err)
+                    alert(err + '  Field is not valid')
+                })
+        }
+    }
+
+
     return (
         <div className='new-field'>
             <div className='field-section'>
@@ -84,6 +127,7 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                     placeholder="Label"
                     value={field.label}
                     onChange={(e) => setField({ ...field, label: e.target.value })}
+                    validateOnly={true}
                 />
                 <InputText
                     type="text"
@@ -92,9 +136,8 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                     onChange={(e) => setField({ ...field, placeholder: e.target.value })}
                 />
                 <InputText
-                    required={true}
                     type="text"
-                    placeholder="keyword"
+                    placeholder="Keyword"
                     value={field.keyword}
                     onChange={(e) => setField({ ...field, keyword: e.target.value })}
                 />

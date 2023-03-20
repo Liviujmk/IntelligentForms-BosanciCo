@@ -113,6 +113,11 @@
     margin: 2rem;
 }
 
+.step4 button {
+    width: 350px;
+    text-align: center;
+}
+
 .p-tabview-nav-container {
     margin-bottom: 0 !important;
 }

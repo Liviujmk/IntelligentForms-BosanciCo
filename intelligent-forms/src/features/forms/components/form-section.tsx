@@ -1,16 +1,10 @@
-import { useEffect, useReducer, useState } from 'react'
 import { Form, Field, Section, ChoiceField } from '../types/form.types'
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
-import { Checkbox } from 'primereact/checkbox';
-import { Chips, ChipsChangeEvent } from 'primereact/chips';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
-import { Panel } from 'primereact/panel';
 import { Editor, EditorTextChangeEvent } from 'primereact/editor';
 import { NewField } from './form-field';
-import { TabView, TabPanel } from 'primereact/tabview';
+import * as yup from 'yup';
+
 
 
 interface Props {
@@ -20,6 +14,7 @@ interface Props {
     sections: any,
     setSections: React.Dispatch<React.SetStateAction<any[]>>
 }
+
 
 export const NewSection = ({ sectionNr, fields, setFields, sections, setSections, }: Props) => {
 
@@ -35,7 +30,7 @@ export const NewSection = ({ sectionNr, fields, setFields, sections, setSections
             </div>
             <div className='rtf-section'>
                 <Editor
-                    placeholder='Add RTF text'
+                    placeholder='Add your text here...'
                     value={
                         sections.filter((section: { sectionNr: number; }) => section.sectionNr === sectionNr)[0].rtfText
                     }

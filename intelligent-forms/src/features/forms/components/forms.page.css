@@ -14,3 +14,10 @@
     margin-top: 3rem;
     width: 400px;
 }
+
+.formsHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
