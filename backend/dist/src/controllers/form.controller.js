@@ -20,14 +20,15 @@ exports.formController = {
     //create form
     createForm: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { userId, title, fields, sections, dataRetention, } = req.body;
+            const { title, fields, sections, dataRetention, } = req.body;
             if (!title || !fields || !sections || !dataRetention)
                 return res.status(400).json({ message: "Missing data" });
             //remove any caracter that is not a letter or a number
             const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
             console.log('titleWithoutSpaces', titleWithoutSpaces);
             const newForm = yield new form_1.default({
-                userId,
+                // @ts-ignore
+                userId: req.userId,
                 title: titleWithoutSpaces,
                 fields,
                 sections,

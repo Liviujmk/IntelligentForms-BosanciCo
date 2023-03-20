@@ -22,7 +22,7 @@ export const submissionController = {
     // get all submissions by form id
     getAllByFormId: async (req: Request, res: Response) => {
         try{
-            const submissions = await Submission.find({ formId: req.params.id }).exec();
+            const submissions = await Submission.find({ formId: req.params.formID }).exec();
             return res.status(200).json(submissions);
         } catch (err) {
             return res.status(500).json({ message: "Internal Server Error" });

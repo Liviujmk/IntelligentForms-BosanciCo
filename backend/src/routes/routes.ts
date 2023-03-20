@@ -40,10 +40,10 @@ router.put('/forms/:id', formController.updateForm);
 router.delete('/forms/:id', formController.deleteForm);
 
 // create routes for submissions based on submission controller
-router.all('/submissions*', isAuthenticated)
 router.post('/client/submissions', submissionController.create);
-router.get('/submissions', submissionController.getAllByFormId);
-router.get('/submissions/:id', submissionController.getById);
-router.delete('/submissions/:id', submissionController.deleteById);
+//router.all('/forms/:id/submissions*', isAuthenticated)
+router.get('/forms/:formID/submissions', submissionController.getAllByFormId);
+router.get('/forms/submissions/:subID', submissionController.getById);
+router.delete('/forms/submissions/:subID', submissionController.deleteById);
 
 export default router;

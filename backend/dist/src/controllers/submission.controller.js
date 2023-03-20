@@ -34,7 +34,7 @@ exports.submissionController = {
     // get all submissions by form id
     getAllByFormId: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const submissions = yield submission_1.default.find({ formId: req.params.id }).exec();
+            const submissions = yield submission_1.default.find({ formId: req.params.formID }).exec();
             return res.status(200).json(submissions);
         }
         catch (err) {

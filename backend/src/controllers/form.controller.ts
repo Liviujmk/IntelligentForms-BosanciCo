@@ -13,7 +13,6 @@ export const formController = {
     createForm: async (req: Request, res: Response) => {
         try {
             const {
-                userId,
                 title,
                 fields,
                 sections,
@@ -26,7 +25,8 @@ export const formController = {
             const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
             console.log('titleWithoutSpaces', titleWithoutSpaces) 
             const newForm = await new FormModel({
-                userId,
+                // @ts-ignore
+                userId: req.userId,
                 title: titleWithoutSpaces,
                 fields,
                 sections,

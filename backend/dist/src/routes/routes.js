@@ -36,9 +36,9 @@ router.get('/forms', form_controller_1.formController.getFormsByUserId);
 router.put('/forms/:id', form_controller_1.formController.updateForm);
 router.delete('/forms/:id', form_controller_1.formController.deleteForm);
 // create routes for submissions based on submission controller
-router.all('/submissions*', auth_controller_1.isAuthenticated);
 router.post('/client/submissions', submission_controller_1.submissionController.create);
-router.get('/submissions', submission_controller_1.submissionController.getAllByFormId);
-router.get('/submissions/:id', submission_controller_1.submissionController.getById);
-router.delete('/submissions/:id', submission_controller_1.submissionController.deleteById);
+//router.all('/forms/:id/submissions*', isAuthenticated)
+router.get('/forms/:formID/submissions', submission_controller_1.submissionController.getAllByFormId);
+router.get('/forms/submissions/:subID', submission_controller_1.submissionController.getById);
+router.delete('/forms/submissions/:subID', submission_controller_1.submissionController.deleteById);
 exports.default = router;
