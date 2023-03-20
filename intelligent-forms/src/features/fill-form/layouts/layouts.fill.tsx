@@ -1,6 +1,5 @@
 import React from 'react';
-import { TabView, TabPanel, TabPanelHeaderTemplateOptions } from 'primereact/tabview';
-import { Button } from 'primereact/button';
+import { TabPanelHeaderTemplateOptions } from 'primereact/tabview';
 import '../components/fill-form.css'
 
 
@@ -11,3 +10,11 @@ export const TabHeaderTemplate = (options: TabPanelHeaderTemplateOptions) => {
         </button>
     )
 };
+
+const editorHeader = () => {
+    return (
+        <span className="ql-formats">
+        </span>
+    );
+};
+export const editorHead = editorHeader();

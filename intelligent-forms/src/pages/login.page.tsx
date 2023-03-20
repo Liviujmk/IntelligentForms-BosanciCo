@@ -2,6 +2,7 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 
 import useAuth from '../features/auth/hooks/useAuth';
@@ -10,6 +11,8 @@ import { loginUser } from '../features/auth/api';
 import { UserLite } from '../features/users/types/user.types';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { classNames } from 'primereact/utils';
+import { useFormik } from 'formik';
 import { Card } from 'primereact/card';
 import { Password } from 'primereact/password';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/Authenticated.layout';
@@ -28,6 +31,7 @@ export const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -44,11 +48,15 @@ export const Login = () => {
                     setAuth(data);
                     navigate(from, { replace: true });
                 }
+                else
+                {
+                    setError('Invalid email or password');
+                }
             })
     }
 
     return (
-        <div className='login-form'>
+        <div className='login-form lg'>
             <div className='login-header'>
                 <p className='title'>Welcome Back</p>
                 <p className='description'>Please enter your details</p>
@@ -61,7 +69,8 @@ export const Login = () => {
             </div>
             <div className="p-field">
                 <span className="p-float-label">
-                    <Password className='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <Password id="password" className='password' value={password} feedback={false} onChange={(e) => {setPassword(e.target.value),setError('')}} required />
+                    {<p className="login-error">{error}</p>}
                     <label htmlFor="password">Password</label>
                 </span>
             </div>

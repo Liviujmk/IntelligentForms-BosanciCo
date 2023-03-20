@@ -4,61 +4,107 @@ import { useParams } from "react-router-dom";
 import { API_PATH_LOCAL, API_PATH_PROD } from "../../../config/api";
 
 import { getForm } from "../../forms/api/api.forms";
-import { capitalizeFirstLetter, capitalizeString,lowercaseString } from "../utils/input.functions";
+import { capitalizeFirstLetter, capitalizeString, lowercaseString } from "../utils/input.functions";
+import { createSubmission, analyzeIdentityCard, analyzePassport } from "../api/fill.api";
 
+import './fill-form.css'
 import { Form, Field, Section, ChoiceField } from "../../forms/types/form.types";
 import { Submission, SubmissionData, SubmissionField } from "../../submissioons/types/submission.types";
 import { Controller, useForm } from 'react-hook-form'
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { BaseLayout } from "../../../layouts/base-layout/base.layout";
-import './fill-form.css'
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from 'primereact/inputnumber';
 import { FileUpload, FileUploadHandlerEvent } from 'primereact/fileupload';
+import { Calendar, CalendarChangeEvent } from 'primereact/calendar';
+import { Editor } from "primereact/editor";
+import { Dialog } from 'primereact/dialog';
 
 //import fill layouts
-import { TabHeaderTemplate } from "../layouts/layouts.fill";
+import { TabHeaderTemplate, editorHead } from "../layouts/layouts.fill";
+
+import { Button } from "primereact/button";
 
 export const FillForm = () => {
-    //fetch form from (url) api and set it to form state
     const { formId } = useParams();
+
+    if (localStorage.getItem(`formId`) === formId) return <h1>Thanks for submitting this form! xD</h1>
+
+    //add loading state
+    const [loading, setLoading] = useState<boolean>(false);
+    const [visible, setVisible] = useState<boolean>(false);
+    //fetch form from (url) api and set it to form state
     const [form, setForm] = useState<Form | null>(null);
     const [sections, setSections] = useState<Section[]>([]);
     const [fields, setFields] = useState<any[]>([]);
+    const [choiceFields, setChoiceFields] = useState<any[]>([]);
+    const [preview, setPreview] = useState<any>([]);
+    const [previewClone, setPreviewClone] = useState<any>([]);
+    const [previewDynamicFieldsIndex, setPreviewDynamicFieldsIndex] = useState<any>([]);
+
+
+    //fetch form from (url) api and set it to form state
     async function fetchForm() {
         const form = await getForm(formId as string);
         setForm(form);
+        setSections(form?.sections);
         setFields(form?.fields);
+        setChoiceFields(form?.fields.filter((field: Field) => field.fieldType.includes('choice')));
+        console.log('form = ', form)
     }
     useEffect(() => {
         fetchForm();
     }, []);
-    console.log('fields = ', fields)
 
-    //set form fields to state
+
+    //set fetched-form fields to state
     const [formFields, setFormFields] = useState<SubmissionField[]>([
         {
             label: '',
             value: '',
+            keyword: '',
         }
     ]);
     useEffect(() => {
+        // set preview from rtfText from each section
+        setPreview(form?.sections.map((section: Section) => {
+            return section.rtfText;
+        }).join('').split(' '));
+
+        setPreviewClone(form?.sections.map((section: Section) => {
+            return section.rtfText;
+        }).join('').split(' '));
+
+        // set formFields from fields
         setFormFields(fields.map((field: Field) => {
             return {
                 label: field.label,
                 value: '',
+                keyword: field.keyword,
             }
         }));
+
     }, [fields]);
-    console.log('formFields = ', formFields);
 
 
-    const [filledForm, setFilledForm] = useState<Submission>({
+    //create a new array with the position of the dynamic fields {} in the preview array
+    useEffect(() => {
+        setPreviewDynamicFieldsIndex(previewClone?.map((word: string, index: number) => {
+            if (word.includes('{') && word.includes('}')) {
+                return index;
+            }
+        }).filter((index: number) => index !== undefined));
+    }, [previewClone?.length]);
+
+
+    //create submission object ------->
+    const [filledForm, setFilledForm] = useState<any>({
         formId: formId as string,
         data: {
-            fields : [],
+            fields: [],
             rtfText: '',
         },
         date: new Date(),
@@ -69,104 +115,91 @@ export const FillForm = () => {
             data: {
                 ...filledForm?.data,
                 fields: formFields,
+                rtfText: preview?.join(' '),
             }
         });
     }, [formFields]);
-    //update filledForm data.fields after fetching form
-    /*useEffect(() => {
+    //create submission object ------->
+
+
+    const handleFieldChange = (e: ChangeEvent<HTMLInputElement> | CalendarChangeEvent) => {
+        console.log('e >>> ', e)
+        const { name, value, id } = e.target;
+        // update preview state with the values of the dynamic fields
+        previewDynamicFieldsIndex?.forEach((index: number) => {
+            if (previewClone[index].includes(`{${name}`)) {
+                // @ts-ignore
+                id.includes('date') ? preview[index] = value.toLocaleDateString('en-UK') : preview[index] = value;
+                // preview[index] = value;
+            }
+        });
+
         setFilledForm({
             ...filledForm,
             data: {
                 ...filledForm?.data,
-                
+                // @ts-ignore
+                fields: filledForm?.data?.fields.map((field: SubmissionField) => {
+                    if (capitalizeString(field.label).split(" ").join("") === capitalizeString(name)) {
+                        return {
+                            ...field,
+                            value: value
+                        }
+                    }
+                    return field;
+                }),
+                rtfText: preview?.join(' '),
             }
         });
-    }, [formFields]);*/
+    }
 
+    const analyzePhoto = async (e: FileUploadHandlerEvent, sectionDocumentType: string) => {
+        let data: any = {};
+        console.log(lowercaseString(sectionDocumentType))
+        if (lowercaseString(sectionDocumentType).includes('ident') && !lowercaseString(sectionDocumentType).includes('car ident')) {
+            data = await analyzeIdentityCard(e)
+        } else if (lowercaseString(sectionDocumentType).includes('passport') || lowercaseString(sectionDocumentType).includes('pasaport')) {
+            data = await analyzePassport(e)
+        } else console.log("Your document is not supported yet.")
+        const keys = Object.keys(data);
 
+        // if keys are equal to the keyword of form.fields, then update preview state with the values of the dynamic fields and also update the filledForm state
+        previewDynamicFieldsIndex?.forEach((index: number) => {
+            keys.forEach((key: string) => {
+                form?.fields.forEach((field: Field) => {
+                    if (lowercaseString(field.keyword).includes(lowercaseString(key))) {
+                        if (lowercaseString(previewClone[index]).includes(`{${lowercaseString(field.placeholder)}`)) {
+                            (data[key].kind === 'date') ? preview[index] = new Date(data[key].value).toLocaleDateString('en-UK')
+                                : preview[index] = data[key].value;
+                        }
+                    }
+                });
+            });
+        });
 
-    const [recognizedForm, setRecognizedForm] = useState<any>({});
-
-    const handleFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
         setFilledForm({
             ...filledForm,
             data: {
                 ...filledForm?.data,
                 fields: filledForm?.data?.fields.map((field: SubmissionField) => {
-                    if (field.label === name) {
+                    if (keys.includes(field.keyword)) {
                         return {
                             ...field,
-                            value: value,
+                            value: data[field.keyword].value
                         }
                     }
                     return field;
-                })
+                }),
+                rtfText: preview?.join(' '),
             }
         });
-    }
-
-    /*const [file, setFile] = useState<File>();
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setFile(e.target.files[0]);
-        }
-    };*/
-
-    const analyzePhoto = async (e: FileUploadHandlerEvent) => {
-        const file = e.files[0];
-        console.log('file = ', file);
-        if (!file) {
-            console.log('No file selected. Please select a file and try again.');
-            return
-        }
-        const formData = new FormData();
-        formData.append('file', file);
-        const response = await fetch(`${API_PATH_PROD}analyze`, {
-            method: 'POST',
-            body: formData
-        });
-        const data = await response.json();
-        setRecognizedForm(data);
-        console.log(data);
-        const keys = Object.keys(data);
-        // setFilledForm({
-        //     ...filledForm,
-        //     data: {
-        //         ...filledForm?.data,
-        //         fields: filledForm?.data?.fields.map((field: SubmissionField) => {
-        //             if (field.label === Object.keys(data)) {
-        //                 return {
-        //                     ...field,
-        //                     value: data[lowercaseString(field.label)].value,
-        //                 }
-        //             }
-        //             return field;
-        //         })
-        //     }
-        // });
 
     }
-
-    const [selectedCity, setSelectedCity] = useState<any>(null);
-
-    // city dropdown
-    interface City {
-        name: string,
-    }
-    const cities: City[] = [
-        { name: 'New York' },
-        { name: 'Rome' },
-        { name: 'London' },
-        { name: 'Istanbul' },
-        { name: 'Paris' }
-    ];
-
 
     console.log('filledForm = ', filledForm)
 
     return (
-        <div>
+        <div className="page-container">
             <h1>Fill form - <u>{form?.title}</u></h1>
             <div className="fill-container">
                 <TabView>
@@ -176,40 +209,170 @@ export const FillForm = () => {
                                 <TabPanel header={`Section ${section.sectionNr}`} headerTemplate={TabHeaderTemplate}>
                                     <Card>
                                         <div>
-                                            <FileUpload customUpload uploadHandler={analyzePhoto} className="form-btn" mode="basic" accept="image/*" maxFileSize={1000000} auto chooseLabel={'Scan ' + section.documentType} />
+                                            <Dialog header="Auto fill" visible={visible} onHide={() => setVisible(false)}
+                                                style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
+                                                <p className="m-0">
+                                                    Please wait! Auto-filling your data...
+                                                </p>
+                                            </Dialog>
+                                            <FileUpload customUpload uploadHandler={
+                                                (e: FileUploadHandlerEvent) => {
+                                                    setVisible(true);
+                                                    analyzePhoto(e, section.documentType).then(() => {
+                                                        setVisible(false);
+                                                    })
+                                                }
+                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={10000000} auto chooseLabel={'Scan ' + section?.documentType} />
                                         </div>
                                         {
-                                            form?.fields.filter((field: ChoiceField) => field.sectionNr === section.sectionNr).map((field: ChoiceField) => {
+                                            form?.fields.filter((field: Field | ChoiceField) => field.sectionNr === section.sectionNr).map((field: Field | ChoiceField) => {
                                                 return (
                                                     <div className="input-container">
                                                         {
 
-                                                            field.fieldType === 'number' && (
+                                                            lowercaseString(field.fieldType) === 'number' && (
                                                                 <div>
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="number-input" keyfilter="int" onChange={handleFieldChange} name={field.label} />
+                                                                        <InputText id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="number-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'string' && (
+                                                            lowercaseString(field.fieldType) === 'string' && (
                                                                 <div>
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="username" />
+                                                                        <InputText id="username" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="username">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
                                                             )
                                                         }
                                                         {
-                                                            field.fieldType === 'single-choice' && (
+                                                            lowercaseString(field.fieldType) === 'date' && (
                                                                 <div>
-                                                                    <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name"
-                                                                        placeholder={capitalizeFirstLetter(field.label)} className="w-full md:w-14rem" />
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                    <span className="p-float-label">
+                                                                        <Calendar touchUI showButtonBar showIcon id="date-input" dateFormat="dd/mm/yy" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                        <label htmlFor="date-input">{capitalizeFirstLetter(field.label)}</label>
+                                                                    </span>
                                                                 </div>
                                                             )
+                                                        }
+                                                        {
+                                                            lowercaseString(field.fieldType) === 'single-choice' && (
+                                                                <div>
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                    <span className="p-float-label">
+                                                                        <Dropdown optionLabel="name"
+                                                                            showClear
+                                                                            // @ts-ignore
+                                                                            options={field.options}
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value}
+                                                                            onChange={(e: DropdownChangeEvent) => {
+                                                                                previewDynamicFieldsIndex?.forEach((index: number) => {
+                                                                                    if (previewClone[index].includes(lowercaseString(field.label))) {
+                                                                                        (e.value?.name) ? preview[index] = e.value?.name : preview[index] = e.value;
+                                                                                    }
+                                                                                });
+                                                                                setFilledForm({
+                                                                                    ...filledForm,
+                                                                                    data: {
+                                                                                        ...filledForm?.data,
+                                                                                        fields: filledForm?.data?.fields.map((f: SubmissionField) => {
+                                                                                            if (f.label === field.label) {
+                                                                                                return {
+                                                                                                    ...f,
+                                                                                                    value: e.value,
+                                                                                                }
+                                                                                            }
+                                                                                            return f;
+                                                                                        }),
+                                                                                        rtfText: preview.join(' '),
+                                                                                    }
+                                                                                });
+                                                                                console.log('preview = ', preview)
+                                                                            }}
+                                                                            placeholder={field.label}
+                                                                        />
+                                                                        <label>{capitalizeFirstLetter(field.label)}</label>
+                                                                    </span>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        {
+                                                            lowercaseString(field.fieldType) === 'multiple-choice' && (
+                                                                <div>
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                    <span className="p-float-label">
+                                                                        <MultiSelect optionLabel="name"
+                                                                            // @ts-ignore
+                                                                            options={field.options}
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value}
+                                                                            onChange={(e) => {
+                                                                                previewDynamicFieldsIndex?.forEach((index: number) => {
+                                                                                    if (previewClone[index].includes(field.placeholder)) {
+                                                                                        preview[index] = e.value.map((v: any) => v.name).join(', ');
+                                                                                    }
+                                                                                });
+                                                                                setFilledForm({
+                                                                                    ...filledForm,
+                                                                                    data: {
+                                                                                        ...filledForm?.data,
+                                                                                        fields: filledForm?.data?.fields.map((f: SubmissionField) => {
+                                                                                            if (f.label === field.label) {
+                                                                                                return {
+                                                                                                    ...f,
+                                                                                                    value: e.value,
+                                                                                                }
+                                                                                            }
+                                                                                            return f;
+                                                                                        }),
+                                                                                        rtfText: preview.join(' '),
+                                                                                    }
+                                                                                });
+                                                                            }}
+                                                                            placeholder={field.label}
+                                                                        />
+                                                                        <label>{capitalizeFirstLetter(field.label)}</label>
+                                                                    </span>
+                                                                </div>
+                                                            )
+
                                                         }
                                                     </div>
                                                 )
@@ -220,8 +383,31 @@ export const FillForm = () => {
                             )
                         })
                     }
-                    <TabPanel header={`Preview`} headerTemplate={TabHeaderTemplate}>asd</TabPanel>
+                    <TabPanel header={`Preview`} headerTemplate={TabHeaderTemplate}>
+                        <Card>
+                            <Editor readOnly value={filledForm?.data?.rtfText} style={{ height: '320px' }} headerTemplate={editorHead} />
+                        </Card>
+                    </TabPanel>
                 </TabView>
+                <div className="submit-group">
+                    {
+                        filledForm?.data?.fields.every((field: SubmissionField) => (
+                            form?.fields.find((f: Field | ChoiceField) => f.label === field.label)?.mandatory === false || (field.value !== '' && field.value !== null && field.value !== undefined && field.value.length !== 0)
+                        ))
+                            && filledForm?.data?.rtfText !== ''
+                            && form?.fields.filter((field: Field | ChoiceField) => (!lowercaseString(field.fieldType).includes("choice") && !lowercaseString(field.fieldType).includes("date"))).every((field: Field | ChoiceField) => filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value.charAt(0) !== ' ')
+                            ? (
+                                <Button label="Submit"
+                                    onClick={() => {
+                                        setLoading(true);
+                                        createSubmission(filledForm);
+                                    }}
+                                />
+                            ) : (
+                                <Button label="Submit" disabled />
+                            )
+                    }
+                </div>
             </div>
         </div>
     )

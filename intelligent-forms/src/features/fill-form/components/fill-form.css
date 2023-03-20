@@ -1,3 +1,9 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .fill-container {
     margin-inline: auto;
     max-width: 600px;
@@ -12,6 +18,7 @@ div.p-tabview .p-tabview-nav {
     border: none;
     gap: 1rem;
 }
+
 
 div.p-tabview .p-tabview-nav .p-tabview-selected button{
     background-color: #3c39e8;
@@ -51,19 +58,69 @@ span.p-float-label > span{
     display: block;
 }
 
+.asterisk {
+    color: red;
+    display: flex;
+    padding-left: .1rem;
+}
+
 .input-container {
-    margin-bottom: 1.58rem;
+    margin-bottom: 1.65rem;
 }
 
 div.input-container div.p-dropdown {
     width: 100% !important;
 }
+div.input-container div.p-multiselect {
+    width: 100% !important;
+}
 
 div .form-btn{
     display: flex;
-    margin-bottom: 1.58rem;
+    margin-bottom: 2.58rem;
 }
 
 div .form-btn span.p-button{
     background-color: #3c39e8;
+}
+
+div .form-btn span.p-button:hover{
+    background-color: #15129e;
+}
+
+.fill-container .p-button {
+    background-color: #3c39e8;
+}
+
+.fill-container .p-button:hover {
+    background-color: #15129e !important;
+}
+
+.fill-container .submit-group .p-button {
+    width: 100%;
+}
+
+span.p-calendar input.p-inputtext, span.p-float-label input.p-inputtext {
+    width: 100%;
+}
+
+.p-float-label span.p-calendar {
+    width: 100%;
+    display: inline-flex;
+}
+
+.p-dropdown-label.p-inputtext {
+    text-align: left;
+}
+.p-multiselect-label {
+    text-align: left;
+}
+
+@media screen and (max-width: 480px) {
+    div.p-tabview .p-tabview-nav {
+        flex-direction: column;
+    }
+    .fill-container {
+        margin: 0rem;
+    }
 }

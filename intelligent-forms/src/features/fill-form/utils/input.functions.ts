@@ -11,3 +11,8 @@ export const capitalizeFirstLetter = (str: string) => {
 export const lowercaseString = (str: string) => {
     return str.toLowerCase()
 }
+
+// create function to check if first letter of string is a space
+export const checkFirstLetter = (str: string) => {
+    return str.charAt(0) === " "
+}

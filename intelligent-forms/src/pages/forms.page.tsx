@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/Authenticated.layout';
-import { CreateForm } from '../features/forms/components/form';
+import { CreateForm } from '../features/forms/components/create-form/create-form';
 export const FormsPage = () => {
     return (
         <AuthenticatedLayout>

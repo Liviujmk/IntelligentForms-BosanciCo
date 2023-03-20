@@ -8,12 +8,13 @@ interface Submission {
 
 interface SubmissionData {
     fields: SubmissionField[],
-    rtfText: string,
+    rtfText: string
 }
 
 interface SubmissionField {
     label: string;
     value: string;
+    keyword: string;
 }
 
 export type { Submission, SubmissionData, SubmissionField }

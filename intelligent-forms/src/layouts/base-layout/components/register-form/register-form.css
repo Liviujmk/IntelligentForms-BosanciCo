@@ -1,0 +1,103 @@
+.form-error {
+  color: red;
+}
+
+.login-form {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-inline: auto;
+  max-width: 500px;
+  max-height: 800px;
+}
+
+
+.custom-select {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 1rem;
+  background-color: #ffffff;
+  border-radius: 5px;
+  font-family: 'Poppins';
+  border: 1px solid #ced4da;
+  color: #6c7581;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom.seelect .option:hover {
+  background-color: #3c39e8;
+}
+
+.p-field,
+button.submit-button {
+  margin: 1.75rem 0;
+}
+
+.login-form.lg .p-field, .login-form.lg button.submit-button {
+  margin: 1rem 0;
+}
+
+.login-form:not(.lg) button.submit-button {
+  display: flex;
+  width: 100%;
+}
+
+.p-field span input {
+  width: 100%;
+  padding: 1rem .75rem;
+}
+
+.input-text {
+  text-align: center;
+  border-radius: 6px;
+  font-family: 'Poppins';
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  color: #495057;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-text:focus, .custom-select:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #c7d2fe;
+  border-color: #6366f1;
+}
+
+.title {
+  margin-top: 50px;
+  font-weight: 600;
+  font-size: 2.5em;
+  margin-bottom: 0;
+}
+
+.description {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: rgba(130, 130, 130, 1);
+}
+
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  display: flex;
+  align-items: center;
+}
+
+.input-icons .icon {
+  color: #7b8288;
+  padding: 20px;
+  max-width: 40px;
+  font-size: 17px !important;
+}
+
+.p-field-group {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
