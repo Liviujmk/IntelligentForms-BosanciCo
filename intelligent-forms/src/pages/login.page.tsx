@@ -75,7 +75,7 @@ export const Login = () => {
             </div>
             <Button className='submit-button' label="Login" onClick={handleSubmit} />
             <p>Don't have an account? <span><Link to={'/signup'}>Register!</Link></span></p>
-            <Link to={'/'}>HomePage</Link>
+            <Link to={'/'}> Go to HomePage</Link>
         </div>
     );
 };

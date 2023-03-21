@@ -23,11 +23,17 @@ export const Navigation = () => {
         },
         {
             label: 'Pricing',
-            icon: 'pi pi-money-bill',
+            icon: 'pi pi-credit-card',
             url: '/dashboard/pricing'
         }
     ];
-    const start = <img alt="logo" src={logoform} height="60" className="mr-2" ></img>;
+    const start = <p
+        id='logo-name'>
+        Intelligent
+        <br />
+        Forms
+    </p>
+
     const end =
         <button onClick={logoutUser}
             className='logout-button'>

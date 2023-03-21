@@ -8,13 +8,13 @@ import logoform from '../../../../assets/logoform.png'
 
 export const BaseNavigation = () => {
     const navigate = useNavigate()
-    const start = <img
-        alt="logo"
-        src={logoform}
-        height="60"
-        className="mr-2"
-    >
-    </img>;
+
+    const start = <p id='logo-name'>
+        Intelligent
+        <br />
+        Forms
+    </p>
+
     const end =
         <>
             <button onClick={() => {
