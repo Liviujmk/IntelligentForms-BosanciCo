@@ -231,8 +231,9 @@ export const FillForm = () => {
         });
 
     }
-
-    console.log('filledForm = ', filledForm)
+    console.log('preview', preview);
+    console.log('previewClone', previewClone);
+    
     return (
         <div className="page-container">
             <h1>{form?.title}</h1>
@@ -248,14 +249,19 @@ export const FillForm = () => {
                                                 style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
                                                 <p className="m-0">{<span>{fileState}</span>}</p>
                                             </Dialog>
-                                            <FileUpload customUpload uploadHandler={
-                                                (e: FileUploadHandlerEvent) => {
-                                                    setVisible(true);
-                                                    analyzePhoto(e, section.documentType).then(() => {
-                                                        setVisible(false);
-                                                    })
-                                                }
-                                            } className="form-btn" mode="basic" accept="image/*" maxFileSize={10000000} auto chooseLabel={'Scan ' + section?.documentType} />
+                                            {
+                                                lowercaseString(section.documentType) !== 'none' && (
+                                                    <FileUpload customUpload uploadHandler={
+                                                        (e: FileUploadHandlerEvent) => {
+                                                            setVisible(true);
+                                                            analyzePhoto(e, section.documentType).then(() => {
+                                                                setVisible(false);
+                                                            })
+                                                        }
+                                                    } className="form-btn" mode="basic" accept="image/*" maxFileSize={10000000} auto chooseLabel={'Scan ' + section?.documentType} />
+                                                )
+                                            }
+                                            
                                         </div>
                                         {
                                             form?.fields.filter((field: Field | ChoiceField) => field.sectionNr === section.sectionNr).map((field: Field | ChoiceField) => {
@@ -299,7 +305,7 @@ export const FillForm = () => {
                                                             )
                                                         }
                                                         {
-                                                            lowercaseString(field.fieldType) === 'string' && (
+                                                            lowercaseString(field.fieldType) === 'text' && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
