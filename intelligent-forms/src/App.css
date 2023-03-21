@@ -25,7 +25,8 @@ a {
 
 .card {
   background: var(--surface-card);
-  padding: 2rem;
+  padding: 1rem;
+  padding-top: 0;
   border-radius: 10px;
   margin-bottom: 1rem;
 }
@@ -222,4 +223,5 @@ button:focus-visible {
   font-weight: 400;
   font-size: 1.75em;
   color: black;
+  margin: 0;
 }

@@ -177,6 +177,7 @@ export const FillForm = () => {
             setFileState('File size is too big. Please upload a file less than 10MB.');
             return;
         }
+        console.log(e.files[0].name)
 
         // assign data
         let data: any = {};
@@ -306,7 +307,7 @@ export const FillForm = () => {
                                                             )
                                                         }
                                                         {
-                                                            (lowercaseString(field.fieldType) === 'string' ) && (
+                                                            (lowercaseString(field.fieldType) === 'text' ) && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {

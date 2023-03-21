@@ -17,7 +17,7 @@ interface Props {
 
 
 export const NewSection = ({ sectionNr, fields, setFields, sections, setSections, }: Props) => {
-
+    console.log('sections', sections)
     return (
         <div className='section'>
             <div className='field-section'>
@@ -37,7 +37,7 @@ export const NewSection = ({ sectionNr, fields, setFields, sections, setSections
                     onTextChange={(e: EditorTextChangeEvent) => {
                         setSections(sections.map((section: { sectionNr: number; }) => {
                             if (section.sectionNr === sectionNr) {
-                                return { ...section, rtfText: e.htmlValue }
+                                return { ...section, rtfText: e.textValue }
                             }
                             return section
                         }))

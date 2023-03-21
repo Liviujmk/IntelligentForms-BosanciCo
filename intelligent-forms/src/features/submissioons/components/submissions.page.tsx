@@ -35,7 +35,7 @@ export const SubmissionsPage = () => {
     const contentArea = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (submissions) {
+        if (submissions!== undefined && submissions.length > 0) {
             setFields(
                 submissions[0].data.fields.map((field: SubmissionField) => field.label)
             )
