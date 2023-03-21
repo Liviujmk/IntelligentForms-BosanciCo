@@ -17,6 +17,10 @@ td div.card.table-group {
     justify-content: center;
 }
 
+.qr-dialog .p-sidebar-header {
+    padding-bottom: 0;
+}
+
 .qr-dialog .p-sidebar-content {
     display: flex;
     flex-direction: column;
@@ -41,9 +45,11 @@ td div.card.table-group {
 
 .link h1 {
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 .link .form-link {
+    color: #3c39e8;
     margin-bottom: 1rem;
 }
 

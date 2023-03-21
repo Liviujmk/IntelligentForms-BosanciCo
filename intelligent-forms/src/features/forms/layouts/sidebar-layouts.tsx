@@ -13,6 +13,8 @@ export const QRLayout = (
             <h3>Scan QR below to fill the form</h3>
             <div className='qr-container'>
                 <QRCode
+                    bgColor="#FFFFFF"
+                    fgColor="#3c39e8"
                     size={256}
                     style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                     value={activeForm.fillFormUrl}
