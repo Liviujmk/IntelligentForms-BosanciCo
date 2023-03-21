@@ -1,9 +1,11 @@
 import { API_PATH_PROD, API_PATH_LOCAL } from "../../../config/api";
 import { Form } from "../types/form.types";
 
+export const FORMS_PATH = "forms";
+
 export const createForm = async (form: Form) => {
     try {
-        const response = await fetch(`${API_PATH_PROD}forms/`, {
+        const response = await fetch(`${API_PATH_PROD}${FORMS_PATH}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -19,7 +21,7 @@ export const createForm = async (form: Form) => {
 
 export const getAllForms = async () => {
     try {
-        const response = await fetch(`${API_PATH_PROD}forms/`, {
+        const response = await fetch(`${API_PATH_PROD}${FORMS_PATH}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -48,7 +50,7 @@ export const getForm = async (formId: string) => {
 
 export const updateForm = async (form: Form, formId: string) => {
     try {
-        const response = await fetch(`${API_PATH_PROD}forms/${formId}`, {
+        const response = await fetch(`${API_PATH_PROD}${FORMS_PATH}/${formId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -64,7 +66,7 @@ export const updateForm = async (form: Form, formId: string) => {
 
 export const deleteForm = async (formId: string) => {
     try {
-        const response = await fetch(`${API_PATH_PROD}forms/${formId}`, {
+        const response = await fetch(`${API_PATH_PROD}${FORMS_PATH}/${formId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

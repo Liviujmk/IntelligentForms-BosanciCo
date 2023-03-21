@@ -100,6 +100,15 @@ export const FillForm = () => {
     }, [previewClone?.length]);
 
 
+    // replace the dynamic fields in the preview array with '__' and set it to preview state
+    useEffect(() => {
+        previewDynamicFieldsIndex?.forEach((index: number) => {
+            preview[index] = '__________';
+        });
+        setPreview(preview);
+    }, [preview]);
+
+
     //create submission object ------->
     const [filledForm, setFilledForm] = useState<any>({
         formId: formId as string,
@@ -115,7 +124,7 @@ export const FillForm = () => {
             data: {
                 ...filledForm?.data,
                 fields: formFields,
-                rtfText: preview?.join(' '),
+                rtfText: preview.join(' '),
             }
         });
     }, [formFields]);
@@ -123,14 +132,22 @@ export const FillForm = () => {
 
 
     const handleFieldChange = (e: ChangeEvent<HTMLInputElement> | CalendarChangeEvent) => {
-        console.log('e >>> ', e)
         const { name, value, id } = e.target;
         // update preview state with the values of the dynamic fields
         previewDynamicFieldsIndex?.forEach((index: number) => {
             if (previewClone[index].includes(`{${name}`)) {
                 // @ts-ignore
-                id.includes('date') ? preview[index] = value.toLocaleDateString('en-UK') : preview[index] = value;
-                // preview[index] = value;
+                if(value === '' || value === null || value === undefined) {
+                    preview[index] = '__________';
+                } else if(id.includes('date') && value!=null) {
+                    // @ts-ignore
+                    preview[index] = value.toLocaleDateString('en-UK')
+                    // @ts-ignore
+                } else if(!id.includes('date') && value.charAt(0) === ' ') {
+                    preview[index] = '__________';
+                } else {
+                    preview[index] = value;
+                }
             }
         });
 
@@ -170,8 +187,8 @@ export const FillForm = () => {
             setFileState('Please wait! Auto-filling your passport data...');
             data = await analyzePassport(e)
         } else {
-            console.log("Your document is not supported yet.")
             setFileState('Document not supported yet.');
+            console.log("Your document is not supported yet.")
             return;
         }
         const keys = Object.keys(data);
@@ -196,6 +213,12 @@ export const FillForm = () => {
                 ...filledForm?.data,
                 fields: filledForm?.data?.fields.map((field: SubmissionField) => {
                     if (keys.includes(field.keyword)) {
+                        if(data[field.keyword].kind === 'date') {
+                            return {
+                                ...field,
+                                value: new Date(data[field.keyword].value)
+                            }
+                        }
                         return {
                             ...field,
                             value: data[field.keyword].value
@@ -210,10 +233,9 @@ export const FillForm = () => {
     }
 
     console.log('filledForm = ', filledForm)
-
     return (
         <div className="page-container">
-            <h1>Fill form - <u>{form?.title}</u></h1>
+            <h1>{form?.title}</h1>
             <div className="fill-container">
                 <TabView>
                     {
@@ -224,20 +246,7 @@ export const FillForm = () => {
                                         <div>
                                             <Dialog header="Auto fill" visible={visible} onHide={() => setVisible(false)}
                                                 style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
-                                                <p className="m-0">
-                                                    {
-                                                        fileState?.includes('Please wait') ? (
-                                                            <span>{fileState}</span>
-                                                        ): (
-                                                            (fileState === 'Document not supported yet.') ? (
-                                                                <span>{fileState}</span>
-                                                            ) : (
-                                                                <span>{fileState}</span>
-                                                            )
-                                                        )
-                                                    }
-                                                    
-                                                </p>
+                                                <p className="m-0">{<span>{fileState}</span>}</p>
                                             </Dialog>
                                             <FileUpload customUpload uploadHandler={
                                                 (e: FileUploadHandlerEvent) => {
@@ -267,6 +276,24 @@ export const FillForm = () => {
                                                                         <InputText id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
                                                                             value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="number-input">{capitalizeFirstLetter(field.label)}</label>
+                                                                    </span>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        {
+                                                            lowercaseString(field.fieldType) === 'decimal' && (
+                                                                <div>
+                                                                    <div className="asterisk-madatory">
+                                                                        {
+                                                                            field.mandatory && (
+                                                                                <span className="asterisk">*</span>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                    <span className="p-float-label">
+                                                                        <InputText id="decimal-input" keyfilter="int" onChange={handleFieldChange} name={field.placeholder}
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                        <label htmlFor="decimal-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
                                                             )
@@ -324,7 +351,7 @@ export const FillForm = () => {
                                                                             onChange={(e: DropdownChangeEvent) => {
                                                                                 previewDynamicFieldsIndex?.forEach((index: number) => {
                                                                                     if (previewClone[index].includes(lowercaseString(field.label))) {
-                                                                                        (e.value?.name) ? preview[index] = e.value?.name : preview[index] = e.value;
+                                                                                        (e.value?.name) ? preview[index] = e.value?.name : preview[index] = '__________';
                                                                                     }
                                                                                 });
                                                                                 setFilledForm({
@@ -370,7 +397,7 @@ export const FillForm = () => {
                                                                             onChange={(e) => {
                                                                                 previewDynamicFieldsIndex?.forEach((index: number) => {
                                                                                     if (previewClone[index].includes(field.placeholder)) {
-                                                                                        preview[index] = e.value.map((v: any) => v.name).join(', ');
+                                                                                        (e.value?.length) ? preview[index] = e.value.map((v: any) => v.name).join(', ') : preview[index] = '__________';
                                                                                     }
                                                                                 });
                                                                                 setFilledForm({
@@ -423,12 +450,18 @@ export const FillForm = () => {
                             ? (
                                 <Button label="Submit"
                                     onClick={() => {
+                                        // setfilledform date when submit
+                                        setFilledForm({
+                                            ...filledForm,
+                                            date: new Date(),
+                                        });
                                         setLoading(true);
                                         createSubmission(filledForm);
                                     }}
+                                    loading={loading}
                                 />
                             ) : (
-                                <Button label="Submit" disabled />
+                                <Button label="Please fill all mandatory fields" disabled />
                             )
                     }
                 </div>

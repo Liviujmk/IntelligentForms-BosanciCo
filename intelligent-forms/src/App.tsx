@@ -9,10 +9,9 @@ import RequireAuth from "./features/auth/RequireAuth";
 import { Login } from "./pages/login.page";
 import { Signup } from "./pages/signup.page";
 import { HomePage } from "./pages/home.page";
-import { DashboardPage } from "./pages/dashboard.page";
 import { FormsPage } from "./features/forms/components/forms.page";
 import { FillForm } from "./features/fill-form/components/fillForm";
-import { SubmissionsPage } from "./pages/submissions.page";
+import { SubmissionsPage } from "./features/submissioons/components/submissions.page";
 import { PricingPage } from "./pages/pricing.page";
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
           <Route path="fill/:formId" element={<FillForm />} />
           <Route element={<RequireAuth />}>
             <Route path="dashboard">
-              <Route index element={<DashboardPage />} />
               <Route path="forms">
                 <Route index element={<FormsPage />} />
                 <Route path="create" element={<div>Create new form</div>} />

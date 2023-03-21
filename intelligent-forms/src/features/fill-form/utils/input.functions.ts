@@ -16,3 +16,7 @@ export const lowercaseString = (str: string) => {
 export const checkFirstLetter = (str: string) => {
     return str.charAt(0) === " "
 }
+
+export const removeHTMLTags = (str: string) => {
+    return str.replace(/(<([^>]+)>)/gi, "")
+}

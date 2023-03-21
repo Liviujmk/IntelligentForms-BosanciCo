@@ -1,5 +1,20 @@
-.card.table-group {
+td div.card.table-group {
     padding: 0;
+    margin: 0;
+    gap: 0 !important;
+    justify-content: flex-end !important;
+}
+
+.card.table {
+    padding: 0;
+}
+
+.card h1 {
+    margin-block: 4rem;
+}
+
+.actions > div {
+    justify-content: center;
 }
 
 .qr-dialog .p-sidebar-content {
@@ -12,5 +27,22 @@
 
 .qr-dialog .qr-container {
     margin-top: 3rem;
-    width: 400px;
+    max-width: 400px;
+    width: auto;
+    margin-inline: auto;
+}
+
+.link {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.link .form-link {
+    margin-bottom: 1rem;
+}
+
+.btn-group {
+    display: flex;
+    gap: 1rem;
 }
