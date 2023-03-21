@@ -231,9 +231,9 @@ export const FillForm = () => {
         });
 
     }
-    console.log('preview', preview);
-    console.log('previewClone', previewClone);
-    
+
+    console.log('filledForm', filledForm);
+
     return (
         <div className="page-container">
             <h1>{form?.title}</h1>
@@ -305,7 +305,7 @@ export const FillForm = () => {
                                                             )
                                                         }
                                                         {
-                                                            lowercaseString(field.fieldType) === 'text' && (
+                                                            (lowercaseString(field.fieldType) === 'string' ) && (
                                                                 <div>
                                                                     <div className="asterisk-madatory">
                                                                         {
