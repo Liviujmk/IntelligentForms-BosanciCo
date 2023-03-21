@@ -40,7 +40,12 @@ export const FormsPage = () => {
 
     return (
         <AuthenticatedLayout>
-            <h1>Forms</h1>
+            <div className='formsHeader'>
+                <h1>Forms</h1>
+                <Link to='create'>
+                    <Button label="Create new form" icon="pi pi-plus" className='p-button-primary' />
+                </Link>
+            </div>
             <div className="card">
                 <Sidebar visible={visible} onHide={() => {
                     setVisible(false);

@@ -27,6 +27,7 @@ td div.card.table-group {
 
 .qr-dialog .qr-container {
     margin-top: 3rem;
+<<<<<<< HEAD
     max-width: 400px;
     width: auto;
     margin-inline: auto;
@@ -45,4 +46,14 @@ td div.card.table-group {
 .btn-group {
     display: flex;
     gap: 1rem;
+=======
+    width: 400px;
+}
+
+.formsHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+>>>>>>> a765cf6fc98c1830e49db7973cca5d605f82f382
 }

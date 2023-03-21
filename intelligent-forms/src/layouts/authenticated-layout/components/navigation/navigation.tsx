@@ -6,7 +6,6 @@ import 'primereact/resources/primereact.css';                       // core css
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
 import './navigation.css'
 import logoform from '../../../../assets/logoform.png'
-import Cookies from 'js-cookie';
 import { logoutUser } from '../../../../features/auth/api';
 
 interface MenuItem {
@@ -18,22 +17,23 @@ export const Navigation = () => {
     const navigate = useNavigate()
     const items: MenuItem[] = [
         {
-            label: 'Dashboard',
-            icon: 'pi pi-home',
-            url: '/dashboard'
-        },
-        {
             label: 'Forms',
             icon: 'pi pi-file',
             url: '/dashboard/forms'
         },
         {
             label: 'Pricing',
-            icon: 'pi pi-money-bill',
+            icon: 'pi pi-credit-card',
             url: '/dashboard/pricing'
         }
     ];
-    const start = <img alt="logo" src={logoform} height="60" className="mr-2"></img>;
+    const start = <p
+        id='logo-name'>
+        Intelligent
+        <br />
+        Forms
+    </p>
+
     const end =
         <button onClick={logoutUser}
             className='logout-button'>

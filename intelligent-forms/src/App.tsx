@@ -13,6 +13,7 @@ import { FormsPage } from "./features/forms/components/forms.page";
 import { FillForm } from "./features/fill-form/components/fillForm";
 import { SubmissionsPage } from "./features/submissioons/components/submissions.page";
 import { PricingPage } from "./pages/pricing.page";
+import { CreateForm } from './features/forms/components/create-form/create-form'
 
 function App() {
   startServer();
@@ -29,7 +30,7 @@ function App() {
             <Route path="dashboard">
               <Route path="forms">
                 <Route index element={<FormsPage />} />
-                <Route path="create" element={<div>Create new form</div>} />
+                <Route path="create" element={<CreateForm />} />
                 <Route path=":formId" element={<div>Form</div>} />
                 <Route
                   path=":formId/submissions"

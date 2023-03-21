@@ -7,16 +7,19 @@
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
+    border: none;
+    border-radius: 0%;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .logout-button {
     background-color: white;
-    color:#3C39E8;
+    color: #3C39E8;
     font-size: large;
 }
 
 .logout-button:hover {
     background-color: #3c39e8;
-    color:white;
+    color: white;
     transition: 0.5s;
 }

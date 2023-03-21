@@ -48,8 +48,7 @@ export const Login = () => {
                     setAuth(data);
                     navigate(from, { replace: true });
                 }
-                else
-                {
+                else {
                     setError('Invalid email or password');
                 }
             })
@@ -69,13 +68,14 @@ export const Login = () => {
             </div>
             <div className="p-field">
                 <span className="p-float-label">
-                    <Password id="password" className='password' value={password} feedback={false} onChange={(e) => {setPassword(e.target.value),setError('')}} required />
+                    <Password id="password" className='password' value={password} feedback={false} onChange={(e) => { setPassword(e.target.value), setError('') }} required />
                     {<p className="login-error">{error}</p>}
                     <label htmlFor="password">Password</label>
                 </span>
             </div>
             <Button className='submit-button' label="Login" onClick={handleSubmit} />
             <p>Don't have an account? <span><Link to={'/signup'}>Register!</Link></span></p>
+            <Link to={'/'}> Go to HomePage</Link>
         </div>
     );
 };
