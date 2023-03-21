@@ -6,7 +6,7 @@ const SUBMISSIONS_PATH = "submissions";
 
 export const getAllSubmissions = async (formID: any) => {
     try {
-        const response = await fetch(`${API_PATH_LOCAL}${FORMS_PATH}/${formID}/${SUBMISSIONS_PATH}`, {
+        const response = await fetch(`${API_PATH_PROD}${FORMS_PATH}/${formID}/${SUBMISSIONS_PATH}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
