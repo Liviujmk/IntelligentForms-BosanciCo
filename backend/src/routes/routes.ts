@@ -15,6 +15,8 @@ router.get('/', (req: Request, res: Response) => {
 // POST routes for form recognizer: at the moment identity-card and passport only 
 router.post('/analyze/identity', formRecognizerController.analyzeIdentityCard);
 router.post('/analyze/passport', formRecognizerController.analyzePassport);
+router.post('/analyze/caridentity', formRecognizerController.analyzeCarIdentification);
+router.post('/analyze/birthcertificate', formRecognizerController.analyzeBirthCertificate);
 
 // routes for register/login service
 router.post('/auth/signup', userController.create);
