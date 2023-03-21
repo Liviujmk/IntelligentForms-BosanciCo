@@ -281,7 +281,7 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
+                                                                        <InputText maxLength={25} id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
                                                                             value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="number-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
@@ -299,7 +299,7 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="decimal-input" keyfilter="int" onChange={handleFieldChange} name={field.placeholder}
+                                                                        <InputText maxLength={25} id="decimal-input" keyfilter="int" onChange={handleFieldChange} name={field.placeholder}
                                                                             value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="decimal-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
@@ -317,7 +317,7 @@ export const FillForm = () => {
                                                                         }
                                                                     </div>
                                                                     <span className="p-float-label">
-                                                                        <InputText id="username" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                        <InputText maxLength={35} keyfilter={/^[^~<>*!?/!@#$%&=+.:;'"`,}{]+$/} id="username" onChange={handleFieldChange} name={field.placeholder} value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
                                                                         <label htmlFor="username">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
