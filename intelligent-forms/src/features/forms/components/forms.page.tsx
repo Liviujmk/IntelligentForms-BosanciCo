@@ -18,6 +18,7 @@ import { QRLayout, LinkLayout } from '../layouts/sidebar-layouts';
 
 export const FormsPage = () => {
     const toast = useRef<Toast>(null);
+    const toastBC = useRef<Toast>(null);
     const [formsByUserId, setFormsByUserId] = useState<Form[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
     const [activeLayout, setActiveLayout] = useState<string>('');
@@ -28,15 +29,40 @@ export const FormsPage = () => {
 
     const { isLoading, data: forms, mutate: mutateForms } = useSWR<Form[]>('/forms', getAllForms);
 
+    const clear = (submit: boolean, formId?: string) => {
+        // @ts-ignore
+        toastBC.current.clear();
+        // @ts-ignore
+        submit && deleteFormMutation(formId);
+    };
+
     const deleteFormMutation = async (formId: string) => {
-        try {
-            await deleteForm(formId);
-            mutateForms();
-            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Form deleted successfully' });
-        } catch (error) {
-            toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Error deleting form' });
-        }
-    }
+        await deleteForm(formId);
+        mutateForms();
+        // @ts-ignore
+        toast.current.show({ severity: 'success', summary: 'Form deleted', detail: 'Form deleted along with its submsissions' });
+    };
+
+    const confirm = async (formId: string) => {
+        toastBC.current?.show({
+            severity: 'warn',
+            sticky: true,
+            className: 'border-none',
+            content: (
+                <div className="flex flex-column align-items-center" style={{ flex: '1' }}>
+                    <div className="text-center">
+                        <i className="pi pi-exclamation-triangle" style={{ fontSize: '3rem' }}></i>
+                        <div className="font-bold text-xl my-3">Are you sure?</div>
+                        <p>This action will also delete all submissions from this form</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button onClick={(e) => clear(true, formId)} type="button" label="Confirm" className="p-button-danger w-6rem" />
+                        <Button onClick={(e) => clear(false)} type="button" label="Cancel" className="p-button-warning w-6rem" />
+                    </div>
+                </div>
+            )
+        });
+    };
 
     return (
         <AuthenticatedLayout>
@@ -90,11 +116,12 @@ export const FormsPage = () => {
                                                 }}
                                                 />
                                                 <Toast ref={toast} />
+                                                <Toast ref={toastBC} />
                                                 <Button tooltip='Delete form' icon="pi pi-trash" className='p-button-danger'
-                                                    // @ts-ignore 
-                                                    onClick={() => deleteFormMutation(rowData.id)}
+                                                    // @ts-ignore
+                                                    onClick={() => confirm(rowData.id)}
                                                 />
-                                                <Link className='' to={`${rowData.id}/submissions`}>
+                                                <Link to={`${rowData.id}/submissions`}>
                                                     <Button tooltip='View submissions' icon="pi pi-eye" className='p-button-success' />
                                                 </Link>
                                             </div>

@@ -3,13 +3,13 @@ import { AuthenticatedLayout } from "../../../layouts/authenticated-layout/Authe
 import { useEffect, useRef, useState } from "react";
 import useSWR from 'swr'
 import { Submission, SubmissionData, SubmissionField } from "../types/submission.types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
 import { getAllSubmissions } from "../api/api.submissions";
 import { getForm } from "../../forms/api/api.forms";
 import { Toast } from "primereact/toast";
-import { Column, ColumnFilterClearTemplateOptions, ColumnFilterElementTemplateOptions } from "primereact/column";
+import { Column, ColumnFilterClearTemplateOptions, ColumnFilterElementTemplateOptions, ColumnFilterApplyTemplateOptions } from "primereact/column";
 import { Form } from "../../forms/types/form.types";
 import { Button } from "primereact/button";
 import { savePDF } from '@progress/kendo-react-pdf';
@@ -19,12 +19,15 @@ import { Calendar, CalendarChangeEvent } from "primereact/calendar";
 
 
 export const SubmissionsPage = () => {
-    const toast = useRef<Toast>(null);
+    const navigate = useNavigate();
     const { formId } = useParams<{ formId: string }>();
     const { data: form } = useSWR<Form>(`/forms/${formId}`, () => getForm(formId as string));
+    
+    const toast = useRef<Toast>(null);
     const { isLoading, data: submissions, mutate: mutateSubmissions } = useSWR<Submission[]>(`/forms/${formId}/submissions`, 
-        () => getAllSubmissions(formId)
+    () => getAllSubmissions(formId)
     );
+    //if (!form) navigate('/dashboard/forms');
 
     const [fields, setFields] = useState<string[]>([]);
     const [submissionDataArray, setSubmissionDataArray] = useState<any[]>([]);
@@ -64,10 +67,10 @@ export const SubmissionsPage = () => {
             )
         }
     }, [submissions]);
-
     useEffect(() => {
         initFilters();
     }, []);
+    
 
     const exportPDF = (rtfText: string) => {
         // @ts-ignore
@@ -82,10 +85,10 @@ export const SubmissionsPage = () => {
     }
 
     const formatDate = (value: Date) => {
-        return value.toLocaleDateString('en-UK', {
+        return value.toLocaleTimeString('en-UK', {
             day: '2-digit',
             month: '2-digit',
-            year: 'numeric'
+            year: 'numeric',
         });
     };
 
@@ -96,8 +99,7 @@ export const SubmissionsPage = () => {
     const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         let _filters = { ...filters };
-
-        // @ts-ignore
+        _filters['global'] = { value: value, matchMode: FilterMatchMode.CONTAINS };
         _filters['global'].value = value;
 
         setFilters(_filters);
@@ -132,7 +134,11 @@ export const SubmissionsPage = () => {
     };
 
     const dateFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return <Calendar value={options.value} onChange={(e: CalendarChangeEvent) => options.filterCallback(e.value, options.index)} dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" mask="99/99/9999" />;
+        return <Calendar value={options.value} onChange={(e: CalendarChangeEvent) => {
+            console.log('e', e.value)
+            console.log('options', options.index)
+            options.filterCallback(e.value, options.index)
+        }} dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" mask="99/99/9999" />;
     };
 
     const header = renderHeader();
@@ -144,7 +150,7 @@ export const SubmissionsPage = () => {
             {
                 isLoading ? <div>Loading...</div> : (
                     // @ts-ignore
-                    <DataTable filters={filters}  header={header} value={submissionDataArray} tableStyle={{ minWidth: '60rem' }} paginator rows={2} rowsPerPageOptions={[2, 4, 8, 16]}>
+                    <DataTable resizableColumns filters={filters}  header={header} value={submissionDataArray} tableStyle={{ minWidth: '60rem' }} paginator rows={2} rowsPerPageOptions={[2, 4, 8, 16]}>
                         {
                             // add timestamp column
                             <Column filterField="date" dataType="date" filter filterElement={dateFilterTemplate} header="Timestamp" 

@@ -95,27 +95,26 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
     }
 
     const saveData = () => {
-        {
-            const data = {
-                label: field.label,
-                placeholder: field.placeholder,
-                fieldType: fieldType?.type,
-                keyword: field.keyword,
-                options: choices,
-                mandatory: checked,
-                sectionNr: sectionNr,
-            }
-            schema.validate(data)
-                .then(() => {
-                    console.log('data is valid')
-                    addField()
-                    resetData()
-                })
-                .catch((err) => {
-                    console.log(err)
-                    alert(err + '  Field is not valid')
-                })
+        const data = {
+            label: field.label,
+            placeholder: field.placeholder,
+            fieldType: fieldType?.type,
+            keyword: field.keyword,
+            options: choices,
+            mandatory: checked,
+            sectionNr: sectionNr,
         }
+        schema.validate(data)
+            .then(() => {
+                console.log('data is valid')
+                addField()
+                resetData()
+            })
+            .catch((err) => {
+                console.log(err)
+                alert(err + '  Field is not valid')
+            })
+
     }
 
 
@@ -137,7 +136,7 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                 />
                 <InputText
                     type="text"
-                    placeholder="Keyword"
+                    placeholder="Document keyword"
                     value={field.keyword}
                     onChange={(e) => setField({ ...field, keyword: e.target.value })}
                 />
@@ -148,7 +147,6 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                             {
                                 type: e.value.type
                             }
-
                         )
                         setField({
                             ...field,
@@ -193,11 +191,17 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                         checked ? ' Mandatory' : ' Mandatory'
                     }
                 </div>
-
-                <Button
-                    label="Save Field"
-                    onClick={saveData}
-                />
+                {
+                    (fieldType.type === 'Single-Choice' || fieldType.type === 'Multiple-Choice') && (choices.length === 0 ) ?
+                        <Button
+                            label="Add Field"
+                            onClick={() => alert('Add at least one option and then click Add Field')}
+                        /> : 
+                        <Button
+                            label="Add Field"
+                            onClick={saveData}
+                        />
+                }
             </div>
             <div className='added-fields'>
 
@@ -206,7 +210,7 @@ export const NewField = ({ sectionNr, fieldsArray, setFields }: Props) => {
                     value={fieldsArray.map((field: any) => {
                         return field.label
                     })}
-                    placeholder='This are the fields you added so far'
+                    placeholder='Here are the fields you added so far'
                     separator={','}
                     readOnly={true}
                 />

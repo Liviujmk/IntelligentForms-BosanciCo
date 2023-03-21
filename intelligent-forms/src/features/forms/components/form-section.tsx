@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Editor, EditorTextChangeEvent } from 'primereact/editor';
 import { NewField } from './form-field';
 import * as yup from 'yup';
+import { Dropdown } from 'primereact/dropdown';
 
 
 
@@ -48,7 +49,27 @@ export const NewSection = ({ sectionNr, fields, setFields, sections, setSections
             </div>
             <div className='scan-document'>
                 <label className="font-bold block mb-2">Scan document type</label>
-                <InputText
+                <Dropdown value={
+                    sections.filter((section: { sectionNr: number; }) => section.sectionNr === sectionNr)[0].documentType
+                }
+                    options={[
+                        'None',
+                        'Identity card',
+                        'Passport',
+                        'Car identity',
+                        'Birth certificate',
+                    ]}
+                    onChange={(e) => {
+                        setSections(sections.map((section: { sectionNr: number; }) => {
+                            if (section.sectionNr === sectionNr) {
+                                return { ...section, documentType: e.value }
+                            }
+                            return section
+                        }))
+                    }}
+                />
+
+                {/* <InputText
                     type="text"
                     placeholder=""
                     value={sections.filter((section: { sectionNr: number; }) => section.sectionNr === sectionNr)[0].documentType}
@@ -61,7 +82,7 @@ export const NewSection = ({ sectionNr, fields, setFields, sections, setSections
                         }))
                     }
                     }
-                />
+                /> */}
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import { API_PATH_LOCAL, API_PATH_PROD } from "../../../config/api";
 
 import { getForm } from "../../forms/api/api.forms";
 import { capitalizeFirstLetter, capitalizeString, lowercaseString } from "../utils/input.functions";
-import { createSubmission, analyzeIdentityCard, analyzePassport } from "../api/fill.api";
+import { createSubmission, analyzeIdentityCard, analyzePassport, analyzeBirthCertificate, analyzeCarIdentity } from "../api/fill.api";
 
 import './fill-form.css'
 import { Form, Field, Section, ChoiceField } from "../../forms/types/form.types";
@@ -30,8 +30,6 @@ import { Button } from "primereact/button";
 
 export const FillForm = () => {
     const { formId } = useParams();
-
-    if (localStorage.getItem(`formId`) === formId) return <h1>Thanks for submitting this form! xD</h1>
 
     //add loading state
     const [loading, setLoading] = useState<boolean>(false);
@@ -87,7 +85,7 @@ export const FillForm = () => {
             }
         }));
 
-    }, [fields]);
+    }, [fields, preview?.length, previewClone?.length]);
 
 
     //create a new array with the position of the dynamic fields {} in the preview array
@@ -97,6 +95,7 @@ export const FillForm = () => {
                 return index;
             }
         }).filter((index: number) => index !== undefined));
+        
     }, [previewClone?.length]);
 
 
@@ -106,7 +105,8 @@ export const FillForm = () => {
             preview[index] = '__________';
         });
         setPreview(preview);
-    }, [preview]);
+        console.log('preview >>>>>> ', preview)
+    }, [formFields]);
 
 
     //create submission object ------->
@@ -187,6 +187,12 @@ export const FillForm = () => {
         } else if (lowercaseString(sectionDocumentType).includes('passport') || lowercaseString(sectionDocumentType).includes('pasaport')) {
             setFileState('Please wait! Auto-filling your passport data...');
             data = await analyzePassport(e)
+        } else if (lowercaseString(sectionDocumentType).includes('car ident')) {
+            setFileState('Please wait! Auto-filling your car identification data...');
+            data = await analyzeCarIdentity(e)
+        } else if (lowercaseString(sectionDocumentType).includes('birth cert')) {
+            setFileState('Please wait! Auto-filling your birth certificate data...');
+            data = await analyzeBirthCertificate(e)
         } else {
             setFileState('Document not supported yet.');
             console.log("Your document is not supported yet.")
@@ -198,7 +204,7 @@ export const FillForm = () => {
         previewDynamicFieldsIndex?.forEach((index: number) => {
             keys.forEach((key: string) => {
                 form?.fields.forEach((field: Field) => {
-                    if (lowercaseString(field.keyword).includes(lowercaseString(key))) {
+                    if (lowercaseString(key).includes(lowercaseString(field.keyword))) {
                         if (lowercaseString(previewClone[index]).includes(`{${lowercaseString(field.placeholder)}`)) {
                             (data[key].kind === 'date') ? preview[index] = new Date(data[key].value).toLocaleDateString('en-UK')
                                 : preview[index] = data[key].value;
@@ -282,7 +288,7 @@ export const FillForm = () => {
                                                                     </div>
                                                                     <span className="p-float-label">
                                                                         <InputText maxLength={25} id="number-input" keyfilter="num" onChange={handleFieldChange} name={field.placeholder}
-                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value} />
+                                                                            value={filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value || ''} />
                                                                         <label htmlFor="number-input">{capitalizeFirstLetter(field.label)}</label>
                                                                     </span>
                                                                 </div>
@@ -453,24 +459,24 @@ export const FillForm = () => {
                         filledForm?.data?.fields.every((field: SubmissionField) => (
                             form?.fields.find((f: Field | ChoiceField) => f.label === field.label)?.mandatory === false || (field.value !== '' && field.value !== null && field.value !== undefined && field.value.length !== 0)
                         ))
-                            && filledForm?.data?.rtfText !== ''
-                            && form?.fields.filter((field: Field | ChoiceField) => (!lowercaseString(field.fieldType).includes("choice") && !lowercaseString(field.fieldType).includes("date"))).every((field: Field | ChoiceField) => filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value.charAt(0) !== ' ')
-                            ? (
-                                <Button label="Submit"
-                                    onClick={() => {
-                                        // setfilledform date when submit
-                                        setFilledForm({
-                                            ...filledForm,
-                                            date: new Date(),
-                                        });
-                                        setLoading(true);
-                                        createSubmission(filledForm);
-                                    }}
-                                    loading={loading}
-                                />
-                            ) : (
-                                <Button label="Please fill all mandatory fields" disabled />
-                            )
+                        && filledForm?.data?.rtfText !== ''
+                        && form?.fields.filter((field: Field | ChoiceField) => (!lowercaseString(field.fieldType).includes("choice") && !lowercaseString(field.fieldType).includes("date"))).every((field: Field | ChoiceField) => filledForm?.data?.fields.find((f: SubmissionField) => f.label === field.label)?.value.charAt(0) !== ' ')
+                        ? (
+                            <Button label="Submit"
+                                onClick={() => {
+                                    // setfilledform date when submit
+                                    setFilledForm({
+                                        ...filledForm,
+                                        date: new Date(),
+                                    });
+                                    setLoading(true);
+                                    createSubmission(filledForm);
+                                }}
+                                loading={loading}
+                            />
+                        ) : (
+                            <Button label="Please fill all mandatory fields" disabled />
+                        )
                     }
                 </div>
             </div>

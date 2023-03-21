@@ -44,6 +44,48 @@ export const analyzePassport= async (e: FileUploadHandlerEvent) => {
     }
 };
 
+export const analyzeCarIdentity= async (e: FileUploadHandlerEvent) => {
+    try {
+        const file = e.files[0];
+        if (!file) {
+            console.log('No file selected. Please select a file and try again.');
+            return
+        }
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await fetch(`${API_PATH_PROD}analyze/caridentity`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        console.log(data);
+        return data
+    } catch (error) {
+        console.log("File upload failed. Please try again.");
+    }
+};
+
+export const analyzeBirthCertificate= async (e: FileUploadHandlerEvent) => {
+    try {
+        const file = e.files[0];
+        if (!file) {
+            console.log('No file selected. Please select a file and try again.');
+            return
+        }
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await fetch(`${API_PATH_PROD}analyze/birthcertificate`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        console.log(data);
+        return data
+    } catch (error) {
+        console.log("File upload failed. Please try again.");
+    }
+};
+
 export const createSubmission = async (submission: Submission) => {
     try {
         const response = await fetch(`${API_PATH_PROD}client/submissions`, {
@@ -55,7 +97,6 @@ export const createSubmission = async (submission: Submission) => {
         });
         const data = await response.json();
         console.log(data);
-        localStorage.setItem('formId', data.formId)
         window.location.reload();
     } catch (error) {
         console.log(error);

@@ -64,3 +64,7 @@ td div.card.table-group {
     align-items: center;
     justify-content: space-between
 }
+
+.p-toast {
+    opacity: 1 !important;
+}
