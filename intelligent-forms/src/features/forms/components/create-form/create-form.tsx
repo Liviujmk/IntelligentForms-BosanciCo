@@ -78,7 +78,7 @@ export const CreateForm = () => {
             .then(() => {
                 createForm(form)
                     .then((res) => {
-                        navigate('/forms')
+                        navigate('/dashboard/forms')
                     })
             })
             .catch((err) => {
