@@ -45,7 +45,6 @@ td div.card.table-group {
 .btn-group {
     display: flex;
     gap: 1rem;
-    width: 400px;
 }
 
 .formsHeader {

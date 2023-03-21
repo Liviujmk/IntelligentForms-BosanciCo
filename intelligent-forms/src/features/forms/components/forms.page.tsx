@@ -46,7 +46,7 @@ export const FormsPage = () => {
                     <Button label="Create new form" icon="pi pi-plus" className='p-button-primary' />
                 </Link>
             </div>
-            <div className="card">
+            <div className="card table">
                 <Sidebar visible={visible} onHide={() => {
                     setVisible(false);
                     setActiveLayout('');
