@@ -233,6 +233,7 @@ export const FillForm = () => {
     }
 
     console.log('filledForm', filledForm);
+    console.log('preview', preview);
 
     return (
         <div className="page-container">
