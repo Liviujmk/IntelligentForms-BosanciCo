@@ -1,9 +1,8 @@
 
 # Intelligent Forms 
 
-Intelligent Forms is a web app used to create form templates.
-The created forms have a 'scan-document' feature that allows to autofill the fields with data from the scanned document.\
-This project received second place at Assist Tech Challenge 2023.
+Intelligent Forms is a web-based application designed for the creation of customizable form templates. Its unique functionality includes a "scan-document" feature that utilizes Azure Form Recognizer to automatically populate form fields with relevant data extracted from scanned documents. As a testament to its innovative capabilities, Intelligent Forms achieved second place in the Assist Tech Challenge 2023.
+
 ## 
 The app is created with React, Typescript, NodeJs and Express.\
 Azure Form Recognizer is the tool used to extract data from uploaded documents. 
