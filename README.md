@@ -1,9 +1,9 @@
 
-# Intelligent Forms - Assist Tech Challenge 2023
+# Intelligent Forms 
 
 Intelligent Forms is a web app used to create form templates.
-The created forms have a 'scan-document' feature that allows to autofill the fields with data from the scanned document.
-
+The created forms have a 'scan-document' feature that allows to autofill the fields with data from the scanned document.\
+This project received second place at Assist Tech Challenge 2023.
 ## 
 The app is created with React, Typescript, NodeJs and Express.\
 Azure Form Recognizer is the tool used to extract data from uploaded documents. 
@@ -53,6 +53,9 @@ password='123456'
 - User is able to upload the picture of a document and the system is able to extract data from it and automatically fill some of the fields from the form
 - User is able to scan the picture of a Romanian Id Card, Passport, Romanian Vehicle Identity Card and Romanian Birth Certificate(This are the only ones trained so far).
 
+## Screenshots
 
-
+<img src="https://raw.githubusercontent.com/Liviujmk/IntelligentForms-BosanciCo/main/landing%20page.jpg" width="50%" height="50%"> 
+<img src="https://raw.githubusercontent.com/Liviujmk/IntelligentForms-BosanciCo/main/forms%20page.jpg" width="50%" height="50%"> 
+<img src="https://raw.githubusercontent.com/Liviujmk/IntelligentForms-BosanciCo/main/demo_IF.jpg" width="50%" height="50%"> 
 
