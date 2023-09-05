@@ -28,7 +28,6 @@ export const loginUser = async (user: UserLite) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include',
     body: JSON.stringify(user),
   });
   return response.json();
