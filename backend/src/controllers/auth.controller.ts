@@ -12,7 +12,7 @@ const authController = {
             const user = await User.findOne({ email }).exec();
             if (!user) return res.status(401).json({ message: "Email or Password is Wrong!" })
             //const isPasswordValid = await bcrypt.compare(password, user.password);
-
+            console.log(user)
             const hashPassword = (password:any) => {
                 return crypto.createHash('sha256').update(password).digest('hex')
             }
@@ -22,10 +22,10 @@ const authController = {
             //set 1 day cookie
             res.cookie('access_token', user.access_token, {
                 maxAge: 1000 * 60 * 60 * 24,
-                secure: true,
+                secure: false,
                 sameSite: 'none'
             });
-
+            
             return res.status(200).json({
                 _id: user._id,
                 name: user.name,
@@ -49,6 +49,7 @@ const authController = {
 };
 
 const isAuthenticated = async (req: Request, res: Response, next: any) => {
+    console.log(req.cookies)
     if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token

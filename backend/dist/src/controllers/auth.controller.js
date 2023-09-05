@@ -25,6 +25,7 @@ const authController = {
             if (!user)
                 return res.status(401).json({ message: "Email or Password is Wrong!" });
             //const isPasswordValid = await bcrypt.compare(password, user.password);
+            console.log(user);
             const hashPassword = (password) => {
                 return crypto_1.default.createHash('sha256').update(password).digest('hex');
             };

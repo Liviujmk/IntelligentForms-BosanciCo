@@ -32,7 +32,7 @@ import router from './src/routes/routes';
 app.use('/', router);
 
 // create a middleware that deletes submission date if today date is greater than form retention date
-app.use(async(req: Request, res: Response, next: any) => {
+/*app.use(async(req: Request, res: Response, next: any) => {
     const today = new Date();
     const submissions = await SubmissionModel.find({});
     submissions.forEach(async (submission) => {
@@ -47,7 +47,7 @@ app.use(async(req: Request, res: Response, next: any) => {
             }
         }
     })
-})
+})*/
 
 
 
