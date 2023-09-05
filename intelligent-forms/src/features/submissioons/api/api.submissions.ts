@@ -11,8 +11,7 @@ export const getAllSubmissions = async (formID: any) => {
             headers: {
                 "Content-Type": "application/json",
                 "x-authorization": localStorage.getItem('access_token')!
-            },
-            credentials: "include",
+            }
         });
         return response.json();
     } catch (error) {
@@ -27,8 +26,7 @@ export const getSubmission = async (submissionID: string) => {
             headers: {
                 "Content-Type": "application/json",
                 "x-authorization": localStorage.getItem('access_token')!
-            },
-            credentials: "include",
+            }
         });
         return response.json();
     } catch (error) {
