@@ -57,11 +57,11 @@ const authController = {
 };
 exports.authController = authController;
 const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.cookies);
-    if (req.cookies.access_token) {
-        const { access_token } = req.cookies;
+    console.log(req.headers);
+    if (req.headers.authorization) {
+        const { authorization } = req.headers;
         //find user by access token
-        const foundUser = yield user_1.default.findOne({ access_token }).exec();
+        const foundUser = yield user_1.default.findOne({ access_token: authorization }).exec();
         if (foundUser) {
             // @ts-ignore
             req.userId = foundUser.id;
