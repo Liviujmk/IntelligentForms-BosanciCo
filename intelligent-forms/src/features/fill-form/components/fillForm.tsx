@@ -33,6 +33,7 @@ export const FillForm = () => {
 
     //add loading state
     const [loading, setLoading] = useState<boolean>(false);
+    const [loading2, setLoading2] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     //fetch form from (url) api and set it to form state
     const [form, setForm] = useState<Form | null>(null);
@@ -46,7 +47,11 @@ export const FillForm = () => {
 
     //fetch form from (url) api and set it to form state
     async function fetchForm() {
-        const form = await getForm(formId as string);
+        setLoading2(true);
+        const form = await getForm(formId as string).then((res) => { 
+            setLoading2(false);
+            return res
+        });
         setForm(form);
         setSections(form?.sections);
         setFields(form?.fields);
@@ -55,8 +60,12 @@ export const FillForm = () => {
     }
     useEffect(() => {
         fetchForm();
+
     }, []);
 
+    // if(!form) {
+    //     return <div>Loading...</div>
+    // }
 
     //set fetched-form fields to state
     const [formFields, setFormFields] = useState<SubmissionField[]>([
@@ -244,7 +253,11 @@ export const FillForm = () => {
 
     return (
         <div className="page-container">
-            <h1>{form?.title}</h1>
+            <h1>
+                {
+                    (loading2) ? <>Loading fill form...</> : form?.title
+                }
+            </h1>
             <div className="fill-container">
                 <TabView>
                     {
@@ -448,13 +461,19 @@ export const FillForm = () => {
                             )
                         })
                     }
-                    <TabPanel header={`Preview`} headerTemplate={TabHeaderTemplate}>
+                    <TabPanel header={`Preview`} headerTemplate={TabHeaderTemplate} style={
+                        loading2 ? { pointerEvents: 'none', opacity: '0' } : { pointerEvents: 'auto', opacity: '1' }
+                    }>
                         <Card>
                             <Editor readOnly value={filledForm?.data?.rtfText} style={{ height: '320px' }} headerTemplate={editorHead} />
                         </Card>
                     </TabPanel>
                 </TabView>
-                <div className="submit-group">
+                <div className="submit-group"
+                    style={
+                        loading2 ? { pointerEvents: 'none', opacity: '0' } : { pointerEvents: 'auto', opacity: '1' }
+                    }
+                >
                     {
                         filledForm?.data?.fields.every((field: SubmissionField) => (
                             form?.fields.find((f: Field | ChoiceField) => f.label === field.label)?.mandatory === false || (field.value !== '' && field.value !== null && field.value !== undefined && field.value.length !== 0)
