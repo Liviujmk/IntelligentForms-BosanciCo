@@ -9,7 +9,7 @@ export const createForm = async (form: Form) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
             body: JSON.stringify(form),
@@ -26,7 +26,7 @@ export const getAllForms = async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "same-origin",
         });
@@ -42,7 +42,7 @@ export const getForm = async (formId: string) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             }
         });
         return response.json();
@@ -57,7 +57,7 @@ export const updateForm = async (form: Form, formId: string) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
             body: JSON.stringify(form),
@@ -74,7 +74,7 @@ export const deleteForm = async (formId: string) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
         });

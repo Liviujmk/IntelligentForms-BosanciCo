@@ -10,7 +10,7 @@ export const getAllSubmissions = async (formID: any) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
         });
@@ -26,7 +26,7 @@ export const getSubmission = async (submissionID: string) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
         });
@@ -42,7 +42,7 @@ export const deleteSubmission = async (submissionID: string) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": localStorage.getItem('access_token')!
+                "x-authorization": localStorage.getItem('access_token')!
             },
             credentials: "include",
         });
