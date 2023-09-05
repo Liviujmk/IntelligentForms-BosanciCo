@@ -20,10 +20,7 @@ const authController = {
             if (!isPasswordValid) return res.status(401).json({ message: "Email or Password is Wrong!" })
 
             //set 1 day cookie
-            res.cookie('access_token', user.access_token, {
-                maxAge: 1000 * 60 * 60 * 24,
-                sameSite: "none"
-            });
+            res.cookie('access_token', user.access_token);
             
             return res.status(200).json({
                 _id: user._id,

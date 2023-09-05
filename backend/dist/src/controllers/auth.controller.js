@@ -33,11 +33,7 @@ const authController = {
             if (!isPasswordValid)
                 return res.status(401).json({ message: "Email or Password is Wrong!" });
             //set 1 day cookie
-            res.cookie('access_token', user.access_token, {
-                maxAge: 1000 * 60 * 60 * 24,
-                secure: true,
-                sameSite: 'none'
-            });
+            res.cookie('access_token', user.access_token);
             return res.status(200).json({
                 _id: user._id,
                 name: user.name,
@@ -61,6 +57,7 @@ const authController = {
 };
 exports.authController = authController;
 const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.cookies);
     if (req.cookies.access_token) {
         const { access_token } = req.cookies;
         //find user by access token
