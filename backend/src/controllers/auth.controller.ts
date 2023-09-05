@@ -22,8 +22,7 @@ const authController = {
             //set 1 day cookie
             res.cookie('access_token', user.access_token, {
                 maxAge: 1000 * 60 * 60 * 24,
-                secure: false,
-                sameSite: 'none'
+                sameSite: "none"
             });
             
             return res.status(200).json({
