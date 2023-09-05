@@ -45,9 +45,9 @@ const authController = {
 };
 
 const isAuthenticated = async (req: Request, res: Response, next: any) => {
-    console.log(req.headers)
-    if (req.headers.authorization) {
-        const { authorization } = req.headers;
+    if (req.headers['x-authorization']) {
+        const authorization = req.headers['x-authorization'];
+        console.log(authorization)
         //find user by access token
         const foundUser = await User.findOne({ access_token: authorization }).exec();
         if (foundUser) {

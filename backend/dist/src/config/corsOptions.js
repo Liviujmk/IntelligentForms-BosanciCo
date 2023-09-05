@@ -12,6 +12,6 @@ exports.allowedOrigins = allowedOrigins;
 const corsOptions = {
     origin: "*",
     optionsSuccessStatus: 200,
-    // credentials: true
+    allowedHeaders: ["*", "x-authorization"]
 };
 exports.corsOptions = corsOptions;

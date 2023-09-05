@@ -1,3 +1,5 @@
+import { CorsOptions } from "cors";
+
 const allowedOrigins = [
     'http://localhost:5173',
     'http://192.168.137.1:5173',
@@ -6,10 +8,10 @@ const allowedOrigins = [
     'https://frontend--gentle-figolla-3ef08d.netlify.app'
 ];
 
-const corsOptions = {
+const corsOptions: CorsOptions = {
     origin: "*",
     optionsSuccessStatus: 200,
-    // credentials: true
+    allowedHeaders: ["*", "x-authorization"]
 }
 
 export {allowedOrigins, corsOptions}
