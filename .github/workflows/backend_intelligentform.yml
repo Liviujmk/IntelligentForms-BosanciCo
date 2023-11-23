@@ -19,6 +19,7 @@ jobs:
           node-version: '18.x'
 
       - name: npm install, build, and test
+        working-directory: ./backend
         run: |
           cd backend  # Change to the backend folder
           npm install
