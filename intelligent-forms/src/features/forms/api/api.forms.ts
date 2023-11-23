@@ -11,7 +11,7 @@ export const createForm = async (form: Form) => {
                 "Content-Type": "application/json",
                 "x-authorization": localStorage.getItem('access_token')!
             },
-            credentials: "include",
+            // credentials: "include",
             body: JSON.stringify(form),
         });
         return response.json();
