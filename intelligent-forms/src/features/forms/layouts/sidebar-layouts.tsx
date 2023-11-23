@@ -30,8 +30,8 @@ export const LinkLayout = (
 ) => {
     return (
         <div className="link">
-            <h1>Fill {activeForm.title}</h1>
-            <h3>Browse link below to fill the form</h3>
+            <h1>{activeForm.title}</h1>
+            <h3>Accesează link-ul de mai jos pentru a completa formularul</h3>
             <h4 className="form-link">{activeForm.fillFormUrl}</h4>
         </div>
     )
