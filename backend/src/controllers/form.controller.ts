@@ -22,12 +22,12 @@ export const formController = {
             if (!title || !fields || !sections || !dataRetention) return res.status(400).json({ message: "Missing data" });
 
             //remove any caracter that is not a letter or a number
-            const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
-            console.log('titleWithoutSpaces', titleWithoutSpaces) 
+            // const titleWithoutSpaces = title.replace(/[^a-zA-Z0-9]/g, '');
+            // console.log('titleWithoutSpaces', titleWithoutSpaces) 
             const newForm = await new FormModel({
                 // @ts-ignore
                 userId: req.userId,
-                title: titleWithoutSpaces,
+                // title: titleWithoutSpaces,
                 fields,
                 sections,
                 dataRetention
