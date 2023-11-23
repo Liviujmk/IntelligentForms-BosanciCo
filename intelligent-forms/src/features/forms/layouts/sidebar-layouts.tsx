@@ -9,7 +9,7 @@ export const QRLayout = (
 ) => {
     return (
         <div className="link">
-            <h1>Fill {activeForm.title}</h1>
+            <h1>{activeForm.title}</h1>
             <h3>Scanează QR-ul de mai jos pentru a completa formularul</h3>
             <div className='qr-container'>
                 <QRCode
