@@ -119,7 +119,7 @@ export const SubmissionsPage = () => {
             <div className="flex justify-content-end">
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Caută după cuvânt" />
                 </span>
             </div>
         );
@@ -145,15 +145,15 @@ export const SubmissionsPage = () => {
 
     return (
         <AuthenticatedLayout>
-            <h1>Submissions from {form?.title}</h1>
+            <h2>{form?.title}</h2>
             <div className="card table">
             {
-                isLoading ? <div>Loading...</div> : (
+                isLoading ? <div>Se încarcă...</div> : (
                     // @ts-ignore
                     <DataTable resizableColumns filters={filters}  header={header} value={submissionDataArray} tableStyle={{ minWidth: '60rem' }} paginator rows={2} rowsPerPageOptions={[2, 4, 8, 16]}>
                         {
                             // add timestamp column
-                            <Column filterField="date" dataType="date" filter filterElement={dateFilterTemplate} header="Timestamp" 
+                            <Column filterField="date" dataType="date" filter filterElement={dateFilterTemplate} header="Creat la" 
                                 body={dateBodyTemplate}
                             />    
                         }
@@ -165,9 +165,9 @@ export const SubmissionsPage = () => {
                         }
                         {
                             // add actions column
-                            <Column key="actions" header="Actions" body={(rowData: any) => (
+                            <Column key="actions" header="Acțiuni" body={(rowData: any) => (
                                 <>
-                                    <Button icon="pi pi-file-pdf" tooltip="Export as PDF"
+                                    <Button icon="pi pi-file-pdf" tooltip="Generare PDF"
                                         onClick={() => exportPDF(rowData.rtfText)}
                                     />
                                 </>

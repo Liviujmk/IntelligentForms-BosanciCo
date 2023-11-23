@@ -40,7 +40,7 @@ export const FormsPage = () => {
         await deleteForm(formId);
         mutateForms();
         // @ts-ignore
-        toast.current.show({ severity: 'success', summary: 'Form deleted', detail: 'Form deleted along with its submsissions' });
+        toast.current.show({ severity: 'success', summary: 'Formular șters', detail: 'Formularul a fost șters împreună cu răspunsurile atribuite.' });
     };
 
     const confirm = async (formId: string) => {
@@ -52,8 +52,8 @@ export const FormsPage = () => {
                 <div className="flex flex-column align-items-center" style={{ flex: '1' }}>
                     <div className="text-center">
                         <i className="pi pi-exclamation-triangle" style={{ fontSize: '3rem' }}></i>
-                        <div className="font-bold text-xl my-3">Are you sure?</div>
-                        <p>This action will also delete all submissions from this form</p>
+                        <div className="font-bold text-xl my-3">Ești sigur?</div>
+                        <p>Această acțiune va șterge toate răspunsurile</p>
                     </div>
                     <div className="flex gap-2">
                         <Button onClick={(e) => clear(true, formId)} type="button" label="Confirm" className="p-button-danger w-6rem" />
@@ -67,9 +67,9 @@ export const FormsPage = () => {
     return (
         <AuthenticatedLayout>
             <div className='formsHeader'>
-                <h1>Forms</h1>
+                <h1>Formulare</h1>
                 <Link to='create'>
-                    <Button label="Create new form" icon="pi pi-plus" className='p-button-primary' />
+                    <Button label="Crează formular" icon="pi pi-plus" className='p-button-primary' />
                 </Link>
             </div>
             <div className="card table">
@@ -83,18 +83,17 @@ export const FormsPage = () => {
 
                 </Sidebar>
                 {
-                    isLoading ? <div>Loading forms...</div> :
+                    isLoading ? <div>Se încarcă formularele...</div> :
                         <DataTable value={forms} tableStyle={{ minWidth: '60rem' }}>
-                            <Column field="title" header="Title"></Column>
-                            <Column field="dataRetention" header="Data Retention"></Column>
-                            <Column field="createdAt" header="Created at"></Column>
-                            <Column className='actions' header="Actions" body={(rowData: Form) => {
+                            <Column field="title" header="Titlu"></Column>
+                            <Column field="createdAt" header="Creat la"></Column>
+                            <Column className='actions' header="Acțiuni" body={(rowData: Form) => {
                                 return (
                                     <div>
                                         <div className="card table-group flex flex-wrap justify-content-center gap-3">
                                             <Button
                                                 text
-                                                label='Show link'
+                                                label='Arată link'
                                                 icon="pi pi-link"
                                                 onClick={() => {
                                                     setActiveLayout('link');
@@ -106,7 +105,7 @@ export const FormsPage = () => {
                                                 }}
                                             />
                                             <div className='btn-group'>
-                                                <Button tooltip="Scan form QR" icon="pi pi-qrcode" onClick={() => {
+                                                <Button tooltip="Generare QR" icon="pi pi-qrcode" onClick={() => {
                                                     setActiveLayout('qr');
                                                     setVisible(true);
                                                     setActiveForm({
@@ -117,12 +116,12 @@ export const FormsPage = () => {
                                                 />
                                                 <Toast ref={toast} />
                                                 <Toast ref={toastBC} />
-                                                <Button tooltip='Delete form' icon="pi pi-trash" className='p-button-danger'
+                                                <Button tooltip='Ștergere formular' icon="pi pi-trash" className='p-button-danger'
                                                     // @ts-ignore
                                                     onClick={() => confirm(rowData.id)}
                                                 />
                                                 <Link to={`${rowData.id}/submissions`}>
-                                                    <Button tooltip='View submissions' icon="pi pi-eye" className='p-button-success' />
+                                                    <Button tooltip='Vezi răspunsuri' icon="pi pi-eye" className='p-button-success' />
                                                 </Link>
                                             </div>
                                         </div>
