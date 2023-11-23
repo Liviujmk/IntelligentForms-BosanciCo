@@ -27,7 +27,7 @@ export const formController = {
             const newForm = await new FormModel({
                 // @ts-ignore
                 userId: req.userId,
-                // title: titleWithoutSpaces,
+                // title: titleWithoutSpaces
                 fields,
                 sections,
                 dataRetention
