@@ -4,7 +4,7 @@ import { CreateForm } from '../features/forms/components/create-form/create-form
 export const FormsPage = () => {
     return (
         <AuthenticatedLayout>
-            <h1>Forms</h1>
+            <h1>Form</h1>
             <button className='login-button'>
                 <Link to="create">Create new form</Link>
             </button>

@@ -9,11 +9,11 @@ export const SecondFrame = () => {
   return (
     <div className="second-frame">
       <div className="second-frame-text">
-        <p className="second-frame-title">Automatic filling forms</p>
-        <p className="second-frame-subtitle">Complete your details just by scanning your personal documents(ID, Passport, Vehicle Registration Certificate).</p>
+        <p className="second-frame-title">Formulare de completare automată</p>
+        <p className="second-frame-subtitle">Completați-vă detaliile doar prin scanarea documentelor personale (ID, pașaport, certificat de înmatriculare a vehiculului).</p>
       </div>
       <div className="second-frame-icon">
-        <img alt="iconscan" src={iconscan} height="300" className="iconscan"></img>
+        <img alt="iconscan" src={iconscan} height="300" className="iconscan" />
       </div> 
     </div>
   )

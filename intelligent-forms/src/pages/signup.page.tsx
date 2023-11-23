@@ -4,10 +4,10 @@ import { Register } from "../layouts/base-layout/components/register-form/regist
 
 export const Signup = () => {
     return (
-        <>
+        <div className="goToMainPage"> 
             <Register />
-            <p>Already have an account? <span><Link to={'/login'}>Login Now!</Link></span></p>
-            <Link to={'/'}>Go to HomePage</Link>
-        </>
+            <p>Ai deja un cont? <span><Link to={'/login'}>Conectează-te acum!</Link></span></p>
+            <Link to={'/'}>Mergin la pagina principală</Link>
+        </div>
     )
 };

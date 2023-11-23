@@ -69,8 +69,8 @@ export const Register = () => {
     <div className="login-form">
       <div className="login-header">
         <Toast ref={toast} />
-        <p className="title"> Get started</p>
-        <p className="description">Create your account now</p>
+        <p className="title">Începeți</p>
+        <p className="description">Creează-ți contul acum</p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="p-field">
@@ -80,10 +80,10 @@ export const Register = () => {
             className="custom-select"
           >
             <option selected value="Company">
-              Company
+              Numele instituției
             </option>
-            <option value="Individual">Individual</option>
-            <option value="Public Institution">Public Institution</option>
+            <option value="Individual">Persoană fizică</option>
+            <option value="Public Institution">Insituție publică</option>
           </select>
         </div>
         <div className="p-field">
@@ -100,7 +100,7 @@ export const Register = () => {
                   <input
                     {...register("fiscalCode")}
                     className="input-text"
-                    placeholder="Fiscal Code"
+                    placeholder="Cod fiscal"
                   />
                 </div>
                 {errors.fiscalCode && (
@@ -120,7 +120,7 @@ export const Register = () => {
                 type="text"
                 {...register("name")}
                 className="input-text"
-                placeholder="Name"
+                placeholder="Nume"
               />
             </div>
             {errors.name && (
@@ -136,7 +136,7 @@ export const Register = () => {
                 type="text"
                 {...register("address")}
                 className="input-text"
-                placeholder="Address"
+                placeholder="Adresa"
               />
             </div>
             {errors.address && (
@@ -169,7 +169,7 @@ export const Register = () => {
                 type="password"
                 {...register("password")}
                 className="input-text"
-                placeholder="Password"
+                placeholder="Parola"
               />
             </div>
             {errors.password && (
@@ -178,7 +178,7 @@ export const Register = () => {
           </span>
         </div>
         <div className="p-field">
-          <Button className="submit-button" label="Submit" type="submit" />
+          <Button className="submit-button" label="Creează contul" type="submit" />
         </div>
       </form>
     </div>

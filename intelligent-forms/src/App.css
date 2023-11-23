@@ -1,227 +1,249 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Climate+Crisis&family=Nova+Square&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Climate+Crisis&family=Nova+Square&display=swap");
 
 #root {
-  margin: 0 auto;
-  text-align: center;
+    margin: 0 auto;
+    text-align: center;
 }
 
 a {
-  color: #3c39e8 !important;
+    color: #3c39e8 !important;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-
 .card {
-  background: var(--surface-card);
-  padding: 1rem;
-  padding-top: 0;
-  border-radius: 10px;
-  margin-bottom: 1rem;
+    background: var(--surface-card);
+    padding: 1rem;
+    padding-top: 0;
+    border-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 .read-the-docs {
-  color: #888;
+    color: #888;
 }
 
 .p-menubar .p-menubar-custom,
 .p-menubar .p-menubar-end {
-  margin-left: inherit;
+    margin-left: inherit;
 }
 
 .p-menubar {
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
 }
 
 .logout-button,
 .signup-button {
-  background-color: #3c39e8;
-  color: #ffffff;
-  margin: 10px;
+    background-color: #3c39e8;
+    color: #ffffff;
+    margin: 10px;
 }
 
 .signup-button:hover,
 .logout-button:hover {
-  background-color: #2d2acf;
+    background-color: #2d2acf;
 }
 
 .login-button {
-  background-color: #ffffff;
-  color: #3c39e8;
+    background-color: #ffffff;
+    color: #3c39e8;
 }
 
 .login-button:hover {
-  border: 1px solid #3c39e8;
+    border: 1px solid #3c39e8;
 }
 
 .login-form {
-  background-color: #f5f5f5;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-inline: auto;
-  max-width: 500px;
-  max-height: 800px;
+    background-color: #f5f5f5;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-inline: auto;
+    max-width: 500px;
+    max-height: 800px;
 }
 
 .title {
-  margin-top: 100px;
-  font-weight: 600;
-  font-size: 2.5em;
-  margin-bottom: 0;
+    margin-top: 100px;
+    font-weight: 600;
+    font-size: 2.5em;
+    margin-bottom: 0;
 }
 
 .description {
-  margin-top: 0;
-  margin-bottom: 3em;
-  color: rgba(130, 130, 130, 1);
+    margin-top: 0;
+    margin-bottom: 3em;
+    color: rgba(130, 130, 130, 1);
 }
 
 .p-field,
 button.submit-button {
-  margin: 1rem 0;
+    margin: 1rem 0;
 }
 
 .p-field span input {
-  width: 100%;
-  padding: 1rem .75rem;
+    width: 100%;
+    padding: 1rem 0.75rem;
 }
 
 .p-password {
-  position: relative;
-  display: flex !important;
+    position: relative;
+    display: flex !important;
 }
 
-label:not('notAbs') {
-  position: absolute;
+label:not("notAbs") {
+    position: absolute;
 }
 
 button.submit-button {
-  padding: 1rem .75rem;
-  background-color: #3c39e8;
+    padding: 1rem 0.75rem;
+    background-color: #3c39e8;
 }
 
 button.submit-button:hover {
-  background-color: #2d2acf !important;
+    background-color: #2d2acf !important;
 }
 
+.login-header {
+    margin-bottom: 2rem;
+}
 
 .p-field-group {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 .p-float-label {
-  width: 100%;
+    width: 100%;
 }
 
 .p-float-label input {
-  width: 100%;
+    width: 100%;
 }
 
 .p-dropdown .p-dropdown-label {
-  text-align: left;
+    text-align: left;
 }
 
 #signup-form {
-  margin-top: 60px;
+    margin-top: 60px;
 }
 
 #pricing-title {
-  font-size: 60px;
-  font-weight: 800;
-  margin-bottom: 0;
+    font-size: 60px;
+    font-weight: 800;
+    margin-bottom: 0;
 }
 
 .login-error,
 .form-error {
-  color: red;
+    color: red;
 }
 
 @media (max-width: 600px) {
-  #pricing-title {
-    font-size: xx-large;
-  }
+    #pricing-title {
+        font-size: xx-large;
+    }
 }
 
-.section>* {
-  margin: 1rem 0;
+.section > * {
+    margin: 1rem 0;
 }
 
-.field-section>* {
-  margin: 1rem 0;
+.field-section > * {
+    margin: 1rem 0;
 }
-
-
 
 a {
-  font-weight: 500;
-  color: #3c39e8;
-  text-decoration: inherit;
+    font-weight: 500;
+    color: #3c39e8;
+    text-decoration: inherit;
 }
 
 a:hover {
-  color: #3c39e8;
+    color: #3c39e8;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: 3.2em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #a71919;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #a71919;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 
 button:hover {
-  border-color: #646cff;
+    border-color: #646cff;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
-.login-form.lg {
-  margin-top: 8rem;
+.logo-name {
+    width: 150px;
 }
 
+.goToMainPage {
+    margin-bottom: 5rem;
+}
 
-#logo-name {
-  font-family: 'Black Ops One', cursive;
-  font-weight: 400;
-  font-size: 1.75em;
-  color: black;
-  margin: 0;
+.qrCodeHomePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -5rem;
+}
+
+.qrCodeHomePage > img {
+    max-width: 300px;
+    height: auto;
+}
+
+.qrCodeHomePage > p {
+    font-size: clamp(3rem, 5vw, 5rem);
+    text-align: right;
+}
+
+@media (max-width: 829px) {
+    .qrCodeHomePage {
+        flex-direction: column;
+    }
+
+    .qrCodeHomePage > p {
+        text-align: center;
+    }
 }

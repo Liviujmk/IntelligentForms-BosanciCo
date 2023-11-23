@@ -1,0 +1,13 @@
+.containerHomePageForms {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    text-align: start;
+    flex-wrap: wrap;
+    margin-inline: 1rem;
+}
+
+.titleHomePageForms {
+    font-size: 2.67em;
+    color: #333;
+}

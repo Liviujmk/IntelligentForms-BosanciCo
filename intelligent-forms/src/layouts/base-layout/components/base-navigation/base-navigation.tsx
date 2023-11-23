@@ -4,16 +4,12 @@ import 'primeicons/primeicons.css';                                 // icons
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';                       // core css
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
-import logoform from '../../../../assets/logoform.png'
+import logoform from '../../../../assets/Artboard 1@4x.png'
 
 export const BaseNavigation = () => {
     const navigate = useNavigate()
 
-    const start = <p id='logo-name'>
-        Intelligent
-        <br />
-        Forms
-    </p>
+    const start = <img src={logoform} className='logo-name' />
 
     const end =
         <>
@@ -21,13 +17,13 @@ export const BaseNavigation = () => {
                 navigate('/login');
             }}
                 className="first-frame-button-login">
-                Log In
+                Conectare
             </button>
             <button onClick={() => {
                 navigate('/signup');
             }}
                 className="first-frame-button-signup">
-                Register
+                Înregistrare
             </button>
         </>
 

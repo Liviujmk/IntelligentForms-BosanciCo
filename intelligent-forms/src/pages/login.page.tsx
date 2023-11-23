@@ -57,8 +57,7 @@ export const Login = () => {
     return (
         <div className='login-form lg'>
             <div className='login-header'>
-                <p className='title'>Welcome Back</p>
-                <p className='description'>Please enter your details</p>
+                <p className='title'>Bine ai revenit</p>
             </div>
             <div className="p-field">
                 <span className="p-float-label">
@@ -70,12 +69,12 @@ export const Login = () => {
                 <span className="p-float-label">
                     <Password id="password" className='password' value={password} feedback={false} onChange={(e) => { setPassword(e.target.value), setError('') }} required />
                     {<p className="login-error">{error}</p>}
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Parola</label>
                 </span>
             </div>
-            <Button className='submit-button' label="Login" onClick={handleSubmit} />
-            <p>Don't have an account? <span><Link to={'/signup'}>Register!</Link></span></p>
-            <Link to={'/'}> Go to HomePage</Link>
+            <Button className='submit-button' label="Conectare" onClick={handleSubmit} />
+            <p>Nu ai un cont? <span><Link to={'/signup'}>Înregistrează-te!</Link></span></p>
+            <Link to={'/'}>Mergi la pagina principală</Link>
         </div>
     );
 };

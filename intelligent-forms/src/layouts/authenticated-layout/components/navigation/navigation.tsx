@@ -5,7 +5,7 @@ import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';                       // core css
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
 import './navigation.css'
-import logoform from '../../../../assets/logoform.png'
+import logo from '../../../../assets/Artboard 1@4x.png'
 import { logoutUser } from '../../../../features/auth/api';
 
 interface MenuItem {
@@ -27,12 +27,8 @@ export const Navigation = () => {
             url: '/dashboard/pricing'
         }
     ];
-    const start = <p
-        id='logo-name'>
-        Intelligent
-        <br />
-        Forms
-    </p>
+    
+    const start = <img src={logo} className='logo-name' />
 
     const end =
         <button onClick={logoutUser}

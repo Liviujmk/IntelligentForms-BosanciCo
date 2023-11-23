@@ -14,6 +14,7 @@ import { FillForm } from "./features/fill-form/components/fillForm";
 import { SubmissionsPage } from "./features/submissioons/components/submissions.page";
 import { PricingPage } from "./pages/pricing.page";
 import { CreateForm } from './features/forms/components/create-form/create-form'
+import HomepageForms from "./layouts/base-layout/components/homepage-forms/homepage-forms";
 
 function App() {
   startServer();
